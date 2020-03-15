@@ -1,5 +1,5 @@
 import psycopg2
-import config
+from config import config
 
 """
 To create tables
