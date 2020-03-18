@@ -6,19 +6,22 @@ import psycopg2
 from config import config
 from passVerify import passVerify
 
-def login(userId,password):
+
+def login(userId, password):
     params = config()
     conn = psycopg2.connect(**params)
     cur = conn.cursor()
-    cur.execute("SELECT EXISTS (SELECT 1 FROM users WHERE username = %(username)s LIMIT 1);",{'username': userId})
+    cur.execute("SELECT EXISTS (SELECT 1 FROM users WHERE username = %(username)s LIMIT 1);", {'username': userId})
     userExist = cur.fetchone()
     if not userExist:
+        cur.close()
+        conn.close()
         return 500
-    cur.execute("SELECT pass_key,salt, FROM users WHERE username = %(username)s",{'username': userId})
-    key,salt = cur.fetchone()
+    cur.execute("SELECT pass_key,salt, FROM users WHERE username = %(username)s", {'username': userId})
+    key, salt = cur.fetchone()
     cur.close()
     conn.close()
-    if passVerify(salt,key,password):
+    if passVerify(salt, key, password):
         return 200
     else:
         return 500
