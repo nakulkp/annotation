@@ -1,9 +1,6 @@
-from passHash import passHash
-from passVerify import passVerify
+# SAFE EXAMPLES. DO THIS!
+# SELECT exists (SELECT 1 FROM table WHERE column = <value> LIMIT 1);
+# cursor.execute("SELECT admin FROM users WHERE username = %(username)s", {'username': username});
 
-salt, key = passHash("nakul")
-
-if string == salt:
-    print("succ")
-else:
-    print("not succ")
+inval = {"user": "nakul", "pass": "password"}
+print(inval["user"])

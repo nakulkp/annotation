@@ -1,11 +1,6 @@
 import psycopg2
 from config import config
 
-"""
-To create tables
-"""
-
-
 def createTables():
     commands = (
         """

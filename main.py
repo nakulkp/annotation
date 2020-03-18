@@ -3,6 +3,7 @@ from flask import request, jsonify
 import psycopg2
 from config import config
 from login import login
+from userSignUp import userSignUp
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
@@ -18,14 +19,23 @@ def page_not_found(e):
     return "<h1>404</h1><p>Requested Resource Not Found!!!</p>", 404
 
 
+@app.route('/signup', methods=['GET'])
+def api_signUp():
+    requestParameters = request.args
+    print(requestParameters)
+    signUpStatus = userSignUp(requestParameters)
+    print(signUpStatus)
+    return jsonify(requestParameters)
+
+
 @app.route('/login', methods=['GET'])
 def api_login():
     requestParameters = request.args
-    userId = requestParameters.get('user')
+    username = requestParameters.get('username')
     password = requestParameters.get('password')
-    loginStatus = login(userId, password)
+    loginStatus = login(username, password)
 
-    return jsonify(loginStatus)  # return 200 if login successful; 500 if login fails
+    return jsonify(loginStatus)
 
 
 @app.route('/articlecontent', methods=['GET'])
