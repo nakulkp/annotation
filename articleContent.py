@@ -1,18 +1,8 @@
-"""
-
-fn call -- userId flag
-	flag init 0
-	query article where userID - todo
-		flag ==0=> fetch first
-		flag !=1=> take todo flag value
-		import	data from table
-
-"""
-
 import flask
 from flask import request, jsonify
 import psycopg2
 from config import config
+from login import login
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
@@ -28,6 +18,16 @@ def page_not_found(e):
     return "<h1>404</h1><p>Requested Resource Not Found!!!</p>", 404
 
 
+@app.route('/login', methods=['GET'])
+def api_login():
+    requestParameters = request.args
+    userId = requestParameters.get('user')
+    password = requestParameters.get('password')
+    loginStatus = login(userId, password)
+
+    return jsonify(loginStatus)  # return 200 if login successful; 500 if login fails
+
+
 @app.route('/articlecontent', methods=['GET'])
 def api_articleById():
     requestParameters = request.args  # takes args from request
@@ -35,10 +35,10 @@ def api_articleById():
     id = requestParameters.get('id')
     flag = requestParameters.get('flag')
 
-    query = "SELECT " + article_id + " FROM master_table WHERE"
-
+    query = "SELECT content FROM master_table WHERE"
+    # cursor.execute("SELECT admin FROM users WHERE username = %(username)s", {'username': username});
     if id:
-        query += ' user_id=' + id + ' AND status=todo'
+        query += ' user_id= %(username)s AND status=todo'
 
     if not (id):
         return page_not_found(404)
@@ -50,13 +50,7 @@ def api_articleById():
     conn = psycopg2.connect(**params)  # connect to DB
 
     cur = conn.cursor()
-    cur.execute(query)
-
-    articleId = cur.fetchall()  # returns list of articles
-    article = articleId[flag]
-    query = "SELECT content FROM master_table WHERE article_id=" + article
-    cur.execute(query)
-
+    cur.execute(query, {'username': id})
     result = cur.fetchall()
 
     # Commiting, and Closing DB Connection
