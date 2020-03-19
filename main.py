@@ -1,9 +1,8 @@
 import flask
 from flask import request, jsonify
-import psycopg2
-from config import config
 from login import login
 from userSignUp import userSignUp
+from articleContent import articleContent
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
@@ -22,53 +21,22 @@ def page_not_found(e):
 @app.route('/signup', methods=['GET'])
 def api_signUp():
     requestParameters = request.args
-    print(requestParameters)
     signUpStatus = userSignUp(requestParameters)
-    print(signUpStatus)
-    return jsonify(requestParameters)
+    return jsonify(signUpStatus)
 
 
 @app.route('/login', methods=['GET'])
 def api_login():
     requestParameters = request.args
-    username = requestParameters.get('username')
-    password = requestParameters.get('password')
-    loginStatus = login(username, password)
-
+    loginStatus = login(requestParameters)
     return jsonify(loginStatus)
 
 
 @app.route('/articlecontent', methods=['GET'])
-def api_articleById():
+def api_articleContent():
     requestParameters = request.args  # takes args from request
-
-    id = requestParameters.get('id')
-    flag = requestParameters.get('flag')
-
-    query = "SELECT content FROM master_table WHERE"
-    # cursor.execute("SELECT admin FROM users WHERE username = %(username)s", {'username': username});
-    if id:
-        query += ' user_id= %(username)s AND status=todo'
-
-    if not (id):
-        return page_not_found(404)
-
-    # query = query[:-4] + ';'  # clip off the trailing AND query
-
-    # Connecting to PostgreSQL server
-    params = config()
-    conn = psycopg2.connect(**params)  # connect to DB
-
-    cur = conn.cursor()
-    cur.execute(query, {'username': id})
-    result = cur.fetchall()
-
-    # Commiting, and Closing DB Connection
-    cur.close()
-    conn.commit()  # Commit Changes
-    conn.close()
-
-    return jsonify(result)
+    resultList = articleContent(requestParameters)
+    return jsonify(resultList)
 
 
 app.run()

@@ -3,10 +3,10 @@ import hashlib
 
 # returns true if password hash match
 
-def passVerify(salt, key, password):
-    new_key = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, 100000)
+def passVerify(pass_key, password):
+    new_key = hash(password)
 
-    if new_key == key:
+    if new_key == pass_key:
         return True
     else:
         return False

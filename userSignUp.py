@@ -4,31 +4,46 @@ from passHash import passHash
 
 
 def userSignUp(requestParameters):
-    username = requestParameters["username"]
-    email = requestParameters["email"]
-    phone = requestParameters["phone"]
-    password = requestParameters["password"]
-    privilege = requestParameters["privilege"]
+    try:
+        username = requestParameters["username"]
+        email = requestParameters["email"]
+        phone = requestParameters["phone"]
+        password = requestParameters["password"]
+        privilege = requestParameters["privilege"]
 
-    pass_key = passHash(password)
+        pass_key = passHash(password)
+        status = 'True'
 
-    sql = "INSERT INTO users(username,email,phone,pass_key,privilege) VALUES (%(username)s,%(email)s,%(phone)s,%(pass_key)s),%(privilege)s)"
+        params = config()
+        conn = psycopg2.connect(**params)
+        cur = conn.cursor()
 
-    params = config()
-    conn = psycopg2.connect(**params)
-    cur = conn.cursor()
+        cur.execute("SELECT EXISTS (SELECT 1 FROM users WHERE email = %(email)s LIMIT 1);",
+                    {'email': email})
+        userExists = cur.fetchone()
+        if userExists:
+            cur.close()
+            conn.close()
+            return "email already exists"
+        cur.execute(
+            "INSERT INTO users (username, email, phone, pass_key, status, privilege) VALUES (%s, %s, %s, %s, %s, %s);",
+            (username, email, phone, pass_key, status, privilege))
+        conn.commit()
+        cur.execute("SELECT EXISTS (SELECT 1 FROM users WHERE email = %(email)s LIMIT 1);",
+                    {'email': email})
+        userExists = cur.fetchone()
 
-    cur.execute(sql,
-                {'username': username, 'email': email, 'phone': phone, 'pass_key': pass_key, 'privilege': privilege})
-    conn.commit()
+        conn.commit()
+        cur.close()
+        conn.close()
 
-    cur.execute("SELECT EXISTS (SELECT 1 FROM users WHERE username = %(username)s LIMIT 1);", {'username': username})
-    userExists = cur.fetchone()
-    conn.commit()
-    cur.close()
-    conn.close()
+        if userExists:
+            return "successful"
+        else:
+            return "failed"
 
-    if userExists:
-        return "successful"
-    else:
-        return "failed"
+    except Exception as error:
+        conn.commit()
+        cur.close()
+        conn.close()
+        return "Error"
