@@ -1,6 +1,8 @@
 import flask
 from flask import request, jsonify
 from login import login
+from markIrrelevant import markIrrelevant
+from markWithQuestion import markWithQuestion
 from userSignUp import userSignUp
 from articleContent import articleContent
 
@@ -34,9 +36,20 @@ def api_login():
 
 @app.route('/articlecontent', methods=['GET'])
 def api_articleContent():
-    requestParameters = request.args  # takes args from request
+    requestParameters = request.args
     resultList = articleContent(requestParameters)
     return jsonify(resultList)
+
+
+@app.route('/markirrelevant', methods=['GET'])
+def api_markIrrelevant():
+    requestParameters = request.args
+    markIrrelevant(requestParameters)
+
+@app.route('/markquestion', methods=['GET'])
+def api_markQuestion():
+    requestParameters = request.args
+    markWithQuestion(requestParameters)
 
 
 app.run()

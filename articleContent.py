@@ -21,6 +21,9 @@ def articleContent(requestParameters):
     articleList = cur.fetchall()
     article_id = articleList[flag]
 
+    cur.execute("SELECT url FROM master_table WHERE article_id= %(article_id)s AND status=todo;", {"article_id": article_id})
+    url = cur.fetchone()
+
     cur.execute("""SELECT country_id,
         commodity_id, category_id, sub_category_id,
         moving_factor_id, factor_value_id,price_value_id,
@@ -44,7 +47,7 @@ def articleContent(requestParameters):
 
     cur.execute("""SELECT countries
         FROM region
-        WHERE country_id = %(country_id)s ;""S", {"country_id": country_id}
+        WHERE country_id = %(country_id)s ;""", {"country_id": country_id}
                 )
     countries = cur.fetchone()
 
@@ -107,5 +110,5 @@ def articleContent(requestParameters):
     conn.commit()
     conn.close()
     returnList = [countries, commodities, categories, sub_categories, moving_factors, factor_value, price_value,
-                  supply_value, demand_value, sc_disruption_value]
+                  supply_value, demand_value, sc_disruption_value,url]
     return returnList
