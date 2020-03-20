@@ -15,6 +15,7 @@ def articleSave(requestParameters):
     supply_value = requestParameters['supply_value']
     demand_value = requestParameters['demand_value']
     sc_disruption_value = requestParameters['sc_disruption_value']
+    question = requestParameters['question']
 
     params = config()
     conn = psycopg2.connect(**params)
@@ -26,6 +27,10 @@ def articleSave(requestParameters):
                  'categories': categories, 'sub_categories': sub_categories, 'moving_factors': moving_factors,
                  'factor_value': factor_value, 'price_value': price_value, 'supply_value': supply_value,
                  'demand_value': demand_value, 'sc_disruption_value': sc_disruption_value})
+
+    if question == 'NULL':
+        cur.execute("""UPDATE master_table SET status = 'completed'
+        WHERE article_id = %(article_id)s;""", {"article_id": article_id})
 
     cur.close()
     conn.commit()

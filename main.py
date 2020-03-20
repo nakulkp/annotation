@@ -61,9 +61,12 @@ def api_save():
     requestParameters = request.args
     articleSave(requestParameters)
 
-@app.route('/articlereview'. methods=['GET'])
+
+@app.route('/articlereview', methods=['GET'])
 def articleReview():
     requestParameters = request.args
     reviewValues = review(requestParameters)
     return reviewValues
+
+
 app.run()
