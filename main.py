@@ -5,6 +5,7 @@ from articleSave import articleSave
 from login import login
 from markIrrelevant import markIrrelevant
 from markWithQuestion import markWithQuestion
+from review import review
 from userSignUp import userSignUp
 from articleContent import articleContent
 
@@ -48,17 +49,21 @@ def api_markIrrelevant():
     requestParameters = request.args
     markIrrelevant(requestParameters)
 
+
 @app.route('/markquestion', methods=['GET'])
 def api_markQuestion():
     requestParameters = request.args
     markWithQuestion(requestParameters)
 
 
-
-@app.route('/articlesave',methods=['GET'])
+@app.route('/articlesave', methods=['GET'])
 def api_save():
     requestParameters = request.args
     articleSave(requestParameters)
 
-
+@app.route('/articlereview'. methods=['GET'])
+def articleReview():
+    requestParameters = request.args
+    reviewValues = review(requestParameters)
+    return reviewValues
 app.run()
