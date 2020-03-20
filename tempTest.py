@@ -3,22 +3,18 @@
 # cursor.execute("SELECT admin FROM users WHERE username = %(username)s", {'username': username});
 import psycopg2
 from config import config
-#Run this program to create database
+
 
 def createTables():
-    commands = (
-        """
-        INSERT INTO test2 (blah) VALUES ('blah2');
-        """
-    )
     conn = None
+    #tableList = ["", "", "", "", "", "", "", ""]
     try:
         params = config()
         conn = psycopg2.connect(**params)
         cur = conn.cursor()
-        cur.execute(commands)
         cur.close()
         conn.commit()
+
     except(Exception, psycopg2.DatabaseError)as error:
         print(error)
     finally:

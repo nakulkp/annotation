@@ -1,5 +1,7 @@
 import flask
 from flask import request, jsonify
+
+from articleSave import articleSave
 from login import login
 from markIrrelevant import markIrrelevant
 from markWithQuestion import markWithQuestion
@@ -50,6 +52,13 @@ def api_markIrrelevant():
 def api_markQuestion():
     requestParameters = request.args
     markWithQuestion(requestParameters)
+
+
+
+@app.route('/articlesave',methods=['GET'])
+def api_save():
+    requestParameters = request.args
+    articleSave(requestParameters)
 
 
 app.run()

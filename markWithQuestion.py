@@ -10,7 +10,7 @@ def markWithQuestion(requestParameters):
     conn = psycopg2.connect(**params)
     cur = conn.cursor()
 
-    cur.execute("""UPDATE master_table set question = %(question)s)
+    cur.execute("""UPDATE master_table set question = %(question)s) AND status = 'marked'
         where article_id = %(article_id)s;""", {"question": question, "article_id": article_id})
 
     cur.close()
