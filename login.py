@@ -4,29 +4,32 @@ from passVerify import passVerify
 
 
 def login(requestParameters):
-    username = requestParameters["username"]
+    email = requestParameters["email"]
     password = requestParameters["password"]
+
+    email=str(email)
 
     params = config()
     conn = psycopg2.connect(**params)
     cur = conn.cursor()
-    cur.execute("SELECT EXISTS (SELECT 1 FROM users WHERE username = %(username)s LIMIT 1);", {'username': username})
+    cur.execute("SELECT EXISTS (SELECT 1 FROM users WHERE email = %(email)s LIMIT 1);", {'email': email})
     userExist = cur.fetchone()
+    userExist = userExist[0]
+
     if not userExist:
         cur.close()
         conn.close()
-        return "invalid"
+        return "user Does Not Exist"
 
-    cur.execute("SELECT pass_key,salt,user_id FROM users WHERE username = %(username)s", {'username': username})
+    cur.execute("SELECT pass_key, user_id FROM users WHERE email = %(email)s", {'email': email})
     row = cur.fetchall()
 
     pass_key = row[0][0]
-    salt = row[0][1]
-    user_id = row[0][2]
+    user_id = row[0][1]
 
     cur.close()
     conn.close()
-    if passVerify(bytes(salt), pass_key, password):
+    if passVerify(pass_key, password):
         return user_id + " valid "
     else:
         return "invalid"

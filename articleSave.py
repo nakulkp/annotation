@@ -27,13 +27,19 @@ def articleSave(requestParameters):
                  'categories': categories, 'sub_categories': sub_categories, 'moving_factors': moving_factors,
                  'factor_value': factor_value, 'price_value': price_value, 'supply_value': supply_value,
                  'demand_value': demand_value, 'sc_disruption_value': sc_disruption_value})
+    cur.close()
+    conn.commit()
 
     if question == 'NULL':
+        cur = conn.cursor()
+
         cur.execute("""UPDATE master_table SET status = 'completed'
         WHERE article_id = %(article_id)s;""", {"article_id": article_id})
 
-    cur.close()
-    conn.commit()
+        cur.close()
+        conn.commit()
+
+
     conn.close()
 
     return

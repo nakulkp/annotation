@@ -4,7 +4,6 @@
 import psycopg2
 from config import config
 
-from flask import Flask, jsonify,request, make_response
 
 def sample():
     conn = None
@@ -13,6 +12,7 @@ def sample():
         params = config()
         conn = psycopg2.connect(**params)
         cur = conn.cursor()
+
 
         cur.close()
         conn.commit()

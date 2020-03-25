@@ -11,6 +11,7 @@ def articleContent(requestParameters):
     cur = conn.cursor()
     userExists = cur.execute("SELECT exists (SELECT 1 FROM table WHERE user_id = %(user_id)s LIMIT 1);",
                              {'user_id': user_id})
+    userExists = userExists[0]
     if not userExists:
         cur.close()
         conn.commit()
@@ -39,51 +40,61 @@ def articleContent(requestParameters):
         FROM region
         WHERE status = 'enabled';""")
     countries = cur.fetchall()
+    countries = countries[0]
 
     cur.execute("""SELECT commodities
         FROM commodity_table
         WHERE status = 'enabled';""")
     commodities = cur.fetchall()
+    commodities = commodities[0]
 
     cur.execute("""SELECT categories
             FROM category_table
         WHERE status = 'enabled';""")
     categories = cur.fetchall()
+    categories = categories[0]
 
     cur.execute("""SELECT sub_categories
             FROM subcategory_table
         WHERE status = 'enabled';""")
     sub_categories = cur.fetchall()
+    sub_categories = sub_categories[0]
 
     cur.execute("""SELECT moving_factors
             FROM moving_factor_table
         WHERE status = 'enabled';""")
     moving_factors = cur.fetchall()
+    moving_factors = moving_factors[0]
 
     cur.execute("""SELECT factor_value
             FROM factor_value_table
         WHERE status = 'enabled';""")
     factor_value = cur.fetchall()
+    factor_value = factor_value[0]
 
     cur.execute("""SELECT price_value
             FROM price
         WHERE status = 'enabled';""")
     price_value = cur.fetchall()
+    price_value = price_value[0]
 
     cur.execute("""SELECT supply_value
             FROM supply
         WHERE status = 'enabled';""")
     supply_value = cur.fetchall()
+    supply_value = supply_value[0]
 
     cur.execute("""SELECT demand_value
             FROM demand
         WHERE status = 'enabled';""")
     demand_value = cur.fetchall()
+    demand_value = demand_value[0]
 
     cur.execute("""SELECT sc_disruption_value
             FROM sc_disruption
         WHERE status = 'enabled';""")
     sc_disruption_value = cur.fetchall()
+    sc_disruption_value = sc_disruption_value[0]
 
     cur.close()
     conn.commit()
