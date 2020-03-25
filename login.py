@@ -7,7 +7,7 @@ def login(requestParameters):
     email = requestParameters["email"]
     password = requestParameters["password"]
 
-    email=str(email)
+    email = str(email)
 
     params = config()
     conn = psycopg2.connect(**params)
@@ -21,15 +21,16 @@ def login(requestParameters):
         conn.close()
         return "user Does Not Exist"
 
-    cur.execute("SELECT pass_key, user_id FROM users WHERE email = %(email)s", {'email': email})
+    cur.execute("SELECT pass_key, user_id, privileges FROM users WHERE email = %(email)s", {'email': email})
     row = cur.fetchall()
 
     pass_key = row[0][0]
     user_id = row[0][1]
+    privilege = row[0][2]
 
     cur.close()
     conn.close()
     if passVerify(pass_key, password):
-        return user_id + " valid "
+        return user_id, privilege
     else:
         return "invalid"

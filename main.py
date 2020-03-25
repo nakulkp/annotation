@@ -23,14 +23,14 @@ def page_not_found(e):
     return "<h1>404</h1><p>Requested Resource Not Found!!!</p>", 404
 
 
-@app.route('/signup', methods=['GET'])
+@app.route('/signup', methods=['POST'])
 def api_signUp():
     requestParameters = request.args
     signUpStatus = userSignUp(requestParameters)
     return jsonify(signUpStatus)
 
 
-@app.route('/login', methods=['GET'])
+@app.route('/login', methods=['POST'])
 def api_login():
     requestParameters = request.args
     loginStatus = login(requestParameters)
@@ -44,7 +44,7 @@ def api_articleContent():
     return jsonify(resultList)
 
 
-@app.route('/markirrelevant', methods=['GET'])
+@app.route('/markirrelevant', methods=['POST'])
 def api_markIrrelevant():
     requestParameters = request.args
     markIrrelevant(requestParameters)
