@@ -18,13 +18,16 @@ def userSignUp(requestParameters):
         conn = psycopg2.connect(**params)
         cur = conn.cursor()
 
-        cur.execute("SELECT EXISTS (SELECT 1 FROM users WHERE email = %(email)s LIMIT 1);",
-                    {'email': email})
+        cur.execute("""SELECT EXISTS (SELECT 1 FROM users
+        WHERE email = %(email)s LIMIT 1);""", {'email': email})
         userExists = cur.fetchone()
+        userExists = userExists[0]
+
         if userExists:
             cur.close()
             conn.close()
             return "email already exists"
+
         cur.execute(
             "INSERT INTO users (username, email, phone, pass_key, status, privilege) VALUES (%s, %s, %s, %s, %s, %s);",
             (username, email, phone, pass_key, status, privilege))

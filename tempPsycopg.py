@@ -4,14 +4,16 @@
 import psycopg2
 from config import config
 
+from flask import Flask, jsonify,request, make_response
 
-def createTables():
+def sample():
     conn = None
-    #tableList = ["", "", "", "", "", "", "", ""]
+
     try:
         params = config()
         conn = psycopg2.connect(**params)
         cur = conn.cursor()
+
         cur.close()
         conn.commit()
 
@@ -23,4 +25,4 @@ def createTables():
 
 
 if __name__ == '__main__':
-    createTables()
+    sample()
