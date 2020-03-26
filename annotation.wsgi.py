@@ -5,7 +5,7 @@ import logging
 logging.basicConfig(stream=sys.stderr)
 sys.path.insert(0, "/var/www/annotation/")
 
-from main import app as application
+from annotation.main import app as application
 
 application.secret_key = 'sa@!@2ccjkiyu2@!#%&#e@!@'
 
