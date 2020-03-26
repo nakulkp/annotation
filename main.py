@@ -1,13 +1,13 @@
 import flask
 from flask import request, jsonify
 
-from application.articleContent import articleContent
-from application.articleSave import articleSave
-from application.markIrrelevant import markIrrelevant
-from application.markWithQuestion import markWithQuestion
-from application.review import review
-from application.userSignUp import userSignUp
-from application.login import login
+from annotation.articleContent import articleContent
+from annotation.articleSave import articleSave
+from annotation.markIrrelevant import markIrrelevant
+from annotation.markWithQuestion import markWithQuestion
+from annotation.review import review
+from annotation.userSignUp import userSignUp
+from annotation.login import login
 
 
 app = flask.Flask(__name__)
