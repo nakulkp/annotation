@@ -12,9 +12,6 @@ def userSignUp(requestParameters):
         password = requestParameters["password"]
         privilege = requestParameters["privilege"]
 
-        if username or email or phone or password or privilege is None:
-            return "Parameter not found"
-
         pass_key = passHash(password)
         status = 'True'
 

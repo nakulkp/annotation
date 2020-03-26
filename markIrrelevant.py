@@ -7,9 +7,6 @@ def markIrrelevant(requestParameters):
     try:
         article_id = requestParameters["article_id"]
 
-        if article_id is None:
-            return "Parameter not found"
-
         params = config()
         conn = psycopg2.connect(**params)
         cur = conn.cursor()

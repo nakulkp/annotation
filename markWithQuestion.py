@@ -5,11 +5,9 @@ from annotation.config import config
 def markWithQuestion(requestParameters):
     conn = None
     try:
+
         article_id = requestParameters["article_id"]
         question = requestParameters["question"]
-
-        if article_id or question is None:
-            return "Parameter not found"
 
         params = config()
         conn = psycopg2.connect(**params)
@@ -22,6 +20,7 @@ def markWithQuestion(requestParameters):
         conn.commit()
         conn.close()
         return "Success"
+
     except Exception as error:
         return "Error"
     finally:
