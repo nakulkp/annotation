@@ -1,5 +1,5 @@
 import psycopg2
-from config import config
+from annotation.config import config
 
 
 def adminDeleteRegion(requestParameters):
@@ -16,6 +16,9 @@ def adminDeleteRegion(requestParameters):
                     WHERE country_id=%{country_id}s;""",
                     {"status": status, "countries": countries, "country_id": country_id}
                     )
+        cur.close()
+        conn.commit()
+        conn.close()
 
         return "success"
 

@@ -1,5 +1,5 @@
 import psycopg2
-from config import config
+from annotation.config import config
 
 
 def adminDeleteCommodity(requestParameters):
@@ -16,6 +16,9 @@ def adminDeleteCommodity(requestParameters):
                     WHERE commodity_id=%{commodity_id}s;""",
                     {"status": status, "commodities": commodities, "commodity_id": commodity_id}
                     )
+        cur.close()
+        conn.commit()
+        conn.close()
 
         return "success"
 

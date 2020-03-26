@@ -1,5 +1,5 @@
 import psycopg2
-from config import config
+from annotation.config import config
 
 
 def adminDeleteSupply(requestParameters):
@@ -16,6 +16,9 @@ def adminDeleteSupply(requestParameters):
                     WHERE supply_value_id=%{supply_value_id}s;""",
                     {"status": status, "supply_value": supply_value, "supply_value_id": supply_value_id}
                     )
+        cur.close()
+        conn.commit()
+        conn.close()
 
         return "success"
 

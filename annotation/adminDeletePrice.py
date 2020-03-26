@@ -1,5 +1,5 @@
 import psycopg2
-from config import config
+from annotation.config import config
 
 
 def adminDeletePrice(requestParameters):
@@ -16,6 +16,9 @@ def adminDeletePrice(requestParameters):
                     WHERE price_value_id=%{price_value_id}s;""",
                     {"status": status, "price_value": price_value, "price_value_id": price_value_id}
                     )
+        cur.close()
+        conn.commit()
+        conn.close()
 
         return "success"
 

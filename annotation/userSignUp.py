@@ -1,6 +1,6 @@
 import psycopg2
-from config import config
-from passHash import passHash
+from annotation.config import config
+from annotation.passHash import passHash
 
 
 def userSignUp(requestParameters):
@@ -36,6 +36,7 @@ def userSignUp(requestParameters):
         cur.execute("SELECT EXISTS (SELECT 1 FROM users WHERE email = %(email)s LIMIT 1);",
                     {'email': email})
         userExists = cur.fetchone()
+        userExists = userExists[0]
 
         conn.commit()
         cur.close()

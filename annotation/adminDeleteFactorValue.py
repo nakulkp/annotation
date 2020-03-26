@@ -1,5 +1,5 @@
 import psycopg2
-from config import config
+from annotation.config import config
 
 
 def adminDeleteFactorValue(requestParameters):
@@ -16,6 +16,10 @@ def adminDeleteFactorValue(requestParameters):
                     WHERE factor_value_id=%{factor_value_id}s;""",
                     {"status": status, "factor_value": factor_value, "factor_value_id": factor_value_id}
                     )
+
+        cur.close()
+        conn.commit()
+        conn.close()
 
         return "success"
 

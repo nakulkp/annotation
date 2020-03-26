@@ -1,5 +1,5 @@
 import psycopg2
-from config import config
+from annotation.config import config
 
 
 def adminDeleteSCDisruption(requestParameters):
@@ -17,6 +17,9 @@ def adminDeleteSCDisruption(requestParameters):
                     {"status": status, "sc_disruption_value": sc_disruption_value,
                      "sc_disruption_value_id": sc_disruption_value_id}
                     )
+        cur.close()
+        conn.commit()
+        conn.close()
 
         return "success"
 

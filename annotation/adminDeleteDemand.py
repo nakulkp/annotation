@@ -1,5 +1,5 @@
 import psycopg2
-from config import config
+from annotation.config import config
 
 
 def adminDeleteDemand(requestParameters):
@@ -16,6 +16,9 @@ def adminDeleteDemand(requestParameters):
                     WHERE demand_value_id=%{demand_value_id}s;""",
                     {"status": status, "demand_value": demand_value, "demand_value_id": demand_value_id}
                     )
+        cur.close()
+        conn.commit()
+        conn.close()
 
         return "success"
 

@@ -1,5 +1,5 @@
 import psycopg2
-from config import config
+from annotation.config import config
 
 
 def adminDeleteMovingFactor(requestParameters):
@@ -16,6 +16,9 @@ def adminDeleteMovingFactor(requestParameters):
                     WHERE moving_factor_id=%{moving_factor_id}s;""",
                     {"status": status, "moving_factors": moving_factors, "moving_factor_id": moving_factor_id}
                     )
+        cur.close()
+        conn.commit()
+        conn.close()
 
         return "success"
 

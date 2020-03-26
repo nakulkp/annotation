@@ -1,5 +1,5 @@
 import psycopg2
-from config import config
+from annotation.config import config
 
 
 def adminDeleteCategory(requestParameters):
@@ -16,6 +16,10 @@ def adminDeleteCategory(requestParameters):
                     WHERE category_id=%{category_id}s;""",
                     {"status": status, "categories": categories, "category_id": category_id}
                     )
+
+        cur.close()
+        conn.commit()
+        conn.close()
 
         return "success"
 

@@ -2,23 +2,23 @@ import flask
 from flask import request, jsonify
 from flask_cors import CORS
 
-from adminDeleteCategory import adminDeleteCategory
-from adminDeleteCommodity import adminDeleteCommodity
-from adminDeleteDemand import adminDeleteDemand
-from adminDeleteFactorValue import adminDeleteFactorValue
-from adminDeleteMovingFactor import adminDeleteMovingFactor
-from adminDeletePrice import adminDeletePrice
-from adminDeleteRegion import adminDeleteRegion
-from adminDeleteSCDisruption import adminDeleteSCDisruption
-from adminDeleteSubCategory import adminDeleteSubCategory
-from adminDeleteSupply import adminDeleteSupply
-from articleContent import articleContent
-from articleSave import articleSave
-from markIrrelevant import markIrrelevant
-from markWithQuestion import markWithQuestion
-from review import review
-from userSignUp import userSignUp
-from login import login
+from annotation.adminDeleteCategory import adminDeleteCategory
+from annotation.adminDeleteCommodity import adminDeleteCommodity
+from annotation.adminDeleteDemand import adminDeleteDemand
+from annotation.adminDeleteFactorValue import adminDeleteFactorValue
+from annotation.adminDeleteMovingFactor import adminDeleteMovingFactor
+from annotation.adminDeletePrice import adminDeletePrice
+from annotation.adminDeleteRegion import adminDeleteRegion
+from annotation.adminDeleteSCDisruption import adminDeleteSCDisruption
+from annotation.adminDeleteSubCategory import adminDeleteSubCategory
+from annotation.adminDeleteSupply import adminDeleteSupply
+from annotation.articleContent import articleContent
+from annotation.articleSave import articleSave
+from annotation.markIrrelevant import markIrrelevant
+from annotation.markWithQuestion import markWithQuestion
+from annotation.review import review
+from annotation.userSignUp import userSignUp
+from annotation.login import login
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True

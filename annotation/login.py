@@ -1,6 +1,6 @@
 import psycopg2
-from config import config
-from passVerify import passVerify
+from annotation.config import config
+from annotation.passVerify import passVerify
 
 
 def login(requestParameters):
@@ -30,6 +30,7 @@ def login(requestParameters):
         user_id = row[0][1]
         privilege = row[0][2]
 
+        conn.commit()
         cur.close()
         conn.close()
         if passVerify(pass_key, password):
