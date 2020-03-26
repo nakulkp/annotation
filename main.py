@@ -1,13 +1,13 @@
 import flask
 from flask import request, jsonify
 
-from articleSave import articleSave
-from login import login
-from markIrrelevant import markIrrelevant
-from markWithQuestion import markWithQuestion
-from review import review
-from userSignUp import userSignUp
-from articleContent import articleContent
+from .articleSave import articleSave
+from .login import login
+from .markIrrelevant import markIrrelevant
+from .markWithQuestion import markWithQuestion
+from .review import review
+from .userSignUp import userSignUp
+from .articleContent import articleContent
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
@@ -16,12 +16,6 @@ app.config["DEBUG"] = True
 @app.route('/', methods=['GET'])
 def home():
     return '<h1> HOME </h1>'
-
-
-@app.errorhandler(404)
-def page_not_found(e):
-    return "<h1>404</h1><p>Requested Resource Not Found!!!</p>", 404
-
 
 @app.route('/signup', methods=['POST'])
 def api_signUp():
@@ -67,6 +61,3 @@ def articleReview():
     requestParameters = request.args
     reviewValues = review(requestParameters)
     return reviewValues
-
-
-app.run()

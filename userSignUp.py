@@ -1,9 +1,10 @@
 import psycopg2
-from config import config
-from passHash import passHash
+from .config import config
+from .passHash import passHash
 
 
 def userSignUp(requestParameters):
+    conn = None
     try:
         username = requestParameters["username"]
         email = requestParameters["email"]
@@ -46,7 +47,8 @@ def userSignUp(requestParameters):
             return "failed"
 
     except Exception as error:
-        conn.commit()
-        cur.close()
-        conn.close()
         return "Error"
+
+    finally:
+        if conn is not None:
+            conn.close()
