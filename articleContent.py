@@ -18,7 +18,7 @@ def articleContent(requestParameters):
             cur.close()
             conn.commit()
             conn.close()
-            return "user does not exist"
+            return 'user does not exists'
 
         cur.execute("SELECT article_id FROM master_table WHERE user_id= %(user_id)s AND status=todo;",
                     {"user_id": user_id})
@@ -109,7 +109,7 @@ def articleContent(requestParameters):
         return returnList
 
     except Exception as error:
-        return "Error= "
+        return "Error"
     finally:
         if conn is not None:
             conn.close()

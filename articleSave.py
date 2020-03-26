@@ -45,7 +45,7 @@ def articleSave(requestParameters):
 
         return "success"
     except Exception as error:
-        return error
+        return 'Error'
     finally:
         if conn is not None:
             conn.close()

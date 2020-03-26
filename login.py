@@ -21,7 +21,7 @@ def login(requestParameters):
         if not userExist:
             cur.close()
             conn.close()
-            return "user Does Not Exist"
+            return ""
 
         cur.execute("SELECT pass_key, user_id, privileges FROM users WHERE email = %(email)s", {'email': email})
         row = cur.fetchall()
