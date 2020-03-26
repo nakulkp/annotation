@@ -1,13 +1,14 @@
 import flask
 from flask import request, jsonify
 
-from .articleSave import articleSave
-from .login import login
-from .markIrrelevant import markIrrelevant
-from .markWithQuestion import markWithQuestion
-from .review import review
-from .userSignUp import userSignUp
-from .articleContent import articleContent
+from application.articleContent import articleContent
+from application.articleSave import articleSave
+from application.markIrrelevant import markIrrelevant
+from application.markWithQuestion import markWithQuestion
+from application.review import review
+from application.userSignUp import userSignUp
+from application.login import login
+
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True

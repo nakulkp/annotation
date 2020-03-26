@@ -1,5 +1,5 @@
 import psycopg2
-from .config import config
+from application.config import config
 
 
 def articleContent(requestParameters):
