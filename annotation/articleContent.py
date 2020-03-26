@@ -26,96 +26,46 @@ def articleContent(requestParameters):
         article_id = articleList[flag]
 
         cur.execute(
-            """SELECT owner, release_date, source, url, headline, content 
+            """SELECT owner, release_date, source, url, headline, content, question 
             FROM master_table 
             WHERE article_id= %(article_id)s AND status=todo;""",
             {"article_id": article_id}
         )
+        row = cur.fetchall()
+        owner = row[0][0]
+        release_date = row[0][1]
+        source = row[0][2]
+        url = row[0][3]
+        headline = row[0][4]
+        content = row[0][5]
+        question = row[0][6]
 
-        owner = cur.fetchone()
-        release_date = cur.fetchone()
-        source = cur.fetchone()
-        url = cur.fetchone()
-        headline = cur.fetchone()
-        content = cur.fetchone()
+        cur.execute(
+            """SELECT country_id, commodity_id, category_id, subcategory_id, moving_factor_id, factor_value_id, price_value_id, supply_value_id, demand_value_id, sc_disruption_value_id 
+            FROM mapping_table 
+            WHERE article_id= %(article_id)s;""", {"article_id": article_id}
+        )
 
-        cur.execute("""SELECT countries, country_id
-            FROM region
-            WHERE status = 'enabled';""")
-        countries = cur.fetchall()
-        countries = countries[0]
-        country_id = countries[1]
-
-        cur.execute("""SELECT commodities, commodity_id
-            FROM commodity_table
-            WHERE status = 'enabled';""")
-        commodities = cur.fetchall()
-        commodities = commodities[0]
-        commodity_id = countries[1]
-
-        cur.execute("""SELECT categories, category_id
-                FROM category_table
-            WHERE status = 'enabled';""")
-        categories = cur.fetchall()
-        categories = categories[0]
-        category_id = countries[1]
-
-        cur.execute("""SELECT sub_categories, subcategory_id
-                FROM subcategory_table
-            WHERE status = 'enabled';""")
-        sub_categories = cur.fetchall()
-        sub_categories = sub_categories[0]
-        subcategory_id = countries[1]
-
-        cur.execute("""SELECT moving_factors, moving_factor_id
-                FROM moving_factor_table
-            WHERE status = 'enabled';""")
-        moving_factors = cur.fetchall()
-        moving_factors = moving_factors[0]
-        moving_factor_id = countries[1]
-
-        cur.execute("""SELECT factor_value, factor_value_id
-                FROM factor_value_table
-            WHERE status = 'enabled';""")
-        factor_value = cur.fetchall()
-        factor_value = factor_value[0]
-        factor_value_id = countries[1]
-
-        cur.execute("""SELECT price_value, price_value_id
-                FROM price
-            WHERE status = 'enabled';""")
-        price_value = cur.fetchall()
-        price_value = price_value[0]
-        price_value_id = countries[1]
-
-        cur.execute("""SELECT supply_value, supply_value_id
-                FROM supply
-            WHERE status = 'enabled';""")
-        supply_value = cur.fetchall()
-        supply_value = supply_value[0]
-        supply_value_id = countries[1]
-
-        cur.execute("""SELECT demand_value, demand_value_id
-                FROM demand
-            WHERE status = 'enabled';""")
-        demand_value = cur.fetchall()
-        demand_value = demand_value[0]
-        demand_value_id = countries[1]
-
-        cur.execute("""SELECT sc_disruption_value, sc_disruption_value_id
-                FROM sc_disruption
-            WHERE status = 'enabled';""")
-        sc_disruption_value = cur.fetchall()
-        sc_disruption_value = sc_disruption_value[0]
-        sc_disruption_value_id = countries[1]
+        row = cur.fetchall()
+        country_id = row[0][0]
+        commodity_id = row[0][1]
+        category_id = row[0][2]
+        subcategory_id = row[0][3]
+        moving_factor_id = row[0][4]
+        factor_value_id = row[0][5]
+        price_value_id = row[0][6]
+        supply_value_id = row[0][7]
+        demand_value_id = row[0][8]
+        sc_disruption_value_id = row[0][9]
 
         cur.close()
         conn.commit()
-        conn.close()
-        returnList = [countries, commodities, categories, sub_categories, moving_factors, factor_value, price_value,
-                      supply_value, demand_value, sc_disruption_value, owner, release_date, source, url, headline,
-                      content, country_id, commodity_id, category_id, subcategory_id, moving_factor_id, factor_value_id,
-                      price_value_id, supply_value_id, demand_value_id, sc_disruption_value_id]
+        returnList = {'owner': owner, 'release_date': release_date, 'source': source, 'url': url, 'headline': headline,
+                      'content': content, 'question': question, 'article_id': article_id, 'country_id': country_id,
+                      'commodity_id': commodity_id, 'category_id': category_id, 'subcategory_id': subcategory_id,
+                      'moving_factor_id': moving_factor_id, 'factor_value_id': factor_value_id,
+                      'price_value_id': price_value_id, 'supply_value_id': supply_value_id,
+                      'demand_value_id': demand_value_id, 'sc_disruption_value_id': sc_disruption_value_id}
 
         return returnList
 
@@ -124,4 +74,3 @@ def articleContent(requestParameters):
     finally:
         if conn is not None:
             conn.close()
-            print('Database connection closed.')

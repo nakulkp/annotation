@@ -5,6 +5,13 @@ from flask_cors import CORS
 from annotation.adminAddCategory import adminAddCategory
 from annotation.adminAddCommodity import adminAddCommodity
 from annotation.adminAddDemand import adminAddDemand
+from annotation.adminAddFactorValue import adminAddFactorValue
+from annotation.adminAddMovingFactor import adminAddMovingFactor
+from annotation.adminAddPrice import adminAddPrice
+from annotation.adminAddRegion import adminAddRegion
+from annotation.adminAddSCDisruption import adminAddSCDisruption
+from annotation.adminAddSubCategory import adminAddSubCategory
+from annotation.adminAddSupply import adminAddSupply
 from annotation.adminDeleteCategory import adminDeleteCategory
 from annotation.adminDeleteCommodity import adminDeleteCommodity
 from annotation.adminDeleteDemand import adminDeleteDemand
@@ -17,6 +24,7 @@ from annotation.adminDeleteSubCategory import adminDeleteSubCategory
 from annotation.adminDeleteSupply import adminDeleteSupply
 from annotation.articleContent import articleContent
 from annotation.articleSave import articleSave
+from annotation.fetchCategory import fetchCategory
 from annotation.markIrrelevant import markIrrelevant
 from annotation.markWithQuestion import markWithQuestion
 from annotation.review import review
@@ -112,11 +120,13 @@ def api_adminDeleteFactorValue():
     status = adminDeleteFactorValue(requestParameters)
     return jsonify(status)
 
+
 @app.route('/admindeletemovingfactor', methods=['POST'])
 def api_adminDeleteMovingFactor():
     requestParameters = request.get_json()
     status = adminDeleteMovingFactor(requestParameters)
     return jsonify(status)
+
 
 @app.route('/admindeleteprice', methods=['POST'])
 def api_adminDeletePrice():
@@ -131,11 +141,13 @@ def api_adminDeleteRegion():
     status = adminDeleteRegion(requestParameters)
     return jsonify(status)
 
+
 @app.route('/admindeletescdisruption', methods=['POST'])
 def api_adminDeleteSCDisruption():
     requestParameters = request.get_json()
     status = adminDeleteSCDisruption(requestParameters)
     return jsonify(status)
+
 
 @app.route('/admindeletesubcategory', methods=['POST'])
 def api_adminDeleteSubCategory():
@@ -143,11 +155,13 @@ def api_adminDeleteSubCategory():
     status = adminDeleteSubCategory(requestParameters)
     return jsonify(status)
 
+
 @app.route('/admindeletesupply', methods=['POST'])
 def api_adminDeleteSupply():
     requestParameters = request.get_json()
     status = adminDeleteSupply(requestParameters)
     return jsonify(status)
+
 
 @app.route('/adminaddcategory', methods=['POST'])
 def api_adminAddCategory():
@@ -155,26 +169,77 @@ def api_adminAddCategory():
     status = adminAddCategory(requestParameters)
     return jsonify(status)
 
+
 @app.route('/adminaddcommodity', methods=['POST'])
-def api_adminAddCommodit():
+def api_adminAddCommodity():
     requestParameters = request.get_json()
-    status = adminAddDemand(requestParameters)
+    status = adminAddCommodity(requestParameters)
     return jsonify(status)
 
 
 @app.route('/adminaddDemand', methods=['POST'])
 def api_adminAddDemand():
     requestParameters = request.get_json()
-    status = adminAddCommodity(requestParameters)
+    status = adminAddDemand(requestParameters)
     return jsonify(status)
 
 
+@app.route('/adminaddfactorvalue', methods=['POST'])
+def api_adminAddFactorValue():
+    requestParameters = request.get_json()
+    status = adminAddFactorValue(requestParameters)
+    return jsonify(status)
 
 
+@app.route('/adminaddmovingfactor', methods=['POST'])
+def api_adminAddMovingFactor():
+    requestParameters = request.get_json()
+    status = adminAddMovingFactor(requestParameters)
+    return jsonify(status)
+
+
+@app.route('/adminaddprice', methods=['POST'])
+def api_adminAddPrice():
+    requestParameters = request.get_json()
+    status = adminAddPrice(requestParameters)
+    return jsonify(status)
+
+
+@app.route('/adminaddregion', methods=['POST'])
+def api_adminAddRegion():
+    requestParameters = request.get_json()
+    status = adminAddRegion(requestParameters)
+    return jsonify(status)
+
+
+@app.route('/adminaddscdisruption', methods=['POST'])
+def api_adminAddSCDisruption():
+    requestParameters = request.get_json()
+    status = adminAddSCDisruption(requestParameters)
+    return jsonify(status)
+
+
+@app.route('/adminaddsubcategory', methods=['POST'])
+def api_adminAddSubCategory():
+    requestParameters = request.get_json()
+    status = adminAddSubCategory(requestParameters)
+    return jsonify(status)
+
+
+@app.route('/adminaddsupply', methods=['POST'])
+def api_adminAddSupply():
+    requestParameters = request.get_json()
+    status = adminAddSupply(requestParameters)
+    return jsonify(status)
+
+@app.route('/fetchcategory', methods=['GET'])
+def api_fetchCategory():
+    status = fetchCategory()
+    return jsonify(status)
 
 @app.route('/upload', methods=['POST'])
 def api_upload():
     requestParameters = request.args
 
-    status = upload(requestParameters)
+    status = csvUpload(requestParameters)
     return jsonify(status)
