@@ -3,6 +3,7 @@ from annotation.config import config
 
 
 def adminDeleteSCDisruption(requestParameters):
+    conn = None
     try:
         sc_disruption_value_id = requestParameters['sc_disruption_value_id']
         status = requestParameters['status']
@@ -19,9 +20,13 @@ def adminDeleteSCDisruption(requestParameters):
                     )
         cur.close()
         conn.commit()
-        conn.close()
+
 
         return "success"
 
     except Exception as error:
         return "error"
+
+    finally:
+        if conn is not None:
+            conn.close()

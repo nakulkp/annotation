@@ -3,6 +3,7 @@ from annotation.config import config
 
 
 def adminDeleteSupply(requestParameters):
+    conn = None
     try:
         supply_value_id = requestParameters['supply_value_id']
         status = requestParameters['status']
@@ -18,9 +19,11 @@ def adminDeleteSupply(requestParameters):
                     )
         cur.close()
         conn.commit()
-        conn.close()
-
         return "success"
 
     except Exception as error:
         return "error"
+
+    finally:
+        if conn is not None:
+            conn.close()

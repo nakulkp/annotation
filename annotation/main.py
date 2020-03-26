@@ -1,7 +1,6 @@
 import flask
 from flask import request, jsonify
 from flask_cors import CORS
-
 from annotation.adminDeleteCategory import adminDeleteCategory
 from annotation.adminDeleteCommodity import adminDeleteCommodity
 from annotation.adminDeleteDemand import adminDeleteDemand

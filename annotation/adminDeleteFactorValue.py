@@ -3,6 +3,7 @@ from annotation.config import config
 
 
 def adminDeleteFactorValue(requestParameters):
+    conn = None
     try:
         factor_value_id = requestParameters['factor_value_id']
         status = requestParameters['status']
@@ -25,3 +26,7 @@ def adminDeleteFactorValue(requestParameters):
 
     except Exception as error:
         return "error"
+
+    finally:
+        if conn is not None:
+            conn.close()

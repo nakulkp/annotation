@@ -3,6 +3,7 @@ from annotation.config import config
 
 
 def adminDeleteSubCategory(requestParameters):
+    conn = None
     try:
         sub_category_id = requestParameters['sub_category_id']
         status = requestParameters['status']
@@ -18,9 +19,11 @@ def adminDeleteSubCategory(requestParameters):
                     )
         cur.close()
         conn.commit()
-        conn.close()
 
         return "success"
 
     except Exception as error:
         return "error"
+    finally:
+        if conn is not None:
+            conn.close()

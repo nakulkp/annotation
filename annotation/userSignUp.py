@@ -7,11 +7,15 @@ def userSignUp(requestParameters):
     conn = None
     try:
         username = requestParameters["username"]
+        print("1")
         email = requestParameters["email"]
+        print("2")
         phone = requestParameters["phone"]
+        print("3")
         password = requestParameters["password"]
+        print("4")
         privilege = requestParameters["privilege"]
-
+        print("5")
         pass_key = passHash(password)
         status = 'True'
 
@@ -48,7 +52,7 @@ def userSignUp(requestParameters):
             return "failed"
 
     except Exception as error:
-        return "Error"
+        return error
 
     finally:
         if conn is not None:

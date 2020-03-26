@@ -3,6 +3,7 @@ from annotation.config import config
 
 
 def adminAddCategory(requestParameters):
+    conn = None
     try:
         categories = requestParameters['categories']
 
@@ -11,24 +12,24 @@ def adminAddCategory(requestParameters):
         cur = conn.cursor()
 
         cur.execute(
-            "INSERT INTO users (username, email, phone, pass_key, status, privilege) VALUES (%s, %s, %s, %s, %s, %s);",
-            (username, email, phone, pass_key, status, privilege))
+            "INSERT INTO category_table (categories) VALUES (%s);", (categories))
         conn.commit()
-        cur.execute("SELECT EXISTS (SELECT 1 FROM users WHERE email = %(email)s LIMIT 1);",
-                    {'email': email})
-        userExists = cur.fetchone()
 
-        conn.commit()
-        cur.close()
-        conn.close()
+        cur.execute("SELECT EXISTS (SELECT 1 FROM category_table WHERE categories = %(categories)s LIMIT 1);",
+                    {'categories': categories})
+        userExists = cur.fetchone()
+        userExists = userExists[0]
 
         if userExists:
-            return {'category_id':category_id}
+            cur.execute("SELECT EXISTS (SELECT 1 FROM category_table WHERE categories = %(categories)s LIMIT 1);",
+                        {'categories': categories})
+
+            return {'category_id': category_id}
         else:
             return "failed"
 
-
-        return {'category_id':category_id}
-
     except Exception as error:
         return "error"
+    finally:
+        if conn is not None:
+            conn.close()

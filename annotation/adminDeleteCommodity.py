@@ -3,6 +3,7 @@ from annotation.config import config
 
 
 def adminDeleteCommodity(requestParameters):
+    conn = None
     try:
         commodity_id = requestParameters['commodity_id']
         status = requestParameters['status']
@@ -18,9 +19,12 @@ def adminDeleteCommodity(requestParameters):
                     )
         cur.close()
         conn.commit()
-        conn.close()
 
         return "success"
 
     except Exception as error:
         return "error"
+
+    finally:
+        if conn is not None:
+            conn.close()
