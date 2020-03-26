@@ -21,9 +21,10 @@ def adminAddCategory(requestParameters):
         userExists = userExists[0]
 
         if userExists:
-            cur.execute("SELECT EXISTS (SELECT 1 FROM category_table WHERE categories = %(categories)s LIMIT 1);",
+            cur.execute("SELECT category_id FROM category_table WHERE categories = %(categories);",
                         {'categories': categories})
-
+            category_id = cur.fetchone()
+            category_id = category_id[0]
             return {'category_id': category_id}
         else:
             return "failed"

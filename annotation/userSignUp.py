@@ -7,20 +7,16 @@ def userSignUp(requestParameters):
     conn = None
     try:
         username = requestParameters["username"]
-        print("1")
         email = requestParameters["email"]
-        print("2")
         phone = requestParameters["phone"]
-        print("3")
         password = requestParameters["password"]
-        print("4")
         privilege = requestParameters["privilege"]
-        print("5")
         pass_key = passHash(password)
         status = 'True'
 
-        params = config()
-        conn = psycopg2.connect(**params)
+        # params = config()
+        # conn = psycopg2.connect(**params)
+        conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
         cur = conn.cursor()
 
         cur.execute("""SELECT EXISTS (SELECT 1 FROM users
@@ -52,7 +48,7 @@ def userSignUp(requestParameters):
             return "failed"
 
     except Exception as error:
-        return error
+        return "error"
 
     finally:
         if conn is not None:

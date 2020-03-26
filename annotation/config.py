@@ -10,7 +10,6 @@ def config(filename='database.ini', section='postgresql'):
     # read config file
     parser.read(filename)
 
-    # get section, default to postgresql
     db = {}
     if parser.has_section(section):
         params = parser.items(section)

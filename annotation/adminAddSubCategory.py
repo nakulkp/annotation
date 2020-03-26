@@ -1,0 +1,36 @@
+import psycopg2
+from annotation.config import config
+
+
+def adminAddSubCategory(requestParameters):
+    conn = None
+    try:
+        sub_categories = requestParameters['sub_categories']
+
+        params = config()
+        conn = psycopg2.connect(**params)
+        cur = conn.cursor()
+
+        cur.execute(
+            "INSERT INTO subcategory_table (sub_categories) VALUES (%s);", (sub_categories))
+        conn.commit()
+
+        cur.execute("SELECT EXISTS (SELECT 1 FROM subcategory_table WHERE sub_categories = %(sub_categories)s LIMIT 1);",
+                    {'sub_categories': sub_categories})
+        userExists = cur.fetchone()
+        userExists = userExists[0]
+
+        if userExists:
+            cur.execute("SELECT sub_category_id FROM subcategory_table WHERE sub_categories = %(sub_categories);",
+                        {'sub_categories': sub_categories})
+            sub_category_id = cur.fetchone()
+            sub_category_id = sub_category_id[0]
+            return {'sub_category_id': sub_category_id}
+        else:
+            return "failed"
+
+    except Exception as error:
+        return "error"
+    finally:
+        if conn is not None:
+            conn.close()
