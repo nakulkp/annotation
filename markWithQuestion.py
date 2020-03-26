@@ -8,6 +8,9 @@ def markWithQuestion(requestParameters):
         article_id = requestParameters["article_id"]
         question = requestParameters["question"]
 
+        if article_id or question is None:
+            return "Parameter not found"
+
         params = config()
         conn = psycopg2.connect(**params)
         cur = conn.cursor()

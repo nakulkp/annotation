@@ -19,6 +19,13 @@ def articleSave(requestParameters):
         sc_disruption_value = requestParameters['sc_disruption_value']
         question = requestParameters['question']
 
+        paramList = [user_id, article_id, countries, commodities, categories, sub_categories, moving_factors,
+                     factor_value, price_value, supply_value, demand_value, sc_disruption_value, question]
+
+        for param in paramList:
+            if param is None:
+                return "Parameter not found"
+
         params = config()
         conn = psycopg2.connect(**params)
         cur = conn.cursor()
@@ -41,12 +48,11 @@ def articleSave(requestParameters):
             cur.close()
             conn.commit()
 
-
         conn.close()
 
-        return
+        return "success"
     except Exception as error:
-        return "Error"
+        return error
     finally:
         if conn is not None:
             conn.close()

@@ -42,23 +42,24 @@ def api_articleContent():
 @app.route('/markirrelevant', methods=['POST'])
 def api_markIrrelevant():
     requestParameters = request.args
-    markIrrelevant(requestParameters)
-
+    status =  markIrrelevant(requestParameters)
+    return jsonify(status)
 
 @app.route('/markquestion', methods=['GET'])
 def api_markQuestion():
     requestParameters = request.args
-    markWithQuestion(requestParameters)
+    status =  markWithQuestion(requestParameters)
+    return jsonify(status)
 
 
 @app.route('/articlesave', methods=['GET'])
 def api_save():
     requestParameters = request.args
-    articleSave(requestParameters)
-
+    status =  articleSave(requestParameters)
+    return jsonify(status)
 
 @app.route('/articlereview', methods=['GET'])
 def articleReview():
     requestParameters = request.args
-    reviewValues = review(requestParameters)
-    return reviewValues
+    status = review(requestParameters)
+    return jsonify(status)

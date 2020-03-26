@@ -8,6 +8,9 @@ def articleContent(requestParameters):
         user_id = requestParameters['user_id']
         flag = requestParameters['flag']
 
+        if user_id or flag is None:
+            return "Parameters not found"
+
         params = config()
         conn = psycopg2.connect(**params)
         cur = conn.cursor()

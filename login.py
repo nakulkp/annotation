@@ -9,6 +9,9 @@ def login(requestParameters):
         email = requestParameters["email"]
         password = requestParameters["password"]
 
+        if email or password is None:
+            return "Parameter not found"
+
         email = str(email)
 
         params = config()

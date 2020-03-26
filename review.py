@@ -7,6 +7,9 @@ def review(requestParameters):
     try:
         user_id = requestParameters["user_id"]
 
+        if user_id is None:
+            return "Parameter not found"
+
         params = config()
         conn = psycopg2.connect(**params)
         cur = conn.cursor()
