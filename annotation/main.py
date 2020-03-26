@@ -1,5 +1,6 @@
 import flask
 from flask import request, jsonify
+from flask_cors import CORS
 
 from annotation.articleContent import articleContent
 from annotation.articleSave import articleSave
@@ -8,29 +9,35 @@ from annotation.markWithQuestion import markWithQuestion
 from annotation.review import review
 from annotation.userSignUp import userSignUp
 from annotation.login import login
+from annotation.adminDelete import adminDelete
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
+cors = CORS(app)
 
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['POST'])
 def home():
+    data = request.get_json()
+    #print(email)
+    #print(data)
     return '<h1> HOME </h1>'
 
 
 @app.route('/signup', methods=['POST'])
 def api_signUp():
-    requestParameters = request.args
+    requestParameters = request.get_json()
 
     username = requestParameters["username"]
     email = requestParameters["email"]
     phone = requestParameters["phone"]
     password = requestParameters["password"]
     privilege = requestParameters["privilege"]
-    if username or email or phone or password or privilege is None:
+    if (username or email or phone or password or privilege) is None:
         return jsonify({'message': "Parameter Not Found"})
 
     signUpStatus = userSignUp(requestParameters)
+    #signUpStatus = "hi"
     return jsonify(signUpStatus)
 
 
@@ -53,6 +60,7 @@ def api_articleContent():
 
     user_id = requestParameters['user_id']
     flag = requestParameters['flag']
+
     if user_id or flag is None:
         return jsonify({'message': "Parameter Not Found"})
 
@@ -72,12 +80,13 @@ def api_markIrrelevant():
     return jsonify(status)
 
 
-@app.route('/markquestion', methods=['GET'])
+@app.route('/markquestion', methods=['POST'])
 def api_markQuestion():
     requestParameters = request.args
 
     article_id = requestParameters["article_id"]
     question = requestParameters["question"]
+
     if article_id or question is None:
         return jsonify({'message': "Parameter Not Found"})
 
@@ -91,20 +100,20 @@ def api_save():
 
     user_id = requestParameters['user_id']
     article_id = requestParameters['article_id']
-    countries = requestParameters['countries']
-    commodities = requestParameters['commodities']
-    categories = requestParameters['categories']
-    sub_categories = requestParameters['sub_categories']
-    moving_factors = requestParameters['moving_factors']
-    factor_value = requestParameters['factor_value']
-    price_value = requestParameters['price_value']
-    supply_value = requestParameters['supply_value']
-    demand_value = requestParameters['demand_value']
-    sc_disruption_value = requestParameters['sc_disruption_value']
+    country_id = requestParameters['country_id']
+    commodity_id = requestParameters['commodity_id']
+    category_id = requestParameters['category_id']
+    subcategory_id = requestParameters['subcategory_id']
+    moving_factor_id = requestParameters['moving_factor_id']
+    factor_value_id = requestParameters['factor_value_id']
+    price_value_id = requestParameters['price_value_id']
+    supply_value_id = requestParameters['supply_value_id']
+    demand_value_id = requestParameters['demand_value_id']
+    sc_disruption_value_id = requestParameters['sc_disruption_value_id']
     question = requestParameters['question']
 
-    paramList = [user_id, article_id, countries, commodities, categories, sub_categories, moving_factors,
-                 factor_value, price_value, supply_value, demand_value, sc_disruption_value, question]
+    paramList = [user_id, article_id, country_id, commodity_id, category_id, subcategory_id, moving_factor_id,
+                 factor_value_id, price_value_id, supply_value_id, demand_value_id, sc_disruption_value_id, question]
 
     for param in paramList:
         if param is None:
@@ -122,5 +131,25 @@ def articleReview():
     if user_id is None:
         return jsonify({'message': "Parameter Not Found"})
 
-    status = review(requestParameters)
+    reviewValues = review(requestParameters)
+    return jsonify(reviewValues)
+
+
+@app.route('/admindelete', methods=['POST'])
+def adminEditAdd():
+    requestParameters = request.args
+
+    user_id = requestParameters["user_id"]
+    if user_id is None:
+        return jsonify({'message': "Parameter Not Found"})
+
+    status = adminDelete(requestParameters)
+    return jsonify(status)
+
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    requestParameters = request.args
+
+    status = upload(requestParameters)
     return jsonify(status)
