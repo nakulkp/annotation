@@ -3,6 +3,8 @@ from flask import request, jsonify
 from flask_cors import CORS
 
 from annotation.adminAddCategory import adminAddCategory
+from annotation.adminAddCommodity import adminAddCommodity
+from annotation.adminAddDemand import adminAddDemand
 from annotation.adminDeleteCategory import adminDeleteCategory
 from annotation.adminDeleteCommodity import adminDeleteCommodity
 from annotation.adminDeleteDemand import adminDeleteDemand
@@ -155,6 +157,13 @@ def api_adminAddCategory():
 
 @app.route('/adminaddcommodity', methods=['POST'])
 def api_adminAddCommodit():
+    requestParameters = request.get_json()
+    status = adminAddDemand(requestParameters)
+    return jsonify(status)
+
+
+@app.route('/adminaddDemand', methods=['POST'])
+def api_adminAddDemand():
     requestParameters = request.get_json()
     status = adminAddCommodity(requestParameters)
     return jsonify(status)
