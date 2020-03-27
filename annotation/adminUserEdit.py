@@ -19,12 +19,12 @@ def adminUseredit(requestParameters):
 
     cur.execute(
         """UPDATE users
-         SET username = %(username)s, email = %(email)s, phone = %(phone)s pass_key = %(pass_key)s status = %(status)s privilege = %(privilege)s
+         SET username = %(username)s, email = %(email)s, phone = %(phone)s, pass_key = %(pass_key)s, status = %(status)s, privilege = %(privilege)s
          WHERE user_id = %(user_id)s;""",
-        {'username': username, 'email': email, 'phone': phone, 'pass_key': pass_key, 'status': status,
-         'privilege': privilege, 'user_id': user_id})
+        {'user_id': user_id, 'username': username, 'email': email, 'phone': phone, 'pass_key': pass_key,
+         'status': status, 'privilege': privilege})
 
     cur.close()
     conn.commit
     conn.close()
-    return ({"message":"success"})
+    return ({"message": "success"})

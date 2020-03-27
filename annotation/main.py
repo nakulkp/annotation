@@ -24,6 +24,7 @@ from annotation.adminDeleteRegion import adminDeleteRegion
 from annotation.adminDeleteSCDisruption import adminDeleteSCDisruption
 from annotation.adminDeleteSubCategory import adminDeleteSubCategory
 from annotation.adminDeleteSupply import adminDeleteSupply
+from annotation.adminUsersFetch import adminUsersFetch
 from annotation.articleContent import articleContent
 from annotation.articleSave import articleSave
 from annotation.csvUpload import csvUpload
@@ -318,3 +319,11 @@ def api_csvUpload():
     requestParameters = request.get_json()
     status = csvUpload(requestParameters)
     return jsonify(status)
+
+
+@app.route('/adminusersfetch', methods=['GET'])
+def api_adminUsersFetch():
+    #requestParameters = request.get_json()
+    status = adminUsersFetch()
+    return jsonify(status)
+
