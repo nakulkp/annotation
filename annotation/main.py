@@ -232,14 +232,16 @@ def api_adminAddSupply():
     status = adminAddSupply(requestParameters)
     return jsonify(status)
 
+
 @app.route('/fetchcategory', methods=['GET'])
 def api_fetchCategory():
     status = fetchCategory()
     return jsonify(status)
 
+
 @app.route('/upload', methods=['POST'])
 def api_upload():
     requestParameters = request.args
 
-    status = csvUpload(requestParameters)
-    return jsonify(status)
+    #status = csvUpload(requestParameters)
+    #return jsonify(status)
