@@ -4,24 +4,19 @@ from annotation.config import config
 
 def fetchSCDisruption():
     conn = None
-    try:
-        #params = config()
-        #conn = psycopg2.connect(**params)
-        conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
-        cur = conn.cursor()
+    #params = config()
+    #conn = psycopg2.connect(**params)
+    conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
+    cur = conn.cursor()
 
-        cur.execute("""SELECT sc_disruption_value
-            FROM sc_disruption
-            WHERE status = 'enabled';""")
-        valueList = cur.fetchall()
+    cur.execute("""SELECT sc_disruption_value
+        FROM sc_disruption
+        WHERE status = 'enabled';""")
+    valueList = cur.fetchall()
 
-        cur.close()
-        conn.commit()
+    cur.close()
+    conn.commit()
 
-        return {'valueList': valueList}
-
-    except Exception as error:
-        return "error"
-    finally:
-        if conn is not None:
-            conn.close()
+    return {'valueList': valueList}
+    if conn is not None:
+        conn.close()
