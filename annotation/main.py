@@ -79,7 +79,7 @@ def api_markQuestion():
     return jsonify(status)
 
 
-@app.route('/articlesave', methods=['GET'])
+@app.route('/articlesave', methods=['POST'])
 def api_save():
     requestParameters = request.get_json()
     status = articleSave(requestParameters)
