@@ -4,7 +4,7 @@ from annotation.config import config
 
 def adminAddCategory(requestParameters):
     conn = None
-    categories = requestParameters['categories']
+    categories = requestParameters["categorie"']
 
     #params = config()
     #conn = psycopg2.connect(**params)
