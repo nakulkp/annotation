@@ -7,6 +7,8 @@ def articleContent(requestParameters):
     user_id = requestParameters['user_id']
     flag = requestParameters['flag']
 
+    flag = int(flag)
+
     #params = config()
     #conn = psycopg2.connect(**params)
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
@@ -21,7 +23,7 @@ def articleContent(requestParameters):
         conn.close()
         return 'user does not exists'
 
-    cur.execute("SELECT article_id FROM master_table WHERE user_id= %(user_id)s AND status=todo;",
+    cur.execute("SELECT article_id FROM master_table WHERE user_id= %(user_id)s AND status='todo';",
                 {"user_id": user_id})
     articleList = cur.fetchall()
     article_id = articleList[flag]
