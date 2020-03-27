@@ -20,7 +20,7 @@ def articleContent(requestParameters):
         conn.close()
         return 'user does not exists'
 
-    cur.execute("SELECT article_id FROM master_table WHERE user_id= %(user_id)s AND status=todo;",
+    cur.execute("SELECT article_id FROM user WHERE user_id= %(user_id)s AND status=todo;",
                 {"user_id": user_id})
     articleList = cur.fetchall()
     article_id = articleList[flag]
