@@ -11,7 +11,7 @@ def articleContent(requestParameters):
     #conn = psycopg2.connect(**params)
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
-    userExists = cur.execute("SELECT exists (SELECT 1 FROM master_table WHERE user_id = %(user_id)s LIMIT 1);",
+    userExists = cur.execute("SELECT exists (SELECT 1 FROM users WHERE user_id = %(user_id)s LIMIT 1);",
                                 {'user_id': user_id})
     userExists = userExists[0]
     if not userExists:
@@ -20,7 +20,7 @@ def articleContent(requestParameters):
         conn.close()
         return 'user does not exists'
 
-    cur.execute("SELECT article_id FROM user WHERE user_id= %(user_id)s AND status=todo;",
+    cur.execute("SELECT article_id FROM master_table WHERE user_id= %(user_id)s AND status=todo;",
                 {"user_id": user_id})
     articleList = cur.fetchall()
     article_id = articleList[flag]
