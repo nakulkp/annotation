@@ -22,7 +22,7 @@ def adminAddCommodity(requestParameters):
         userExists = userExists[0]
 
         if userExists:
-            cur.execute("SELECT commodity_id FROM commodity_table WHERE commodities = %(commodities);",
+            cur.execute("SELECT commodity_id FROM commodity_table WHERE commodities = %(commodities)s;",
                         {'commodities': commodities})
             commodity_id = cur.fetchone()
             commodity_id = commodity_id[0]

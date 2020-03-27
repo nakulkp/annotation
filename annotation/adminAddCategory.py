@@ -4,15 +4,14 @@ from annotation.config import config
 
 def adminAddCategory(requestParameters):
     conn = None
-    categories = requestParameters["categories"]
+    categories = requestParameters['categories']
 
     #params = config()
     #conn = psycopg2.connect(**params)
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute(
-        "INSERT INTO category_table (categories) VALUES (%s);", (categories))
+    cur.execute("INSERT INTO category_table (categories) VALUES (%(categories)s);", {'categories': categories})
     conn.commit()
 
     cur.execute("SELECT EXISTS (SELECT 1 FROM category_table WHERE categories = %(categories)s LIMIT 1);",
@@ -21,7 +20,7 @@ def adminAddCategory(requestParameters):
     userExists = userExists[0]
 
     if userExists:
-        cur.execute("SELECT category_id FROM category_table WHERE categories = %(categories);",
+        cur.execute("SELECT category_id FROM category_table WHERE categories = %(categories)s;",
                     {'categories': categories})
         category_id = cur.fetchone()
         category_id = category_id[0]
