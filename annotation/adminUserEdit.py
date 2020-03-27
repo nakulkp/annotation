@@ -2,7 +2,7 @@ import psycopg2
 from annotation.config import config
 
 
-def adminUseredit(requestParameters):
+def adminUserEdit(requestParameters):
     user_id = requestParameters['user_id']
     username = requestParameters['username']
     email = requestParameters['email']

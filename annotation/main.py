@@ -4,6 +4,8 @@ from flask_cors import CORS
 import jwt
 import datetime
 
+from functools import wraps
+
 from annotation.adminAddCategory import adminAddCategory
 from annotation.adminAddCommodity import adminAddCommodity
 from annotation.adminAddDemand import adminAddDemand
@@ -24,6 +26,7 @@ from annotation.adminDeleteRegion import adminDeleteRegion
 from annotation.adminDeleteSCDisruption import adminDeleteSCDisruption
 from annotation.adminDeleteSubCategory import adminDeleteSubCategory
 from annotation.adminDeleteSupply import adminDeleteSupply
+from annotation.adminUserEdit import adminUserEdit
 from annotation.adminUsersFetch import adminUsersFetch
 from annotation.articleContent import articleContent
 from annotation.articleSave import articleSave
@@ -323,7 +326,12 @@ def api_csvUpload():
 
 @app.route('/adminusersfetch', methods=['GET'])
 def api_adminUsersFetch():
-    #requestParameters = request.get_json()
-    status = adminUsersFetch()
+    valuesList = adminUsersFetch()
+    return jsonify(valuesList)
+
+@app.route('/adminuseredit', methods=['POST'])
+def api_adminUsersEdit():
+    requestParameters = request.get_json()
+    status = adminUserEdit(requestParameters)
     return jsonify(status)
 

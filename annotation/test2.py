@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify
 import jwt
 import datetime
 
+from functools import wraps
+
 from annotation.login import login
 
 app = Flask(__name__)
@@ -11,7 +13,7 @@ app.config["SECRET_KEY"] = "!5@adjh@#!@QSQsw1!@c"
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        token = request.args.get('token')
+        token = request.get_json('token')
         if not token:
             return jsonify({'message': 'token missing'}), 403
         try:
