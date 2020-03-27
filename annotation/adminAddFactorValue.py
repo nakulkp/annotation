@@ -12,7 +12,7 @@ def adminAddFactorValue(requestParameters):
     cur = conn.cursor()
 
     cur.execute(
-        "INSERT INTO factor_value_table (factor_value) VALUES (%(factor_values)s);", {'factor_value': factor_value})
+        "INSERT INTO factor_value_table (factor_value) VALUES (%(factor_value)s);", {'factor_value': factor_value})
     conn.commit()
 
     cur.execute("SELECT EXISTS (SELECT 1 FROM factor_value_table WHERE factor_value = %(factor_value)s LIMIT 1);",

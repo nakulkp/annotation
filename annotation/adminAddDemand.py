@@ -12,7 +12,7 @@ def adminAddDemand(requestParameters):
     cur = conn.cursor()
 
     cur.execute(
-        "INSERT INTO demand (demand_value) VALUES (%(demand_values)s);", {'demand_value': demand_value})
+        "INSERT INTO demand (demand_value) VALUES (%(demand_value)s);", {'demand_value': demand_value})
     conn.commit()
 
     cur.execute("SELECT EXISTS (SELECT 1 FROM demand WHERE demand_value = %(demand_value)s LIMIT 1);",
