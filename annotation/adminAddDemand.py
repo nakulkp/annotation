@@ -11,8 +11,9 @@ def adminAddDemand(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
+
     cur.execute(
-        "INSERT INTO demand (demand_value) VALUES (%(demand_value)s);", {'demand_value': demand_value})
+        "INSERT INTO demand (demand_value,status) VALUES (%(demand_value)s,'enabled');", {'demand_value': demand_value})
     conn.commit()
 
     cur.execute("SELECT EXISTS (SELECT 1 FROM demand WHERE demand_value = %(demand_value)s LIMIT 1);",

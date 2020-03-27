@@ -12,7 +12,7 @@ def adminAddSupply(requestParameters):
     cur = conn.cursor()
 
     cur.execute(
-        "INSERT INTO supply (supply_value) VALUES (%(supply_value)s);", {'supply_value': supply_value})
+        "INSERT INTO supply (supply_value,status) VALUES (%(supply_value)s,'enabled');", {'supply_value': supply_value})
     conn.commit()
 
     cur.execute("SELECT EXISTS (SELECT 1 FROM supply WHERE supply_value = %(supply_value)s LIMIT 1);",

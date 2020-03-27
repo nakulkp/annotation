@@ -21,5 +21,3 @@ def adminDeletePrice(requestParameters):
     conn.commit()
 
     return "success"
-    if conn is not None:
-        conn.close()

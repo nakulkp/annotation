@@ -6,13 +6,13 @@ def adminAddMovingFactor(requestParameters):
     conn = None
     moving_factors = requestParameters['moving_factors']
 
-    #params = config()
-    #conn = psycopg2.connect(**params)
+    # params = config()
+    # conn = psycopg2.connect(**params)
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
-
     cur.execute(
-        "INSERT INTO moving_factor_table (moving_factors) VALUES (%(moving_factors)s);", {'moving_factors': moving_factors})
+        "INSERT INTO moving_factor_table (moving_factors,status) VALUES (%(moving_factors)s,'enabled');",
+        {'moving_factors': moving_factors})
     conn.commit()
 
     cur.execute("SELECT EXISTS (SELECT 1 FROM moving_factor_table WHERE moving_factors = %(moving_factors)s LIMIT 1);",

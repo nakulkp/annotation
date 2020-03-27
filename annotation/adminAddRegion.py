@@ -10,9 +10,8 @@ def adminAddRegion(requestParameters):
     #conn = psycopg2.connect(**params)
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
-
     cur.execute(
-        "INSERT INTO region (countries) VALUES (%(countries)s);", {'countries': countries})
+        "INSERT INTO region (countries,status) VALUES (%(countries)s,'enabled');", {'countries': countries})
     conn.commit()
 
     cur.execute("SELECT EXISTS (SELECT 1 FROM region WHERE countries = %(countries)s LIMIT 1);",

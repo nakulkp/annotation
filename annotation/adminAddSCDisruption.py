@@ -10,9 +10,8 @@ def adminAddSCDisruption(requestParameters):
     #conn = psycopg2.connect(**params)
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
-
     cur.execute(
-        "INSERT INTO sc_disruption (sc_disruption_value) VALUES (%(sc_disruption_value)s);", {'sc_disruption_value': sc_disruption_value})
+        "INSERT INTO sc_disruption (sc_disruption_value,status) VALUES (%(sc_disruption_value)s,'enabled');", {'sc_disruption_value': sc_disruption_value})
     conn.commit()
 
     cur.execute("SELECT EXISTS (SELECT 1 FROM sc_disruption WHERE sc_disruption_value = %(sc_disruption_value)s LIMIT 1);",

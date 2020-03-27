@@ -11,7 +11,7 @@ def adminAddCategory(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("INSERT INTO category_table (categories) VALUES (%(categories)s);", {'categories': categories})
+    cur.execute("INSERT INTO category_table (categories, status) VALUES (%(categories)s,'enabled');", {'categories': categories})
     conn.commit()
 
     cur.execute("SELECT EXISTS (SELECT 1 FROM category_table WHERE categories = %(categories)s LIMIT 1);",

@@ -10,9 +10,8 @@ def adminAddPrice(requestParameters):
     #conn = psycopg2.connect(**params)
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
-
     cur.execute(
-        "INSERT INTO price (price_value) VALUES (%(price_value)s);", {'price_value': price_value})
+        "INSERT INTO price (price_value,status) VALUES (%(price_value)s,'enabled');", {'price_value': price_value})
     conn.commit()
 
     cur.execute("SELECT EXISTS (SELECT 1 FROM price WHERE price_value = %(price_value)s LIMIT 1);",

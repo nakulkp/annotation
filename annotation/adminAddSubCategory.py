@@ -10,9 +10,8 @@ def adminAddSubCategory(requestParameters):
     #conn = psycopg2.connect(**params)
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
-
     cur.execute(
-        "INSERT INTO subcategory_table (sub_categories) VALUES (%(sub_categories)s);", {'sub_categories': sub_categories})
+        "INSERT INTO subcategory_table (sub_categories,status) VALUES (%(sub_categories)s,'enabled');", {'sub_categories': sub_categories})
     conn.commit()
 
     cur.execute("SELECT EXISTS (SELECT 1 FROM subcategory_table WHERE sub_categories = %(sub_categories)s LIMIT 1);",
