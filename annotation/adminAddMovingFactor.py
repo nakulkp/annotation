@@ -7,8 +7,9 @@ def adminAddMovingFactor(requestParameters):
     try:
         moving_factors = requestParameters['moving_factors']
 
-        params = config()
-        conn = psycopg2.connect(**params)
+        //params = config()
+        //conn = psycopg2.connect(**params)
+        conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
         cur = conn.cursor()
 
         cur.execute(

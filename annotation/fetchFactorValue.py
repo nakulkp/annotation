@@ -5,8 +5,9 @@ from annotation.config import config
 def fetchFactorValue():
     conn = None
     try:
-        params = config()
-        conn = psycopg2.connect(**params)
+        //params = config()
+        //conn = psycopg2.connect(**params)
+        conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
         cur = conn.cursor()
 
         cur.execute("""SELECT factor_value

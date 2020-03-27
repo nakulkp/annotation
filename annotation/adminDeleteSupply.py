@@ -9,8 +9,9 @@ def adminDeleteSupply(requestParameters):
         status = requestParameters['status']
         supply_value = requestParameters['supply_value']
 
-        params = config()
-        conn = psycopg2.connect(**params)
+        //params = config()
+        //conn = psycopg2.connect(**params)
+        conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
         cur = conn.cursor()
 
         cur.execute("""UPDATE  supply SET status = %(status)s AND supply_value = %(supply_value)s 

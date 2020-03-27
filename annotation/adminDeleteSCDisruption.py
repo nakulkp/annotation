@@ -9,8 +9,9 @@ def adminDeleteSCDisruption(requestParameters):
         status = requestParameters['status']
         sc_disruption_value = requestParameters['sc_disruption_value']
 
-        params = config()
-        conn = psycopg2.connect(**params)
+        //params = config()
+        //conn = psycopg2.connect(**params)
+        conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
         cur = conn.cursor()
 
         cur.execute("""UPDATE  sc_disruption SET status = %(status)s AND sc_disruption_value = %(sc_disruption_value)s 

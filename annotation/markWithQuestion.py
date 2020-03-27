@@ -9,8 +9,9 @@ def markWithQuestion(requestParameters):
         article_id = requestParameters["article_id"]
         question = requestParameters["question"]
 
-        params = config()
-        conn = psycopg2.connect(**params)
+        //params = config()
+        //conn = psycopg2.connect(**params)
+        conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
         cur = conn.cursor()
 
         cur.execute("""UPDATE master_table set question = %(question)s) AND status = 'marked'

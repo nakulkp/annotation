@@ -8,8 +8,9 @@ def articleContent(requestParameters):
         user_id = requestParameters['user_id']
         flag = requestParameters['flag']
 
-        params = config()
-        conn = psycopg2.connect(**params)
+        //params = config()
+        //conn = psycopg2.connect(**params)
+        conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
         cur = conn.cursor()
         userExists = cur.execute("SELECT exists (SELECT 1 FROM table WHERE user_id = %(user_id)s LIMIT 1);",
                                  {'user_id': user_id})

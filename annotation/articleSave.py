@@ -19,8 +19,9 @@ def articleSave(requestParameters):
         sc_disruption_value_id = requestParameters['sc_disruption_value_id']
         question = requestParameters['question']
 
-        params = config()
-        conn = psycopg2.connect(**params)
+        //params = config()
+        //conn = psycopg2.connect(**params)
+        conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
         cur = conn.cursor()
 
         cur.execute("""INSERT INTO master_table (user_id, article_id, country_id, commodity_id, category_id, subcategory_id, moving_factor_id, factor_value_id, price_value_id, supply_value_id, demand_value_id, sc_disruption_value_id)
