@@ -9,8 +9,8 @@ def adminDeleteDemand(requestParameters):
         status = requestParameters['status']
         demand_value = requestParameters['demand_value']
 
-        //params = config()
-        //conn = psycopg2.connect(**params)
+        #params = config()
+        #conn = psycopg2.connect(**params)
         conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
         cur = conn.cursor()
 

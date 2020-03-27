@@ -9,8 +9,8 @@ def adminDeleteCommodity(requestParameters):
         status = requestParameters['status']
         commodities = requestParameters['commodities']
 
-        //params = config()
-        //conn = psycopg2.connect(**params)
+        #params = config()
+        #conn = psycopg2.connect(**params)
         conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
         cur = conn.cursor()
 

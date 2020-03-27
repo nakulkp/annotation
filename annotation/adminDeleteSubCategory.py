@@ -9,8 +9,8 @@ def adminDeleteSubCategory(requestParameters):
         status = requestParameters['status']
         sub_categories = requestParameters['sub_categories']
 
-        //params = config()
-        //conn = psycopg2.connect(**params)
+        #params = config()
+        #conn = psycopg2.connect(**params)
         conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
         cur = conn.cursor()
 

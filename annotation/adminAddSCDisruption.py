@@ -7,8 +7,8 @@ def adminAddSCDisruption(requestParameters):
     try:
         sc_disruption_value = requestParameters['sc_disruption_value']
 
-        //params = config()
-        //conn = psycopg2.connect(**params)
+        #params = config()
+        #conn = psycopg2.connect(**params)
         conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
         cur = conn.cursor()
 
