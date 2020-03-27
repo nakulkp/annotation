@@ -24,7 +24,17 @@ from annotation.adminDeleteSubCategory import adminDeleteSubCategory
 from annotation.adminDeleteSupply import adminDeleteSupply
 from annotation.articleContent import articleContent
 from annotation.articleSave import articleSave
+from annotation.csvUpload import csvUpload
 from annotation.fetchCategory import fetchCategory
+from annotation.fetchCommodity import fetchCommodity
+from annotation.fetchDemand import fetchDemand
+from annotation.fetchFactorValue import fetchFactorValue
+from annotation.fetchMovingFactor import fetchMovingFactor
+from annotation.fetchPrice import fetchPrice
+from annotation.fetchRegion import fetchRegion
+from annotation.fetchSCDisruption import fetchSCDisruption
+from annotation.fetchSubCategory import fetchSubCategory
+from annotation.fetchSupply import fetchSupply
 from annotation.markIrrelevant import markIrrelevant
 from annotation.markWithQuestion import markWithQuestion
 from annotation.review import review
@@ -235,13 +245,66 @@ def api_adminAddSupply():
 
 @app.route('/fetchcategory', methods=['GET'])
 def api_fetchCategory():
-    status = fetchCategory()
+    valueList = fetchCategory()
+    return jsonify(valueList)
+
+
+@app.route('/fetchcommodity', methods=['GET'])
+def api_fetchCommodity():
+    valueList = fetchCommodity()
+    return jsonify(valueList)
+
+
+@app.route('/fetchdemand', methods=['GET'])
+def api_fetchDemand():
+    valueList = fetchDemand()
+    return jsonify(valueList)
+
+
+@app.route('/fetchfactorvalue', methods=['GET'])
+def api_fetchFactorValue():
+    valueList = fetchFactorValue()
+    return jsonify(valueList)
+
+
+@app.route('/fetchmovingfactor', methods=['GET'])
+def api_fetchMovingFactor():
+    valueList = fetchMovingFactor()
+    return jsonify(valueList)
+
+
+@app.route('/fetchprice', methods=['GET'])
+def api_fetchPrice():
+    valueList = fetchPrice()
+    return jsonify(valueList)
+
+
+@app.route('/fetchregion', methods=['GET'])
+def api_fetchRegion():
+    valueList = fetchRegion()
+    return jsonify(valueList)
+
+
+@app.route('/fetchscdisruption', methods=['GET'])
+def api_fetchSCDisruption():
+    valueList = fetchSCDisruption()
+    return jsonify(valueList)
+
+
+@app.route('/fetchsubcategory', methods=['GET'])
+def api_fetchSubCategory():
+    valueList = fetchSubCategory()
+    return jsonify(valueList)
+
+
+@app.route('/fetchsupply', methods=['GET'])
+def api_fetchSupply():
+    valueList = fetchSupply()
+    return jsonify(valueList)
+
+
+@app.route('/csvupload', methods=['POST'])
+def api_csvUpload():
+    requestParameters = request.get_json()
+    status = csvUpload(requestParameters)
     return jsonify(status)
-
-
-@app.route('/upload', methods=['POST'])
-def api_upload():
-    requestParameters = request.args
-
-    #status = csvUpload(requestParameters)
-    #return jsonify(status)
