@@ -7,11 +7,11 @@ def createTables():
         """
         CREATE TABLE users (
             user_id SERIAL NOT NULL, 
-            username character varying(50) COLLATE pg_catalog."default" NOT NULL,
-            email text NOT NULL,
-            phone character varying(50) NOT NULL,
-            pass_key text NOT NULL,
-            status boolean NOT NULL,
+            username character varying() COLLATE pg_catalog."default" NOT NULL,
+            email character varying() NOT NULL,
+            phone character varying() NOT NULL,
+            pass_key character varying() NOT NULL,
+            status character varying() NOT NULL,
             privilege character varying(50) NOT NULL,
             CONSTRAINT users_pkey PRIMARY KEY (user_id),
             CONSTRAINT "user" UNIQUE (email, phone)
@@ -21,14 +21,14 @@ def createTables():
         CREATE TABLE master_table (
             user_id INTEGER NOT NULL,
             article_id SERIAL NOT NULL,
-            headline text NOT NULL,
-            content text NOT NULL,
-            owner character varying(50) NOT NULL,
+            headline character varying() NOT NULL,
+            content character varying() NOT NULL,
+            owner character varying() NOT NULL,
             release_date date NOT NULL,
             source text,
             url text,
             question text,
-            status character varying(50) NOT NULL DEFAULT 'todo'::character varying,
+            status character varying() NOT NULL,
             CONSTRAINT master_table_pkey PRIMARY KEY (article_id)
         );
         """,
@@ -50,71 +50,81 @@ def createTables():
         """,
         """
         CREATE TABLE region(
-            countries character varying(50) NOT NULL,
+            countries character varying() NOT NULL,
             country_id SERIAL NOT NULL,
+            status character varying() NOT NULL,
             CONSTRAINT region_pkey PRIMARY KEY (country_id)
         );
         """,
         """
         CREATE TABLE commodity_table (
-            commodities text NOT NULL,
+            commodities character varying() NOT NULL,
             commodity_id SERIAL NOT NULL,
+            status character varying() NOT NULL,
             CONSTRAINT "commodityTable_pkey" PRIMARY KEY (commodity_id)
         );
         """,
         """
         CREATE TABLE category_table (
-            categories character varying(50) NOT NULL,
+            categories character varying() NOT NULL,
             category_id SERIAL NOT NULL,
+            status character varying() NOT NULL,
             CONSTRAINT category_table_pkey PRIMARY KEY (category_id)
         );
         """,
         """
         CREATE TABLE subcategory_table (
-            sub_categories character varying(50) NOT NULL,
+            sub_categories character varying() NOT NULL,
             sub_category_id SERIAL NOT NULL,
+            status character varying() NOT NULL,
             CONSTRAINT subcategory_table_pkey PRIMARY KEY (sub_category_id)
         );
         """,
         """
         CREATE TABLE moving_factor_table (
-            moving_factors character varying(50) NOT NULL,
+            moving_factors character varying() NOT NULL,
             moving_factor_id SERIAL NOT NULL,
+            status character varying() NOT NULL,
             CONSTRAINT moving_factor_table_pkey PRIMARY KEY (moving_factor_id)
         );
         """,
         """
         CREATE TABLE factor_value_table (
-            factor_value character varying(50) NOT NULL,
+            factor_value character varying() NOT NULL,
             factor_value_id SERIAL NOT NULL,
+            status character varying() NOT NULL,
             CONSTRAINT factor_value_table_pkey PRIMARY KEY (factor_value_id)
         );
         """,
         """
         CREATE TABLE price (
-            price_value character varying(50) NOT NULL,
+            price_value character varying() NOT NULL,
             price_value_id SERIAL NOT NULL,
+            status character varying() NOT NULL,
             CONSTRAINT price_pkey PRIMARY KEY (price_value_id)
         );
         """,
         """
         CREATE TABLE supply (
-            supply_value character varying(50) NOT NULL,
+            supply_value character varying() NOT NULL,
             supply_value_id SERIAL NOT NULL,
+            status character varying() NOT NULL,
             CONSTRAINT supply_pkey PRIMARY KEY (supply_value_id)
         );
         """,
         """
         CREATE TABLE demand (
-            demand_value character varying(50) NOT NULL,
+            demand_value character varying() NOT NULL,
             demand_value_id SERIAL NOT NULL,
+            status character varying() NOT NULL,
             CONSTRAINT demand_pkey PRIMARY KEY (demand_value_id)
         );
         """,
         """
         CREATE TABLE sc_disruption (
-            sc_disruption_value character varying(50) NOT NULL,
+            sc_disruption_value character varying() NOT NULL,
             sc_disruption_value_id SERIAL NOT NULL,
+            status character varying() NOT NULL,
             CONSTRAINT sc_disruption_pkey PRIMARY KEY (sc_disruption_value_id)
         );
         """
