@@ -16,4 +16,4 @@ def adminUseredit(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("""""")
+    cur.execute("""UPDATE users SET blah = %(blah)s""",{'blah':blah})

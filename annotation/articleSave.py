@@ -33,7 +33,7 @@ def articleSave(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("""UPDATE master_table set owner = %(owner)s AND release_date = %(release_date)s AND source = %(source)s AND headline = %(headline)s AND content = %(content)s AND question = %(question)s AND  status = %(status)s 
+    cur.execute("""UPDATE master_table SET owner = %(owner)s , release_date = %(release_date)s , source = %(source)s , headline = %(headline)s, content = %(content)s , question = %(question)s,  status = %(status)s 
     WHERE article_id = %(article_id)s;""",
                 {'owner': owner, 'release_date': release_date, 'source': source, 'url': url, 'headline': headline,
                  'content': content, 'question': question, 'status': status, 'article_id': article_id}

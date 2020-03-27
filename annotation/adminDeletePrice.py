@@ -13,7 +13,7 @@ def adminDeletePrice(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("""UPDATE  price SET status = %(status)s AND price_value = %(price_value)s 
+    cur.execute("""UPDATE  price SET status = %(status)s , price_value = %(price_value)s 
                 WHERE price_value_id=%(price_value_id)s;""",
                 {"status": status, "price_value": price_value, "price_value_id": price_value_id}
                 )

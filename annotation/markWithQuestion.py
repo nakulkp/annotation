@@ -12,7 +12,7 @@ def markWithQuestion(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("""UPDATE master_table SET question = %(question)s AND status = 'marked'
+    cur.execute("""UPDATE master_table SET question = %(question)s, status = 'marked'
         WHERE article_id = %(article_id)s;""", {"question": question, "article_id": article_id})
 
     cur.close()

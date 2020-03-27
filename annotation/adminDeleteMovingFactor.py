@@ -13,7 +13,7 @@ def adminDeleteMovingFactor(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("""UPDATE  moving_factor_table SET status = %(status)s AND moving_factors = %(moving_factors)s 
+    cur.execute("""UPDATE  moving_factor_table SET status = %(status)s , moving_factors = %(moving_factors)s 
                 WHERE moving_factor_id=%(moving_factor_id)s;""",
                 {"status": status, "moving_factors": moving_factors, "moving_factor_id": moving_factor_id}
                 )

@@ -12,7 +12,7 @@ def adminDeleteDemand(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("""UPDATE  demand SET status = %(status)s AND demand_value = %(demand_value)s 
+    cur.execute("""UPDATE  demand SET status = %(status)s , demand_value = %(demand_value)s 
                 WHERE demand_value_id=%(demand_value_id)s;""",
                 {"status": status, "demand_value": demand_value, "demand_value_id": demand_value_id}
                 )

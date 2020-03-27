@@ -13,7 +13,7 @@ def adminDeleteCategory(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("""UPDATE  category_table SET status = %(status)s AND categories = %(categories)s 
+    cur.execute("""UPDATE  category_table SET status = %(status)s , categories = %(categories)s 
                 WHERE category_id=%(category_id)s;""",
                 {"status": status, "categories": categories, "category_id": category_id}
                 )

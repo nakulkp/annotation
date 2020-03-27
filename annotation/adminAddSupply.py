@@ -28,5 +28,3 @@ def adminAddSupply(requestParameters):
         return {'supply_value_id': supply_value_id}
     else:
         return "failed"
-    if conn is not None:
-        conn.close()

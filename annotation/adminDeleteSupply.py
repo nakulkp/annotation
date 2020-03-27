@@ -13,7 +13,7 @@ def adminDeleteSupply(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("""UPDATE  supply SET status = %(status)s AND supply_value = %(supply_value)s 
+    cur.execute("""UPDATE  supply SET status = %(status)s, supply_value = %(supply_value)s 
                 WHERE supply_value_id=%(supply_value_id)s;""",
                 {"status": status, "supply_value": supply_value, "supply_value_id": supply_value_id}
                 )

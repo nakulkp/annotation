@@ -13,7 +13,7 @@ def adminDeleteSCDisruption(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("""UPDATE  sc_disruption SET status = %(status)s AND sc_disruption_value = %(sc_disruption_value)s 
+    cur.execute("""UPDATE  sc_disruption SET status = %(status)s , sc_disruption_value = %(sc_disruption_value)s 
                 WHERE sc_disruption_value_id=%(sc_disruption_value_id)s;""",
                 {"status": status, "sc_disruption_value": sc_disruption_value,
                     "sc_disruption_value_id": sc_disruption_value_id}

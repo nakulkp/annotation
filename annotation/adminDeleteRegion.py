@@ -13,7 +13,7 @@ def adminDeleteRegion(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("""UPDATE  region SET status = %(status)s AND countries = %(countries)s 
+    cur.execute("""UPDATE  region SET status = %(status)s , countries = %(countries)s 
                 WHERE country_id=%(country_id)s;""",
                 {"status": status, "countries": countries, "country_id": country_id}
                 )
