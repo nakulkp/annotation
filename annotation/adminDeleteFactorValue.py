@@ -14,7 +14,7 @@ def adminDeleteFactorValue(requestParameters):
     cur = conn.cursor()
 
     cur.execute("""UPDATE  factor_value_table SET status = %(status)s AND factor_value = %(factor_value)s 
-                WHERE factor_value_id=%{factor_value_id}s;""",
+                WHERE factor_value_id=%(factor_value_id)s;""",
                 {"status": status, "factor_value": factor_value, "factor_value_id": factor_value_id}
                 )
 

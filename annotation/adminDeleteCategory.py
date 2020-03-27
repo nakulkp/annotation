@@ -14,7 +14,7 @@ def adminDeleteCategory(requestParameters):
     cur = conn.cursor()
 
     cur.execute("""UPDATE  category_table SET status = %(status)s AND categories = %(categories)s 
-                WHERE category_id=%{category_id}s;""",
+                WHERE category_id=%(category_id)s;""",
                 {"status": status, "categories": categories, "category_id": category_id}
                 )
 

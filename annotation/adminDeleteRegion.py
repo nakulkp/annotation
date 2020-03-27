@@ -14,7 +14,7 @@ def adminDeleteRegion(requestParameters):
     cur = conn.cursor()
 
     cur.execute("""UPDATE  region SET status = %(status)s AND countries = %(countries)s 
-                WHERE country_id=%{country_id}s;""",
+                WHERE country_id=%(country_id)s;""",
                 {"status": status, "countries": countries, "country_id": country_id}
                 )
     cur.close()

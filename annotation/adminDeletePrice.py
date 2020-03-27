@@ -14,7 +14,7 @@ def adminDeletePrice(requestParameters):
     cur = conn.cursor()
 
     cur.execute("""UPDATE  price SET status = %(status)s AND price_value = %(price_value)s 
-                WHERE price_value_id=%{price_value_id}s;""",
+                WHERE price_value_id=%(price_value_id)s;""",
                 {"status": status, "price_value": price_value, "price_value_id": price_value_id}
                 )
     cur.close()

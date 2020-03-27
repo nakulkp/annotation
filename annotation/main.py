@@ -1,6 +1,8 @@
 import flask
 from flask import request, jsonify
 from flask_cors import CORS
+import jwt
+import datetime
 
 from annotation.adminAddCategory import adminAddCategory
 from annotation.adminAddCommodity import adminAddCommodity
@@ -43,6 +45,7 @@ from annotation.login import login
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
+app.config["SECRET_KEY"] = "!5@adjh@#!@QSQsw1!@c"
 cors = CORS(app)
 
 
@@ -65,6 +68,13 @@ def api_signUp():
 def api_login():
     requestParameters = request.get_json()
     loginStatus = login(requestParameters)
+    email = requestParameters['email']
+    authenticated = loginStatus.pop()
+    if authenticated['auth'] == 'success':
+        token = jwt.encode(
+            {'email': email, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
+            app.config["SECRET_KEY"])
+        return jsonify({'token': token.decode('UTF-8')}, loginStatus)
     return jsonify(loginStatus)
 
 

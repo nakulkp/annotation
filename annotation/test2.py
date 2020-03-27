@@ -1,21 +1,46 @@
 from flask import Flask, request, jsonify
+import jwt
+import datetime
 
-from annotation.csvUpload import csvUpload
+from annotation.login import login
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
+app.config["SECRET_KEY"] = "!5@adjh@#!@QSQsw1!@c"
 
-lst = [1,2,3,4,5]
-popVal = lst.pop()
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = request.args.get('token')
+        if not token:
+            return jsonify({'message': 'token missing'}), 403
+        try:
+            data = jwt.decode(token, app.config['SECRET_KEY'])
+        except:
+            return jsonify({'message': 'Invalid Token'}), 403
+        return f(*args, **kwargs)
 
-print(lst)
-print(popVal)
+    return decorated
 
-@app.route('/csvupload', methods=['POST'])
-def api_csvUpload():
+@app.route('/home', methods=['POST'])
+@token_required
+def home():
+    return "HOME"
+
+
+@app.route('/login', methods=['POST'])
+def api_login():
     requestParameters = request.get_json()
+    # loginStatus = login(requestParameters)
+    authenticated = {"auth": "success"}
+    email = requestParameters['email']
+    # authenticated = loginStatus.pop()
+    if authenticated['auth'] == 'success':
+        token = jwt.encode(
+            {'email': email, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
+            app.config["SECRET_KEY"])
+        return jsonify({'token': token.decode('UTF-8')})
+    # return jsonify(loginStatus)
 
-    status = csvUpload(requestParameters)
-    return jsonify(status)
 
-#app.run()
+app.run()

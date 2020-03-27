@@ -14,7 +14,7 @@ def adminDeleteSCDisruption(requestParameters):
     cur = conn.cursor()
 
     cur.execute("""UPDATE  sc_disruption SET status = %(status)s AND sc_disruption_value = %(sc_disruption_value)s 
-                WHERE sc_disruption_value_id=%{sc_disruption_value_id}s;""",
+                WHERE sc_disruption_value_id=%(sc_disruption_value_id)s;""",
                 {"status": status, "sc_disruption_value": sc_disruption_value,
                     "sc_disruption_value_id": sc_disruption_value_id}
                 )

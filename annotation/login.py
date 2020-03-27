@@ -25,7 +25,7 @@ def login(requestParameters):
         conn.close()
         return ""
 
-    cur.execute("""SELECT pass_key, user_id, privilege FROM users WHERE email =%(email)s;""",
+    cur.execute("""SELECT pass_key, user_id, privilege FROM users WHERE email =%(email)s AND status = 'enabled';""",
                 {'email': email})
 
     row = cur.fetchall()
@@ -37,8 +37,6 @@ def login(requestParameters):
     cur.close()
     conn.close()
     if passVerify(pass_key, password) == True:
-        return user_id, privilege
+        return {"user_id": user_id, "privilege": privilege, "auth": "success"}
     else:
-        return "invalid"
-    if conn is not None:
-        conn.close()
+        return {"auth": "failed"}

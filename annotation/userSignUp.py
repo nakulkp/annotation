@@ -12,7 +12,7 @@ def userSignUp(requestParameters):
         password = requestParameters["password"]
         privilege = requestParameters["privilege"]
         pass_key = passHash(password)
-        status = 'True'
+        status = 'enabled'
 
         # params = config()
         # conn = psycopg2.connect(**params)

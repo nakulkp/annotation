@@ -14,7 +14,7 @@ def adminDeleteMovingFactor(requestParameters):
     cur = conn.cursor()
 
     cur.execute("""UPDATE  moving_factor_table SET status = %(status)s AND moving_factors = %(moving_factors)s 
-                WHERE moving_factor_id=%{moving_factor_id}s;""",
+                WHERE moving_factor_id=%(moving_factor_id)s;""",
                 {"status": status, "moving_factors": moving_factors, "moving_factor_id": moving_factor_id}
                 )
     cur.close()

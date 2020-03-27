@@ -14,7 +14,7 @@ def adminDeleteCommodity(requestParameters):
     cur = conn.cursor()
 
     cur.execute("""UPDATE  commodity_table SET status = %(status)s AND commodities = %(commodities)s 
-                WHERE commodity_id=%{commodity_id}s;""",
+                WHERE commodity_id=%(commodity_id)s;""",
                 {"status": status, "commodities": commodities, "commodity_id": commodity_id}
                 )
     cur.close()

@@ -14,7 +14,7 @@ def adminDeleteSubCategory(requestParameters):
     cur = conn.cursor()
 
     cur.execute("""UPDATE  subcategory_table SET status = %(status)s AND sub_categories = %(sub_categories)s 
-                WHERE sub_category_id=%{sub_category_id}s;""",
+                WHERE sub_category_id=%(sub_category_id)s;""",
                 {"status": status, "sub_categories": sub_categories, "sub_category_id": sub_category_id}
                 )
     cur.close()
