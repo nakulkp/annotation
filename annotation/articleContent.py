@@ -31,7 +31,7 @@ def articleContent(requestParameters):
     cur.execute(
         """SELECT owner, release_date, source, url, headline, content, question 
         FROM master_table 
-        WHERE article_id= %(article_id)s AND status="todo";""",
+        WHERE article_id= %(article_id)s AND status='todo';""",
         {"article_id": article_id}
     )
     row = cur.fetchall()
