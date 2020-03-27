@@ -5,7 +5,8 @@ from config import config
 def createTables():
     commands = (
         """
-        CREATE TABLE users (
+        CREATE TABLE users ( 
+            created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
             user_id SERIAL NOT NULL, 
             username character varying() COLLATE pg_catalog."default" NOT NULL,
             email character varying() NOT NULL,
@@ -18,8 +19,9 @@ def createTables():
         );  
         """,
         """
-        CREATE TABLE master_table (
-            user_id INTEGER NOT NULL,
+        CREATE TABLE master_table ( 
+            created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
+            user_id INTEGER NOT NULL, 
             article_id SERIAL NOT NULL,
             headline character varying() NOT NULL,
             content character varying() NOT NULL,
@@ -33,7 +35,8 @@ def createTables():
         );
         """,
         """
-        CREATE TABLE mapping_table (
+        CREATE TABLE mapping_table ( 
+            created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
             user_id INTEGER NOT NULL,
             article_id INTEGER NOT NULL,
             country_id INTEGER NOT NULL,
@@ -49,7 +52,8 @@ def createTables():
         );   
         """,
         """
-        CREATE TABLE region(
+        CREATE TABLE region( 
+            created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
             countries character varying() NOT NULL,
             country_id SERIAL NOT NULL,
             status character varying() NOT NULL,
@@ -57,7 +61,8 @@ def createTables():
         );
         """,
         """
-        CREATE TABLE commodity_table (
+        CREATE TABLE commodity_table ( 
+            created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
             commodities character varying() NOT NULL,
             commodity_id SERIAL NOT NULL,
             status character varying() NOT NULL,
@@ -65,7 +70,8 @@ def createTables():
         );
         """,
         """
-        CREATE TABLE category_table (
+        CREATE TABLE category_table ( 
+            created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
             categories character varying() NOT NULL,
             category_id SERIAL NOT NULL,
             status character varying() NOT NULL,
@@ -73,7 +79,8 @@ def createTables():
         );
         """,
         """
-        CREATE TABLE subcategory_table (
+        CREATE TABLE subcategory_table ( 
+            created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
             sub_categories character varying() NOT NULL,
             sub_category_id SERIAL NOT NULL,
             status character varying() NOT NULL,
@@ -81,7 +88,8 @@ def createTables():
         );
         """,
         """
-        CREATE TABLE moving_factor_table (
+        CREATE TABLE moving_factor_table ( 
+            created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
             moving_factors character varying() NOT NULL,
             moving_factor_id SERIAL NOT NULL,
             status character varying() NOT NULL,
@@ -89,7 +97,8 @@ def createTables():
         );
         """,
         """
-        CREATE TABLE factor_value_table (
+        CREATE TABLE factor_value_table ( 
+            created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
             factor_value character varying() NOT NULL,
             factor_value_id SERIAL NOT NULL,
             status character varying() NOT NULL,
@@ -97,7 +106,8 @@ def createTables():
         );
         """,
         """
-        CREATE TABLE price (
+        CREATE TABLE price ( 
+            created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
             price_value character varying() NOT NULL,
             price_value_id SERIAL NOT NULL,
             status character varying() NOT NULL,
@@ -105,7 +115,8 @@ def createTables():
         );
         """,
         """
-        CREATE TABLE supply (
+        CREATE TABLE supply ( 
+            created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
             supply_value character varying() NOT NULL,
             supply_value_id SERIAL NOT NULL,
             status character varying() NOT NULL,
@@ -113,7 +124,8 @@ def createTables():
         );
         """,
         """
-        CREATE TABLE demand (
+        CREATE TABLE demand ( 
+            created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
             demand_value character varying() NOT NULL,
             demand_value_id SERIAL NOT NULL,
             status character varying() NOT NULL,
@@ -121,7 +133,8 @@ def createTables():
         );
         """,
         """
-        CREATE TABLE sc_disruption (
+        CREATE TABLE sc_disruption ( 
+            created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
             sc_disruption_value character varying() NOT NULL,
             sc_disruption_value_id SERIAL NOT NULL,
             status character varying() NOT NULL,
