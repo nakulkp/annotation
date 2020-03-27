@@ -28,6 +28,7 @@ from annotation.adminDeleteSubCategory import adminDeleteSubCategory
 from annotation.adminDeleteSupply import adminDeleteSupply
 from annotation.adminUserEdit import adminUserEdit
 from annotation.adminUsersFetch import adminUsersFetch
+from annotation.annotationCount import annotationCount
 from annotation.articleContent import articleContent
 from annotation.articleSave import articleSave
 from annotation.csvUpload import csvUpload
@@ -53,15 +54,29 @@ app.config["SECRET_KEY"] = "!5@adjh@#!@QSQsw1!@c"
 cors = CORS(app)
 
 
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        requestParameters = request.get_json()
+        token = requestParameters.pop()
+        if not token:
+            return jsonify({'message': 'token missing'}), 403
+        try:
+            data = jwt.decode(token, app.config['SECRET_KEY'])
+        except:
+            return jsonify({'message': 'Invalid Token'}), 403
+        return f(*args, **kwargs)
+
+    return decorated
+
+
 @app.route('/', methods=['POST'])
 def api_home():
-    data = request.get_json()
-    # print(email)
-    # print(data)
-    return '<h1> HOME </h1>'
+    return jsonify("Home")
 
 
 @app.route('/signup', methods=['POST'])
+@token_required
 def api_signUp():
     requestParameters = request.get_json()
     signUpStatus = userSignUp(requestParameters)
@@ -83,6 +98,7 @@ def api_login():
 
 
 @app.route('/articlecontent', methods=['GET'])
+@token_required
 def api_articleContent():
     requestParameters = request.args
     resultList = articleContent(requestParameters)
@@ -90,6 +106,7 @@ def api_articleContent():
 
 
 @app.route('/markirrelevant', methods=['POST'])
+@token_required
 def api_markIrrelevant():
     requestParameters = request.get_json()
     status = markIrrelevant(requestParameters)
@@ -97,6 +114,7 @@ def api_markIrrelevant():
 
 
 @app.route('/markquestion', methods=['POST'])
+@token_required
 def api_markQuestion():
     requestParameters = request.get_json()
     status = markWithQuestion(requestParameters)
@@ -104,6 +122,7 @@ def api_markQuestion():
 
 
 @app.route('/articlesave', methods=['POST'])
+@token_required
 def api_save():
     requestParameters = request.get_json()
     status = articleSave(requestParameters)
@@ -111,6 +130,7 @@ def api_save():
 
 
 @app.route('/articlereview', methods=['GET'])
+@token_required
 def api_articleReview():
     requestParameters = request.args
     reviewValues = review(requestParameters)
@@ -118,6 +138,7 @@ def api_articleReview():
 
 
 @app.route('/admindeletecategory', methods=['POST'])
+@token_required
 def api_adminDeleteCategory():
     requestParameters = request.get_json()
     status = adminDeleteCategory(requestParameters)
@@ -125,6 +146,7 @@ def api_adminDeleteCategory():
 
 
 @app.route('/admindeletecommodity', methods=['POST'])
+@token_required
 def api_adminDeleteCommodity():
     requestParameters = request.get_json()
     status = adminDeleteCommodity(requestParameters)
@@ -132,6 +154,7 @@ def api_adminDeleteCommodity():
 
 
 @app.route('/admindeletedemand', methods=['POST'])
+@token_required
 def api_adminDeleteDemand():
     requestParameters = request.get_json()
     status = adminDeleteDemand(requestParameters)
@@ -139,6 +162,7 @@ def api_adminDeleteDemand():
 
 
 @app.route('/admindeletefactorvalue', methods=['POST'])
+@token_required
 def api_adminDeleteFactorValue():
     requestParameters = request.get_json()
     status = adminDeleteFactorValue(requestParameters)
@@ -146,6 +170,7 @@ def api_adminDeleteFactorValue():
 
 
 @app.route('/admindeletemovingfactor', methods=['POST'])
+@token_required
 def api_adminDeleteMovingFactor():
     requestParameters = request.get_json()
     status = adminDeleteMovingFactor(requestParameters)
@@ -153,6 +178,7 @@ def api_adminDeleteMovingFactor():
 
 
 @app.route('/admindeleteprice', methods=['POST'])
+@token_required
 def api_adminDeletePrice():
     requestParameters = request.get_json()
     status = adminDeletePrice(requestParameters)
@@ -160,6 +186,7 @@ def api_adminDeletePrice():
 
 
 @app.route('/admindeleteregion', methods=['POST'])
+@token_required
 def api_adminDeleteRegion():
     requestParameters = request.get_json()
     status = adminDeleteRegion(requestParameters)
@@ -167,6 +194,7 @@ def api_adminDeleteRegion():
 
 
 @app.route('/admindeletescdisruption', methods=['POST'])
+@token_required
 def api_adminDeleteSCDisruption():
     requestParameters = request.get_json()
     status = adminDeleteSCDisruption(requestParameters)
@@ -174,6 +202,7 @@ def api_adminDeleteSCDisruption():
 
 
 @app.route('/admindeletesubcategory', methods=['POST'])
+@token_required
 def api_adminDeleteSubCategory():
     requestParameters = request.get_json()
     status = adminDeleteSubCategory(requestParameters)
@@ -181,6 +210,7 @@ def api_adminDeleteSubCategory():
 
 
 @app.route('/admindeletesupply', methods=['POST'])
+@token_required
 def api_adminDeleteSupply():
     requestParameters = request.get_json()
     status = adminDeleteSupply(requestParameters)
@@ -188,6 +218,7 @@ def api_adminDeleteSupply():
 
 
 @app.route('/adminaddcategory', methods=['POST'])
+@token_required
 def api_adminAddCategory():
     requestParameters = request.get_json()
     status = adminAddCategory(requestParameters)
@@ -195,6 +226,7 @@ def api_adminAddCategory():
 
 
 @app.route('/adminaddcommodity', methods=['POST'])
+@token_required
 def api_adminAddCommodity():
     requestParameters = request.get_json()
     status = adminAddCommodity(requestParameters)
@@ -202,6 +234,7 @@ def api_adminAddCommodity():
 
 
 @app.route('/adminaddDemand', methods=['POST'])
+@token_required
 def api_adminAddDemand():
     requestParameters = request.get_json()
     status = adminAddDemand(requestParameters)
@@ -209,6 +242,7 @@ def api_adminAddDemand():
 
 
 @app.route('/adminaddfactorvalue', methods=['POST'])
+@token_required
 def api_adminAddFactorValue():
     requestParameters = request.get_json()
     status = adminAddFactorValue(requestParameters)
@@ -216,6 +250,7 @@ def api_adminAddFactorValue():
 
 
 @app.route('/adminaddmovingfactor', methods=['POST'])
+@token_required
 def api_adminAddMovingFactor():
     requestParameters = request.get_json()
     status = adminAddMovingFactor(requestParameters)
@@ -223,6 +258,7 @@ def api_adminAddMovingFactor():
 
 
 @app.route('/adminaddprice', methods=['POST'])
+@token_required
 def api_adminAddPrice():
     requestParameters = request.get_json()
     status = adminAddPrice(requestParameters)
@@ -230,6 +266,7 @@ def api_adminAddPrice():
 
 
 @app.route('/adminaddregion', methods=['POST'])
+@token_required
 def api_adminAddRegion():
     requestParameters = request.get_json()
     status = adminAddRegion(requestParameters)
@@ -237,6 +274,7 @@ def api_adminAddRegion():
 
 
 @app.route('/adminaddscdisruption', methods=['POST'])
+@token_required
 def api_adminAddSCDisruption():
     requestParameters = request.get_json()
     status = adminAddSCDisruption(requestParameters)
@@ -244,6 +282,7 @@ def api_adminAddSCDisruption():
 
 
 @app.route('/adminaddsubcategory', methods=['POST'])
+@token_required
 def api_adminAddSubCategory():
     requestParameters = request.get_json()
     status = adminAddSubCategory(requestParameters)
@@ -251,6 +290,7 @@ def api_adminAddSubCategory():
 
 
 @app.route('/adminaddsupply', methods=['POST'])
+@token_required
 def api_adminAddSupply():
     requestParameters = request.get_json()
     status = adminAddSupply(requestParameters)
@@ -258,66 +298,77 @@ def api_adminAddSupply():
 
 
 @app.route('/fetchcategory', methods=['GET'])
+@token_required
 def api_fetchCategory():
     valueList = fetchCategory()
     return jsonify(valueList)
 
 
 @app.route('/fetchcommodity', methods=['GET'])
+@token_required
 def api_fetchCommodity():
     valueList = fetchCommodity()
     return jsonify(valueList)
 
 
 @app.route('/fetchdemand', methods=['GET'])
+@token_required
 def api_fetchDemand():
     valueList = fetchDemand()
     return jsonify(valueList)
 
 
 @app.route('/fetchfactorvalue', methods=['GET'])
+@token_required
 def api_fetchFactorValue():
     valueList = fetchFactorValue()
     return jsonify(valueList)
 
 
 @app.route('/fetchmovingfactor', methods=['GET'])
+@token_required
 def api_fetchMovingFactor():
     valueList = fetchMovingFactor()
     return jsonify(valueList)
 
 
 @app.route('/fetchprice', methods=['GET'])
+@token_required
 def api_fetchPrice():
     valueList = fetchPrice()
     return jsonify(valueList)
 
 
 @app.route('/fetchregion', methods=['GET'])
+@token_required
 def api_fetchRegion():
     valueList = fetchRegion()
     return jsonify(valueList)
 
 
 @app.route('/fetchscdisruption', methods=['GET'])
+@token_required
 def api_fetchSCDisruption():
     valueList = fetchSCDisruption()
     return jsonify(valueList)
 
 
 @app.route('/fetchsubcategory', methods=['GET'])
+@token_required
 def api_fetchSubCategory():
     valueList = fetchSubCategory()
     return jsonify(valueList)
 
 
 @app.route('/fetchsupply', methods=['GET'])
+@token_required
 def api_fetchSupply():
     valueList = fetchSupply()
     return jsonify(valueList)
 
 
 @app.route('/csvupload', methods=['POST'])
+@token_required
 def api_csvUpload():
     requestParameters = request.get_json()
     status = csvUpload(requestParameters)
@@ -325,13 +376,23 @@ def api_csvUpload():
 
 
 @app.route('/adminusersfetch', methods=['GET'])
+@token_required
 def api_adminUsersFetch():
     valuesList = adminUsersFetch()
     return jsonify(valuesList)
 
+
 @app.route('/adminuseredit', methods=['POST'])
+@token_required
 def api_adminUsersEdit():
     requestParameters = request.get_json()
     status = adminUserEdit(requestParameters)
     return jsonify(status)
 
+
+@app.route('/annotationcount', methods=['POST'])
+@token_required
+def api_annotationCount():
+    requestParameters = request.get_json()
+    status = annotationCount(requestParameters)
+    return jsonify(status)

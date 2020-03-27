@@ -4,6 +4,7 @@ import datetime
 
 from functools import wraps
 
+from annotation.annotationCount import annotationCount
 from annotation.login import login
 
 app = Flask(__name__)
@@ -13,7 +14,8 @@ app.config["SECRET_KEY"] = "!5@adjh@#!@QSQsw1!@c"
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        token = request.get_json('token')
+        requestParameters = request.get_json()
+        token = requestParameters["token"]
         if not token:
             return jsonify({'message': 'token missing'}), 403
         try:
@@ -41,8 +43,15 @@ def api_login():
         token = jwt.encode(
             {'email': email, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
             app.config["SECRET_KEY"])
+        print(token)
         return jsonify({'token': token.decode('UTF-8')})
     # return jsonify(loginStatus)
+
+@app.route('/annotationcount', methods=['POST'])
+def api_annotationCount():
+    requestParameters = request.get_json()
+    status = annotationCount()
+    return jsonify(status)
 
 
 app.run()

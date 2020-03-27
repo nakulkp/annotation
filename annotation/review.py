@@ -8,6 +8,7 @@ def review(requestParameters):
 
     #params = config()
     #conn = psycopg2.connect(**params)
+
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
@@ -31,5 +32,3 @@ def review(requestParameters):
     conn.commit()
     conn.close()
     return reviewValues
-    if conn is not None:
-        conn.close()

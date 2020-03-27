@@ -23,8 +23,18 @@ def articleContent(requestParameters):
         conn.close()
         return 'user does not exists'
 
+    cur.execute("""SELECT COUNT(article_id)
+        FROM master_table
+        WHERE user_id = %(user_id)s AND status='todo';""", {"user_id": user_id})
+    todoCount = cur.fetchone()
+    todoCount = todoCount[0]
+
+    if todoCount == 0:
+        return {"message": "empty"}
+
     cur.execute("SELECT article_id FROM master_table WHERE user_id= %(user_id)s AND status='todo';",
                 {"user_id": user_id})
+
     articleList = cur.fetchall()
     article_id = articleList[flag]
 
