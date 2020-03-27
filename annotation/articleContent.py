@@ -13,6 +13,7 @@ def articleContent(requestParameters):
     cur = conn.cursor()
     userExists = cur.execute("SELECT exists (SELECT 1 FROM users WHERE user_id = %(user_id)s LIMIT 1);",
                                 {'user_id': user_id})
+    userExists = cur.fetchone()
     userExists = userExists[0]
     if not userExists:
         cur.close()
