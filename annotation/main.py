@@ -97,7 +97,7 @@ def api_login():
     return jsonify(loginStatus)
 
 
-@app.route('/articlecontent', methods=['GET'])
+@app.route('/articlecontent', methods=['POST'])
 @token_required
 def api_articleContent():
     requestParameters = request.args
@@ -130,7 +130,7 @@ def api_save():
     return jsonify(status)
 
 
-@app.route('/articlereview', methods=['GET'])
+@app.route('/articlereview', methods=['POST'])
 @token_required
 def api_articleReview():
     requestParameters = request.args
@@ -298,70 +298,70 @@ def api_adminAddSupply():
     return jsonify(status)
 
 
-@app.route('/fetchcategory', methods=['GET'])
+@app.route('/fetchcategory', methods=['POST'])
 @token_required
 def api_fetchCategory():
     valueList = fetchCategory()
     return jsonify(valueList)
 
 
-@app.route('/fetchcommodity', methods=['GET'])
+@app.route('/fetchcommodity', methods=['POST'])
 @token_required
 def api_fetchCommodity():
     valueList = fetchCommodity()
     return jsonify(valueList)
 
 
-@app.route('/fetchdemand', methods=['GET'])
+@app.route('/fetchdemand', methods=['POST'])
 @token_required
 def api_fetchDemand():
     valueList = fetchDemand()
     return jsonify(valueList)
 
 
-@app.route('/fetchfactorvalue', methods=['GET'])
+@app.route('/fetchfactorvalue', methods=['POST'])
 @token_required
 def api_fetchFactorValue():
     valueList = fetchFactorValue()
     return jsonify(valueList)
 
 
-@app.route('/fetchmovingfactor', methods=['GET'])
+@app.route('/fetchmovingfactor', methods=['POST'])
 @token_required
 def api_fetchMovingFactor():
     valueList = fetchMovingFactor()
     return jsonify(valueList)
 
 
-@app.route('/fetchprice', methods=['GET'])
+@app.route('/fetchprice', methods=['POST'])
 @token_required
 def api_fetchPrice():
     valueList = fetchPrice()
     return jsonify(valueList)
 
 
-@app.route('/fetchregion', methods=['GET'])
+@app.route('/fetchregion', methods=['POST'])
 @token_required
 def api_fetchRegion():
     valueList = fetchRegion()
     return jsonify(valueList)
 
 
-@app.route('/fetchscdisruption', methods=['GET'])
+@app.route('/fetchscdisruption', methods=['POST'])
 @token_required
 def api_fetchSCDisruption():
     valueList = fetchSCDisruption()
     return jsonify(valueList)
 
 
-@app.route('/fetchsubcategory', methods=['GET'])
+@app.route('/fetchsubcategory', methods=['POST'])
 @token_required
 def api_fetchSubCategory():
     valueList = fetchSubCategory()
     return jsonify(valueList)
 
 
-@app.route('/fetchsupply', methods=['GET'])
+@app.route('/fetchsupply', methods=['POST'])
 @token_required
 def api_fetchSupply():
     valueList = fetchSupply()
@@ -375,8 +375,8 @@ def api_csvUpload():
     return jsonify(status)
 
 
-@app.route('/adminusersfetch', methods=['GET'])
-@token_required
+@app.route('/adminusersfetch', methods=['POST'])
+#@token_required
 def api_adminUsersFetch():
     valuesList = adminUsersFetch()
     return jsonify(valuesList)
