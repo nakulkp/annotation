@@ -27,5 +27,3 @@ def adminAddCategory(requestParameters):
         return {'category_id': category_id}
     else:
         return "failed"
-    if conn is not None:
-        conn.close()

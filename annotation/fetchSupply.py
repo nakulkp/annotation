@@ -4,15 +4,29 @@ from annotation.config import config
 
 def fetchSupply():
     conn = None
-    #params = config()
-    #conn = psycopg2.connect(**params)
+    # params = config()
+    # conn = psycopg2.connect(**params)
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("""SELECT supply_value
+    cur.execute("SELECT EXISTS (SELECT 1 FROM supply LIMIT 1);")
+
+    valueExists = cur.fetchone()
+    valueExists = valueExists[0]
+
+    if not valueExists:
+        return {'message': "no values"}
+
+    cur.execute("""SELECT supply_value, supply_value_id, status
         FROM supply
         WHERE status = 'enabled';""")
-    valueList = cur.fetchall()
+    rows = cur.fetchall()
+    valueList = []
+    i = 0
+    for row in rows:
+        value = {"supply_value": row[i][0], "supply_value_id": row[i][1], "status": row[i][2]}
+        valueList.append(value)
+        i += 1
 
     cur.close()
     conn.commit()

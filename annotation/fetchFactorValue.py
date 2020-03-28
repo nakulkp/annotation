@@ -4,15 +4,29 @@ from annotation.config import config
 
 def fetchFactorValue():
     conn = None
-    #params = config()
-    #conn = psycopg2.connect(**params)
+    # params = config()
+    # conn = psycopg2.connect(**params)
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("""SELECT factor_value
+    cur.execute("SELECT EXISTS (SELECT 1 FROM factor_value_table LIMIT 1);")
+
+    valueExists = cur.fetchone()
+    valueExists = valueExists[0]
+
+    if not valueExists:
+        return {'message': "no values"}
+
+    cur.execute("""SELECT factor_value, factor_value_id, status
         FROM factor_value_table
         WHERE status = 'enabled';""")
-    valueList = cur.fetchall()
+    rows = cur.fetchall()
+    valueList = []
+    i = 0
+    for row in rows:
+        value = {"factor_value": row[i][0], "factor_value_id": row[i][1], "status": row[i][2]}
+        valueList.append(value)
+        i += 1
 
     cur.close()
     conn.commit()
