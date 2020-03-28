@@ -30,6 +30,7 @@ from annotation.adminUserEdit import adminUserEdit
 from annotation.adminUsersFetch import adminUsersFetch
 from annotation.annotationCount import annotationCount
 from annotation.articleContent import articleContent
+from annotation.articleContentId import articleContentId
 from annotation.articleSave import articleSave
 from annotation.csvUpload import csvUpload
 from annotation.fetchCategory import fetchCategory
@@ -76,7 +77,7 @@ def api_home():
 
 
 @app.route('/signup', methods=['POST'])
-#@token_required
+# @token_required
 def api_signUp():
     requestParameters = request.get_json()
     signUpStatus = userSignUp(requestParameters)
@@ -101,8 +102,15 @@ def api_login():
 @token_required
 def api_articleContent():
     requestParameters = request.args
-    print(requestParameters)
     resultList = articleContent(requestParameters)
+    return jsonify(resultList)
+
+
+@app.route('/articlecontentid', methods=['POST'])
+@token_required
+def api_articleContentId():
+    requestParameters = request.args
+    resultList = articleContentId(requestParameters)
     return jsonify(resultList)
 
 
@@ -376,7 +384,7 @@ def api_csvUpload():
 
 
 @app.route('/adminusersfetch', methods=['POST'])
-#@token_required
+@token_required
 def api_adminUsersFetch():
     valuesList = adminUsersFetch()
     return jsonify(valuesList)
