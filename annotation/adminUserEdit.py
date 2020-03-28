@@ -23,8 +23,7 @@ def adminUserEdit(requestParameters):
          WHERE user_id = %(user_id)s;""",
         {'user_id': user_id, 'username': username, 'email': email, 'phone': phone, 'pass_key': pass_key,
          'status': status, 'privilege': privilege})
-
+    conn.commit()
     cur.close()
-    conn.commit
     conn.close()
     return ({"message": "success"})

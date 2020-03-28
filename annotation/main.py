@@ -101,7 +101,7 @@ def api_login():
 @app.route('/articlecontent', methods=['POST'])
 @token_required
 def api_articleContent():
-    requestParameters = request.args
+    requestParameters = request.get_json()
     resultList = articleContent(requestParameters)
     return jsonify(resultList)
 
@@ -109,7 +109,7 @@ def api_articleContent():
 @app.route('/articlecontentid', methods=['POST'])
 @token_required
 def api_articleContentId():
-    requestParameters = request.args
+    requestParameters = request.get_json()
     resultList = articleContentId(requestParameters)
     return jsonify(resultList)
 
@@ -141,7 +141,7 @@ def api_save():
 @app.route('/articlereview', methods=['POST'])
 @token_required
 def api_articleReview():
-    requestParameters = request.args
+    requestParameters = request.get_json()
     reviewValues = review(requestParameters)
     return jsonify(reviewValues)
 
