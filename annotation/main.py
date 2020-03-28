@@ -76,7 +76,7 @@ def api_home():
 
 
 @app.route('/signup', methods=['POST'])
-@token_required
+#@token_required
 def api_signUp():
     requestParameters = request.get_json()
     signUpStatus = userSignUp(requestParameters)
