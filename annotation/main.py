@@ -58,7 +58,7 @@ def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         requestParameters = request.get_json()
-        token = requestParameters.pop()
+        token = requestParameters["token"]
         if not token:
             return jsonify({'message': 'token missing'}), 403
         try:
@@ -88,6 +88,7 @@ def api_login():
     requestParameters = request.get_json()
     loginStatus = login(requestParameters)
     email = requestParameters['email']
+
     if loginStatus['auth'] == 'success':
         token = jwt.encode(
             {'email': email, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
@@ -100,6 +101,7 @@ def api_login():
 @token_required
 def api_articleContent():
     requestParameters = request.args
+    print(requestParameters)
     resultList = articleContent(requestParameters)
     return jsonify(resultList)
 
@@ -367,7 +369,6 @@ def api_fetchSupply():
 
 
 @app.route('/csvupload', methods=['POST'])
-@token_required
 def api_csvUpload():
     requestParameters = request.get_json()
     status = csvUpload(requestParameters)
