@@ -62,7 +62,7 @@ def token_required(f):
         if not token:
             return jsonify({'message': 'token missing'}), 403
         try:
-            #token = token.encode('UTF-8')
+            token = token.encode('UTF-8')
             data = jwt.decode(token, app.config['SECRET_KEY'])
         except:
             return jsonify({'message': 'Invalid Token'}), 403
@@ -93,7 +93,7 @@ def api_login():
         token = jwt.encode(
             {'email': email, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
             app.config["SECRET_KEY"])
-        return jsonify({'token': token}, loginStatus)
+        return jsonify({'token': token.decode('UTF-8')}, loginStatus)
     return jsonify(loginStatus)
 
 
