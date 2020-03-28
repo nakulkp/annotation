@@ -22,11 +22,10 @@ def fetchSupply():
         WHERE status = 'enabled';""")
     rows = cur.fetchall()
     valueList = []
-    i = 0
+
     for row in rows:
-        value = {"supply_value": row[i][0], "supply_value_id": row[i][1], "status": row[i][2]}
+        value = {"supply_value": row[0], "supply_value_id": row[1], "status": row[2]}
         valueList.append(value)
-        i += 1
 
     cur.close()
     conn.commit()

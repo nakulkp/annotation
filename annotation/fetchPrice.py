@@ -9,7 +9,7 @@ def fetchPrice():
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("SELECT EXISTS (SELECT 1 FROM price LIMIT 1);")
+    cur.execute("SELECT EXISTS (SELECT 1 FROM price WHERE status = 'enabled' LIMIT 1);")
 
     valueExists = cur.fetchone()
     valueExists = valueExists[0]
@@ -22,15 +22,12 @@ def fetchPrice():
         WHERE status = 'enabled';""")
     rows = cur.fetchall()
     valueList = []
-    i = 0
+
     for row in rows:
-        value = {"price_value": row[i][0], "price_value_id": row[i][1], "status": row[i][2]}
+        value = {"price_value": row[0], "price_value_id": row[1], "status": row[2]}
         valueList.append(value)
-        i += 1
 
     cur.close()
     conn.commit()
 
     return {'valueList': valueList}
-    if conn is not None:
-        conn.close()

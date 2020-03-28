@@ -9,7 +9,7 @@ def fetchSCDisruption():
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("SELECT EXISTS (SELECT 1 FROM sc_disruption LIMIT 1);")
+    cur.execute("SELECT EXISTS (SELECT 1 FROM sc_disruption WHERE status = 'enabled' LIMIT 1);")
 
     valueExists = cur.fetchone()
     valueExists = valueExists[0]
@@ -22,11 +22,10 @@ def fetchSCDisruption():
         WHERE status = 'enabled';""")
     rows = cur.fetchall()
     valueList = []
-    i = 0
+
     for row in rows:
-        value = {"sc_disruption_value": row[i][0], "sc_disruption_value_id": row[i][1], "status": row[i][2]}
+        value = {"sc_disruption_value": row[0], "sc_disruption_value_id": row[1], "status": row[2]}
         valueList.append(value)
-        i += 1
 
     cur.close()
     conn.commit()

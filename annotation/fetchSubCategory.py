@@ -22,11 +22,11 @@ def fetchSubCategory():
         WHERE status = 'enabled';""")
     rows = cur.fetchall()
     valueList = []
-    i = 0
+
     for row in rows:
-        value = {"sub_categories": row[i][0], "sub_category_id": row[i][1], "status": row[i][2]}
+        value = {"sub_categories": row[0], "sub_category_id": row[1], "status": row[2]}
         valueList.append(value)
-        i += 1
+
 
     cur.close()
     conn.commit()
