@@ -88,7 +88,7 @@ def api_login():
     requestParameters = request.get_json()
     loginStatus = login(requestParameters)
     email = requestParameters['email']
-    authenticated = loginStatus.pop()
+    authenticated = loginStatus['auth']
     if authenticated['auth'] == 'success':
         token = jwt.encode(
             {'email': email, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
