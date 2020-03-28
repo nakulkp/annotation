@@ -62,6 +62,7 @@ def token_required(f):
         if not token:
             return jsonify({'message': 'token missing'}), 403
         try:
+            token = token.encode('UTF-8')
             data = jwt.decode(token, app.config['SECRET_KEY'])
         except:
             return jsonify({'message': 'Invalid Token'}), 403
