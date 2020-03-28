@@ -88,8 +88,7 @@ def api_login():
     requestParameters = request.get_json()
     loginStatus = login(requestParameters)
     email = requestParameters['email']
-    authenticated = loginStatus
-    if authenticated['auth'] == 'success':
+    if loginStatus['auth'] == 'success':
         token = jwt.encode(
             {'email': email, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
             app.config["SECRET_KEY"])
