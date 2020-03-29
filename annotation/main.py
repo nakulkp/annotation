@@ -52,6 +52,7 @@ from annotation.login import login
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 app.config["SECRET_KEY"] = "!5@adjh@#!@QSQsw1!@c"
+app.config["SALT"] = "3@v2p#nc@asD!@$D%42a5%^Aa6AGU&Y"
 cors = CORS(app)
 
 
