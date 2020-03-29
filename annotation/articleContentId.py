@@ -13,7 +13,7 @@ def articleContentId(requestParameters):
 
     cur.execute("""SELECT COUNT(article_id)
         FROM master_table
-        WHERE article_id = %(article_id)s AND status='todo';""", {"article_id": article_id})
+        WHERE article_id = %(article_id)s;""", {"article_id": article_id})
     todoCount = cur.fetchone()
     todoCount = todoCount[0]
 
@@ -22,7 +22,7 @@ def articleContentId(requestParameters):
 
     cur.execute("""SELECT owner, release_date, source, url, headline, content, question 
         FROM master_table 
-        WHERE article_id= %(article_id)s AND status='todo';""",
+        WHERE article_id= %(article_id)s;""",
                 {"article_id": article_id}
                 )
     row = cur.fetchall()

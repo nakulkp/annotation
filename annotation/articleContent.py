@@ -54,7 +54,7 @@ def articleContent(requestParameters):
     question = row[0][6]
 
     returnList = {'owner': owner, 'release_date': release_date, 'source': source, 'url': url, 'headline': headline,
-                  'content': content, 'question': question, 'article_id': article_id}
+                  'content': content, 'question': question, 'article_id': article_id, 'count': todoCount}
 
     cur.execute("""SELECT exists (SELECT 1 FROM mapping_table
             WHERE article_id= %(article_id)s LIMIT 1);""", {'article_id': article_id})
@@ -84,7 +84,7 @@ def articleContent(requestParameters):
                     'commodity_id': commodity_id, 'category_id': category_id, 'subcategory_id': subcategory_id,
                     'moving_factor_id': moving_factor_id, 'factor_value_id': factor_value_id,
                     'price_value_id': price_value_id, 'supply_value_id': supply_value_id,
-                    'demand_value_id': demand_value_id, 'sc_disruption_value_id': sc_disruption_value_id}
+                    'demand_value_id': demand_value_id, 'sc_disruption_value_id': sc_disruption_value_id, 'count': todoCount}
 
         returnList.update(extraVal)
 
