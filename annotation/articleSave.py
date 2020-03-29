@@ -27,6 +27,7 @@ def articleSave(requestParameters):
 
     if question == 'NULL':
         status = 'completed'
+        question = ''
 
     # params = config()
     # conn = psycopg2.connect(**params)
