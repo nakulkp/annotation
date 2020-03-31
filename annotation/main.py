@@ -37,6 +37,7 @@ from annotation.fetchCategory import fetchCategory
 from annotation.fetchCommodity import fetchCommodity
 from annotation.fetchDemand import fetchDemand
 from annotation.fetchFactorValue import fetchFactorValue
+from annotation.fetchMapping import fetchMapping
 from annotation.fetchMovingFactor import fetchMovingFactor
 from annotation.fetchPrice import fetchPrice
 from annotation.fetchRegion import fetchRegion
@@ -332,6 +333,14 @@ def api_fetchDemand():
 @token_required
 def api_fetchFactorValue():
     valueList = fetchFactorValue()
+    return jsonify(valueList)
+
+
+@app.route('/fetchmapping', methods=['POST'])
+@token_required
+def api_fetchMapping():
+    requestParameters = request.get_json()
+    valueList = fetchMapping()
     return jsonify(valueList)
 
 

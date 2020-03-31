@@ -37,6 +37,7 @@ def createTables():
         """
         CREATE TABLE mapping_table ( 
             created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
+            mapping_id SERIAL NOT NULL,            
             user_id INTEGER NOT NULL,
             article_id INTEGER NOT NULL,
             country_id INTEGER NOT NULL,
@@ -48,7 +49,8 @@ def createTables():
             price_value_id INTEGER NOT NULL,
             supply_value_id INTEGER NOT NULL,
             demand_value_id INTEGER NOT NULL,
-            sc_disruption_value_id INTEGER NOT NULL
+            sc_disruption_value_id INTEGER NOT NULL,
+            CONSTRAINT mapping_table_pkey PRIMARY KEY (mapping_id)
         );   
         """,
         """
