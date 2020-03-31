@@ -47,6 +47,7 @@ from annotation.fetchSupply import fetchSupply
 from annotation.markIrrelevant import markIrrelevant
 from annotation.markWithQuestion import markWithQuestion
 from annotation.review import review
+from annotation.updateMapping import updateMapping
 from annotation.userSignUp import userSignUp
 from annotation.login import login
 
@@ -413,4 +414,11 @@ def api_adminUsersEdit():
 def api_annotationCount():
     requestParameters = request.get_json()
     status = annotationCount(requestParameters)
+    return jsonify(status)
+
+@app.route('/updatemapping', methods=['POST'])
+@token_required
+def api_updateMapping():
+    requestParameters = request.get_json()
+    status = updateMapping(requestParameters)
     return jsonify(status)
