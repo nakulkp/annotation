@@ -36,7 +36,7 @@ def fetchSubCategory(requestParameters):
     sub_category_id = requestParameters["sub_category_id"]
 
     cur.execute("""SELECT sub_categories
-           FROM category_table
+           FROM subcategory_table
            WHERE sub_category_id= %(sub_category_id)s ;""", {"sub_category_id": sub_category_id})
     row = cur.fetchone()
     sub_categories = row[0]
