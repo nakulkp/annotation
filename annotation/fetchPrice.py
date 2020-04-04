@@ -12,7 +12,7 @@ def fetchPrice(requestParameters):
     is_null = requestParameters['is_null']
 
     if is_null == 'NULL':
-        cur.execute("SELECT EXISTS (SELECT 1 FROM price WHERE status = 'enabled' LIMIT 1);")
+        cur.execute("SELECT EXISTS (SELECT 1 FROM price LIMIT 1);")
 
         valueExists = cur.fetchone()
         valueExists = valueExists[0]
@@ -21,8 +21,7 @@ def fetchPrice(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT price_value, price_value_id, status
-            FROM price
-            WHERE status = 'enabled';""")
+            FROM price;""")
         rows = cur.fetchall()
         valueList = []
 
@@ -39,7 +38,7 @@ def fetchPrice(requestParameters):
 
     cur.execute("""SELECT price_value
            FROM price
-           WHERE status = 'enabled' AND price_value_id= %(price_value_id)s ;""", {"price_value_id": price_value_id})
+           WHERE price_value_id= %(price_value_id)s ;""", {"price_value_id": price_value_id})
     row = cur.fetchone()
     price_value = row[0]
 

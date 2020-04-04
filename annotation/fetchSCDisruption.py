@@ -10,7 +10,7 @@ def fetchSCDisruption(requestParameters):
 
     is_null = requestParameters['is_null']
     if is_null == 'NULL':
-        cur.execute("SELECT EXISTS (SELECT 1 FROM sc_disruption WHERE status = 'enabled' LIMIT 1);")
+        cur.execute("SELECT EXISTS (SELECT 1 FROM sc_disruption LIMIT 1);")
 
         valueExists = cur.fetchone()
         valueExists = valueExists[0]
@@ -19,8 +19,7 @@ def fetchSCDisruption(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT sc_disruption_value, sc_disruption_value_id, status
-            FROM sc_disruption
-            WHERE status = 'enabled';""")
+            FROM sc_disruption;""")
         rows = cur.fetchall()
         valueList = []
 
@@ -37,7 +36,7 @@ def fetchSCDisruption(requestParameters):
 
     cur.execute("""SELECT sc_disruption_value
            FROM sc_disruption
-           WHERE status = 'enabled' AND sc_disruption_value_id= %(sc_disruption_value_id)s ;""", {"sc_disruption_value_id": sc_disruption_value_id})
+           WHERE sc_disruption_value_id= %(sc_disruption_value_id)s ;""", {"sc_disruption_value_id": sc_disruption_value_id})
     row = cur.fetchone()
     sc_disruption_value = row[0]
 

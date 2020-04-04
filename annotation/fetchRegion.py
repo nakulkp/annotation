@@ -11,7 +11,7 @@ def fetchRegion(requestParameters):
     is_null = requestParameters['is_null']
 
     if is_null == 'NULL':
-        cur.execute("SELECT EXISTS (SELECT 1 FROM region WHERE status = 'enabled' LIMIT 1);")
+        cur.execute("SELECT EXISTS (SELECT 1 FROM region LIMIT 1);")
 
         valueExists = cur.fetchone()
         valueExists = valueExists[0]
@@ -20,8 +20,7 @@ def fetchRegion(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT countries, country_id, status
-            FROM region
-            WHERE status = 'enabled';""")
+            FROM region;""")
         rows = cur.fetchall()
         valueList = []
 
@@ -38,7 +37,7 @@ def fetchRegion(requestParameters):
 
     cur.execute("""SELECT countries
            FROM region
-           WHERE status = 'enabled' AND country_id= %(country_id)s ;""", {"country_id": country_id})
+           WHERE country_id= %(country_id)s ;""", {"country_id": country_id})
     row = cur.fetchone()
     countries = row[0]
 

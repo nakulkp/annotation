@@ -11,7 +11,7 @@ def fetchCategory(requestParameters):
     is_null = requestParameters['is_null']
 
     if is_null == 'NULL':
-        cur.execute("SELECT EXISTS (SELECT 1 FROM category_table WHERE status = 'enabled' LIMIT 1);")
+        cur.execute("SELECT EXISTS (SELECT 1 FROM category_table LIMIT 1);")
 
         valueExists = cur.fetchone()
         valueExists = valueExists[0]
@@ -20,8 +20,7 @@ def fetchCategory(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT categories, category_id, status
-            FROM category_table
-            WHERE status = 'enabled';""")
+            FROM category_table;""")
         rows = cur.fetchall()
         valueList = []
         for row in rows:
@@ -35,7 +34,7 @@ def fetchCategory(requestParameters):
 
     cur.execute("""SELECT categories
            FROM category_table
-           WHERE status = 'enabled' AND category_id= %(category_id)s ;""", {"category_id": category_id})
+           WHERE category_id= %(category_id)s ;""", {"category_id": category_id})
     row = cur.fetchone()
     categories = row[0]
 

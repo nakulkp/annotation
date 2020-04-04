@@ -11,7 +11,7 @@ def fetchDemand(requestParameters):
     is_null = requestParameters['is_null']
 
     if is_null == 'NULL':
-        cur.execute("SELECT EXISTS (SELECT 1 FROM demand  WHERE status = 'enabled' LIMIT 1);")
+        cur.execute("SELECT EXISTS (SELECT 1 FROM demand LIMIT 1);")
 
         valueExists = cur.fetchone()
         valueExists = valueExists[0]
@@ -20,8 +20,7 @@ def fetchDemand(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT demand_value, demand_value_id, status
-            FROM demand
-            WHERE status = 'enabled';""")
+            FROM demand;""")
         rows = cur.fetchall()
         valueList = []
 
@@ -40,7 +39,7 @@ def fetchDemand(requestParameters):
 
     cur.execute("""SELECT demand_value
            FROM demand
-           WHERE status = 'enabled' AND demand_value_id= %(demand_value_id)s ;""", {"demand_value_id": demand_value_id})
+           WHERE demand_value_id= %(demand_value_id)s ;""", {"demand_value_id": demand_value_id})
     row = cur.fetchone()
     demand_value = row[0]
 

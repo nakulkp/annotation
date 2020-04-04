@@ -11,7 +11,7 @@ def fetchMovingFactor(requestParameters):
     is_null = requestParameters['is_null']
 
     if is_null == 'NULL':
-        cur.execute("SELECT EXISTS (SELECT 1 FROM moving_factor_table  WHERE status = 'enabled' LIMIT 1);")
+        cur.execute("SELECT EXISTS (SELECT 1 FROM moving_factor_table LIMIT 1);")
 
         valueExists = cur.fetchone()
         valueExists = valueExists[0]
@@ -20,8 +20,7 @@ def fetchMovingFactor(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT moving_factors, moving_factor_id, status
-            FROM moving_factor_table
-            WHERE status = 'enabled';""")
+            FROM moving_factor_table;""")
         rows = cur.fetchall()
         valueList = []
 
@@ -38,7 +37,7 @@ def fetchMovingFactor(requestParameters):
 
     cur.execute("""SELECT moving_factors
            FROM moving_factor_table
-           WHERE status = 'enabled' AND moving_factor_id= %(moving_factor_id)s ;""",
+           WHERE moving_factor_id= %(moving_factor_id)s ;""",
                 {"moving_factor_id": moving_factor_id})
     row = cur.fetchone()
     moving_factors = row[0]

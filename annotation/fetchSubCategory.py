@@ -19,8 +19,7 @@ def fetchSubCategory(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT sub_categories, sub_category_id, status
-            FROM subcategory_table
-            WHERE status = 'enabled';""")
+            FROM subcategory_table;""")
         rows = cur.fetchall()
         valueList = []
 
@@ -38,7 +37,7 @@ def fetchSubCategory(requestParameters):
 
     cur.execute("""SELECT sub_categories
            FROM category_table
-           WHERE status = 'enabled' AND sub_category_id= %(sub_category_id)s ;""", {"sub_category_id": sub_category_id})
+           WHERE sub_category_id= %(sub_category_id)s ;""", {"sub_category_id": sub_category_id})
     row = cur.fetchone()
     sub_categories = row[0]
 

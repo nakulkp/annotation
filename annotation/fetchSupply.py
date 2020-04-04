@@ -18,8 +18,7 @@ def fetchSupply(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT supply_value, supply_value_id, status
-            FROM supply
-            WHERE status = 'enabled';""")
+            FROM supply;""")
         rows = cur.fetchall()
         valueList = []
 
@@ -36,7 +35,7 @@ def fetchSupply(requestParameters):
 
     cur.execute("""SELECT supply_value
            FROM supply
-           WHERE status = 'enabled' AND supply_value_id= %(supply_value_id)s ;""", {"supply_value_id": supply_value_id})
+           WHERE supply_value_id= %(supply_value_id)s ;""", {"supply_value_id": supply_value_id})
     row = cur.fetchone()
     supply_value = row[0]
 
