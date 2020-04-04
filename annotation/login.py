@@ -23,7 +23,7 @@ def login(requestParameters):
     if not userExist:
         cur.close()
         conn.close()
-        return ""
+        return {""}
 
     cur.execute(
         """SELECT pass_key, user_id, privilege, username FROM users WHERE email =%(email)s AND status = 'enabled';""",
