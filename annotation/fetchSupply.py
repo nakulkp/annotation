@@ -39,4 +39,4 @@ def fetchSupply(requestParameters):
     row = cur.fetchone()
     supply_value = row[0]
 
-    return {supply_value}
+    return supply_value

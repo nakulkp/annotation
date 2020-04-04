@@ -41,4 +41,4 @@ def fetchSubCategory(requestParameters):
     row = cur.fetchone()
     sub_categories = row[0]
 
-    return {sub_categories}
+    return sub_categories

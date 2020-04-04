@@ -41,4 +41,4 @@ def fetchCommodity(requestParameters):
     row = cur.fetchone()
     commodities = row[0]
 
-    return {commodities}
+    return commodities
