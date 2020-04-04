@@ -75,6 +75,7 @@ def fetchMapping(requestParameters):
         cur.close()
         conn.close()
 
-    success_message = {"message": "success"}
-    returnList.append(success_message)
+    #success_message = {"message": "success"}
+    #returnList.append(success_message)
+    finalList = {'data': returnList, "message": "success"}
     return returnList
