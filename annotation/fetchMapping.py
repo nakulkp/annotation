@@ -69,7 +69,7 @@ def fetchMapping(requestParameters):
         price_value = fetchPrice({'is_null' : "no", 'price_value_id': price_value_id})
         countries = fetchRegion({'is_null' : "no", 'country_id': country_id})
         sc_disruption_value = fetchSCDisruption({'is_null' : "no", 'sc_disruption_value_id': sc_disruption_value_id})
-        sub_categories = fetchSubCategory({'is_null' : "no", 'subcategory_id': subcategory_id})
+        sub_categories = fetchSubCategory({'is_null' : "no", 'sub_category_id': subcategory_id})
         supply_value = fetchSupply({'is_null' : "no", 'supply_value_id': supply_value_id})
 
         returnList.append(categories)
