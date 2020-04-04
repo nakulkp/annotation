@@ -78,4 +78,4 @@ def fetchMapping(requestParameters):
     #success_message = {"message": "success"}
     #returnList.append(success_message)
     finalList = {'data': returnList, "message": "success"}
-    return returnList
+    return finalList
