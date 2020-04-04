@@ -9,7 +9,7 @@ def fetchDemand():
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("SELECT EXISTS (SELECT 1 FROM demand  WHERE status = 'enabled' LIMIT 1);")
+    cur.execute("SELECT EXISTS (SELECT 1 FROM demand LIMIT 1);")
 
     valueExists = cur.fetchone()
     valueExists = valueExists[0]
@@ -18,8 +18,7 @@ def fetchDemand():
         return {'message': "no values"}
 
     cur.execute("""SELECT demand_value, demand_value_id, status
-        FROM demand
-        WHERE status = 'enabled';""")
+        FROM demand;""")
     rows = cur.fetchall()
     valueList = []
 

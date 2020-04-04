@@ -8,7 +8,7 @@ def fetchRegion():
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("SELECT EXISTS (SELECT 1 FROM region WHERE status = 'enabled' LIMIT 1);")
+    cur.execute("SELECT EXISTS (SELECT 1 FROM region LIMIT 1);")
 
     valueExists = cur.fetchone()
     valueExists = valueExists[0]
@@ -17,8 +17,7 @@ def fetchRegion():
         return {'message': "no values"}
 
     cur.execute("""SELECT countries, country_id, status
-        FROM region
-        WHERE status = 'enabled';""")
+        FROM region;""")
     rows = cur.fetchall()
     valueList = []
 

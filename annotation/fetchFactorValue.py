@@ -9,7 +9,7 @@ def fetchFactorValue():
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("SELECT EXISTS (SELECT 1 FROM factor_value_table WHERE status = 'enabled' LIMIT 1);")
+    cur.execute("SELECT EXISTS (SELECT 1 FROM factor_value_table LIMIT 1);")
 
     valueExists = cur.fetchone()
     valueExists = valueExists[0]
@@ -18,8 +18,7 @@ def fetchFactorValue():
         return {'message': "no values"}
 
     cur.execute("""SELECT factor_value, factor_value_id, status
-        FROM factor_value_table
-        WHERE status = 'enabled';""")
+        FROM factor_value_table;""")
     rows = cur.fetchall()
     valueList = []
     for row in rows:

@@ -9,7 +9,7 @@ def fetchCommodity():
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("SELECT EXISTS (SELECT 1 FROM commodity_table  WHERE status = 'enabled' LIMIT 1);")
+    cur.execute("SELECT EXISTS (SELECT 1 FROM commodity_table LIMIT 1);")
 
     valueExists = cur.fetchone()
     valueExists = valueExists[0]
@@ -18,8 +18,7 @@ def fetchCommodity():
         return {'message': "no values"}
 
     cur.execute("""SELECT commodities, commodity_id, status
-        FROM commodity_table
-        WHERE status = 'enabled';""")
+        FROM commodity_table;""")
     rows = cur.fetchall()
     valueList = []
     for row in rows:

@@ -9,7 +9,7 @@ def fetchMovingFactor():
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("SELECT EXISTS (SELECT 1 FROM moving_factor_table  WHERE status = 'enabled' LIMIT 1);")
+    cur.execute("SELECT EXISTS (SELECT 1 FROM moving_factor_table LIMIT 1);")
 
     valueExists = cur.fetchone()
     valueExists = valueExists[0]
@@ -18,8 +18,7 @@ def fetchMovingFactor():
         return {'message': "no values"}
 
     cur.execute("""SELECT moving_factors, moving_factor_id, status
-        FROM moving_factor_table
-        WHERE status = 'enabled';""")
+        FROM moving_factor_table;""")
     rows = cur.fetchall()
     valueList = []
 

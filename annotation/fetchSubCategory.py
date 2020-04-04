@@ -18,8 +18,7 @@ def fetchSubCategory():
         return {'message': "no values"}
 
     cur.execute("""SELECT sub_categories, sub_category_id, status
-        FROM subcategory_table
-        WHERE status = 'enabled';""")
+        FROM subcategory_table;""")
     rows = cur.fetchall()
     valueList = []
 

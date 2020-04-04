@@ -9,7 +9,7 @@ def fetchCategory():
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("SELECT EXISTS (SELECT 1 FROM category_table WHERE status = 'enabled' LIMIT 1);")
+    cur.execute("SELECT EXISTS (SELECT 1 FROM category_table LIMIT 1);")
 
     valueExists = cur.fetchone()
     valueExists = valueExists[0]
@@ -18,8 +18,7 @@ def fetchCategory():
         return {'message': "no values"}
 
     cur.execute("""SELECT categories, category_id, status
-        FROM category_table
-        WHERE status = 'enabled';""")
+        FROM category_table;""")
     rows = cur.fetchall()
     valueList = []
     for row in rows:
