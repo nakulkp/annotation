@@ -40,4 +40,4 @@ def fetchSCDisruption(requestParameters):
     row = cur.fetchone()
     sc_disruption_value = row[0]
 
-    return {'sc_disruption_value': sc_disruption_value}
+    return {sc_disruption_value}

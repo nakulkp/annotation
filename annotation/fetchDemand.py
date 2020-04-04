@@ -43,4 +43,4 @@ def fetchDemand(requestParameters):
     row = cur.fetchone()
     demand_value = row[0]
 
-    return {'demand_value': demand_value}
+    return { demand_value}

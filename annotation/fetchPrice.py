@@ -42,4 +42,4 @@ def fetchPrice(requestParameters):
     row = cur.fetchone()
     price_value = row[0]
 
-    return {'price_value': price_value}
+    return {price_value}

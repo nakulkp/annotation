@@ -38,4 +38,4 @@ def fetchCategory(requestParameters):
     row = cur.fetchone()
     categories = row[0]
 
-    return {'categories': categories}
+    return {categories}

@@ -41,4 +41,4 @@ def fetchRegion(requestParameters):
     row = cur.fetchone()
     countries = row[0]
 
-    return {'countries': countries}
+    return {countries}

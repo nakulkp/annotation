@@ -40,4 +40,4 @@ def fetchFactorValue(requestParameters):
     row = cur.fetchone()
     factor_value = row[0]
 
-    return {'factor_value': factor_value}
+    return {factor_value}
