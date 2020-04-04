@@ -312,28 +312,32 @@ def api_adminAddSupply():
 @app.route('/fetchcategory', methods=['POST'])
 @token_required
 def api_fetchCategory():
-    valueList = fetchCategory()
+    requestParameters = request.get_json()
+    valueList = fetchCategory(requestParameters)
     return jsonify(valueList)
 
 
 @app.route('/fetchcommodity', methods=['POST'])
 @token_required
 def api_fetchCommodity():
-    valueList = fetchCommodity()
+    requestParameters = request.get_json()
+    valueList = fetchCommodity(requestParameters)
     return jsonify(valueList)
 
 
 @app.route('/fetchdemand', methods=['POST'])
 @token_required
 def api_fetchDemand():
-    valueList = fetchDemand()
+    requestParameters = request.get_json()
+    valueList = fetchDemand(requestParameters)
     return jsonify(valueList)
 
 
 @app.route('/fetchfactorvalue', methods=['POST'])
 @token_required
 def api_fetchFactorValue():
-    valueList = fetchFactorValue()
+    requestParameters = request.get_json()
+    valueList = fetchFactorValue(requestParameters)
     return jsonify(valueList)
 
 
@@ -341,49 +345,55 @@ def api_fetchFactorValue():
 @token_required
 def api_fetchMapping():
     requestParameters = request.get_json()
-    valueList = fetchMapping()
+    valueList = fetchMapping(requestParameters)
     return jsonify(valueList)
 
 
 @app.route('/fetchmovingfactor', methods=['POST'])
 @token_required
 def api_fetchMovingFactor():
-    valueList = fetchMovingFactor()
+    requestParameters = request.get_json()
+    valueList = fetchMovingFactor(requestParameters)
     return jsonify(valueList)
 
 
 @app.route('/fetchprice', methods=['POST'])
 @token_required
 def api_fetchPrice():
-    valueList = fetchPrice()
+    requestParameters = request.get_json()
+    valueList = fetchPrice(requestParameters)
     return jsonify(valueList)
 
 
 @app.route('/fetchregion', methods=['POST'])
 @token_required
 def api_fetchRegion():
-    valueList = fetchRegion()
+    requestParameters = request.get_json()
+    valueList = fetchRegion(requestParameters)
     return jsonify(valueList)
 
 
 @app.route('/fetchscdisruption', methods=['POST'])
 @token_required
 def api_fetchSCDisruption():
-    valueList = fetchSCDisruption()
+    requestParameters = request.get_json()
+    valueList = fetchSCDisruption(requestParameters)
     return jsonify(valueList)
 
 
 @app.route('/fetchsubcategory', methods=['POST'])
 @token_required
 def api_fetchSubCategory():
-    valueList = fetchSubCategory()
+    requestParameters = request.get_json()
+    valueList = fetchSubCategory(requestParameters)
     return jsonify(valueList)
 
 
 @app.route('/fetchsupply', methods=['POST'])
 @token_required
 def api_fetchSupply():
-    valueList = fetchSupply()
+    requestParameters = request.get_json()
+    valueList = fetchSupply(requestParameters)
     return jsonify(valueList)
 
 

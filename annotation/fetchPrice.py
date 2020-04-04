@@ -2,32 +2,45 @@ import psycopg2
 from annotation.config import config
 
 
-def fetchPrice():
+def fetchPrice(requestParameters):
     conn = None
     # params = config()
     # conn = psycopg2.connect(**params)
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("SELECT EXISTS (SELECT 1 FROM price WHERE status = 'enabled' LIMIT 1);")
+    is_null = requestParameters['is_null']
 
-    valueExists = cur.fetchone()
-    valueExists = valueExists[0]
+    if is_null == 'NULL':
+        cur.execute("SELECT EXISTS (SELECT 1 FROM price WHERE status = 'enabled' LIMIT 1);")
 
-    if not valueExists:
-        return {'message': "no values"}
+        valueExists = cur.fetchone()
+        valueExists = valueExists[0]
 
-    cur.execute("""SELECT price_value, price_value_id, status
-        FROM price
-        WHERE status = 'enabled';""")
-    rows = cur.fetchall()
-    valueList = []
+        if not valueExists:
+            return {'message': "no values"}
 
-    for row in rows:
-        value = {"price_value": row[0], "price_value_id": row[1], "status": row[2]}
-        valueList.append(value)
+        cur.execute("""SELECT price_value, price_value_id, status
+            FROM price
+            WHERE status = 'enabled';""")
+        rows = cur.fetchall()
+        valueList = []
 
-    cur.close()
-    conn.commit()
+        for row in rows:
+            value = {"price_value": row[0], "price_value_id": row[1], "status": row[2]}
+            valueList.append(value)
 
-    return {'valueList': valueList}
+        cur.close()
+        conn.commit()
+
+        return {'valueList': valueList}
+
+    price_value_id = requestParameters["price_value_id"]
+
+    cur.execute("""SELECT price_value
+           FROM price
+           WHERE status = 'enabled' AND price_value_id= %(price_value_id)s ;""", {"price_value_id": price_value_id})
+    row = cur.fetchone()
+    price_value = row[0]
+
+    return {'price_value': price_value}

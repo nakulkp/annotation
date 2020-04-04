@@ -2,4 +2,4 @@ Flask==1.1.1
 psycopg2==2.8.4
 PyJWT==1.7.1
 Flask-Cors==3.0.8
-flask-bcrypt==0.7.1
+Flask-Bcrypt==0.7.1

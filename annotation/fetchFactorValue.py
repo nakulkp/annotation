@@ -2,34 +2,43 @@ import psycopg2
 from annotation.config import config
 
 
-def fetchFactorValue():
-    conn = None
+def fetchFactorValue(requestParameters):
     # params = config()
     # conn = psycopg2.connect(**params)
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
+    is_null = requestParameters['is_null']
 
-    cur.execute("SELECT EXISTS (SELECT 1 FROM factor_value_table WHERE status = 'enabled' LIMIT 1);")
+    if is_null == 'NULL':
+        cur.execute("SELECT EXISTS (SELECT 1 FROM factor_value_table WHERE status = 'enabled' LIMIT 1);")
 
-    valueExists = cur.fetchone()
-    valueExists = valueExists[0]
+        valueExists = cur.fetchone()
+        valueExists = valueExists[0]
 
-    if not valueExists:
-        return {'message': "no values"}
+        if not valueExists:
+            return {'message': "no values"}
 
-    cur.execute("""SELECT factor_value, factor_value_id, status
-        FROM factor_value_table
-        WHERE status = 'enabled';""")
-    rows = cur.fetchall()
-    valueList = []
-    for row in rows:
-        value = {"factor_value": row[0], "factor_value_id": row[1], "status": row[2]}
-        valueList.append(value)
+        cur.execute("""SELECT factor_value, factor_value_id, status
+            FROM factor_value_table
+            WHERE status = 'enabled';""")
+        rows = cur.fetchall()
+        valueList = []
+        for row in rows:
+            value = {"factor_value": row[0], "factor_value_id": row[1], "status": row[2]}
+            valueList.append(value)
 
 
-    cur.close()
-    conn.commit()
+        cur.close()
+        conn.commit()
 
-    return {'valueList': valueList}
-    if conn is not None:
-        conn.close()
+        return {'valueList': valueList}
+
+    factor_value_id = requestParameters["factor_value_id"]
+
+    cur.execute("""SELECT factor_value
+           FROM factor_value_table
+           WHERE status = 'enabled' AND factor_value_id= %(factor_value_id)s ;""", {"factor_value_id": factor_value_id})
+    row = cur.fetchone()
+    factor_value = row[0]
+
+    return {'factor_value': factor_value}

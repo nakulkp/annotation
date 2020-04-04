@@ -2,31 +2,44 @@ import psycopg2
 from annotation.config import config
 
 
-def fetchCommodity():
+def fetchCommodity(requestParameters):
     conn = None
     # params = config()
     # conn = psycopg2.connect(**params)
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("SELECT EXISTS (SELECT 1 FROM commodity_table  WHERE status = 'enabled' LIMIT 1);")
+    is_null = requestParameters['is_null']
 
-    valueExists = cur.fetchone()
-    valueExists = valueExists[0]
+    if is_null == 'NULL':
+        cur.execute("SELECT EXISTS (SELECT 1 FROM commodity_table  WHERE status = 'enabled' LIMIT 1);")
 
-    if not valueExists:
-        return {'message': "no values"}
+        valueExists = cur.fetchone()
+        valueExists = valueExists[0]
 
-    cur.execute("""SELECT commodities, commodity_id, status
-        FROM commodity_table
-        WHERE status = 'enabled';""")
-    rows = cur.fetchall()
-    valueList = []
-    for row in rows:
-        value = {"commodities": row[0], "commodity_id": row[1], "status": row[2]}
-        valueList.append(value)
+        if not valueExists:
+            return {'message': "no values"}
 
-    cur.close()
-    conn.commit()
+        cur.execute("""SELECT commodities, commodity_id, status
+            FROM commodity_table
+            WHERE status = 'enabled';""")
+        rows = cur.fetchall()
+        valueList = []
+        for row in rows:
+            value = {"commodities": row[0], "commodity_id": row[1], "status": row[2]}
+            valueList.append(value)
 
-    return {'valueList': valueList}
+        cur.close()
+        conn.commit()
+
+        return {'valueList': valueList}
+
+    commodity_id = requestParameters["commodity_id"]
+
+    cur.execute("""SELECT commodities
+           FROM commodity_table
+           WHERE status = 'enabled' AND commodity_id= %(commodity_id)s ;""", {"commodity_id": commodity_id})
+    row = cur.fetchone()
+    commodities = row[0]
+
+    return {'commodities': commodities}

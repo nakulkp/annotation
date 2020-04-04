@@ -2,34 +2,42 @@ import psycopg2
 from annotation.config import config
 
 
-def fetchSupply():
-    conn = None
+def fetchSupply(requestParameters):
     # params = config()
     # conn = psycopg2.connect(**params)
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
+    is_null = requestParameters['is_null']
+    if is_null == 'NULL':
+        cur.execute("SELECT EXISTS (SELECT 1 FROM supply LIMIT 1);")
 
-    cur.execute("SELECT EXISTS (SELECT 1 FROM supply LIMIT 1);")
+        valueExists = cur.fetchone()
+        valueExists = valueExists[0]
 
-    valueExists = cur.fetchone()
-    valueExists = valueExists[0]
+        if not valueExists:
+            return {'message': "no values"}
 
-    if not valueExists:
-        return {'message': "no values"}
+        cur.execute("""SELECT supply_value, supply_value_id, status
+            FROM supply
+            WHERE status = 'enabled';""")
+        rows = cur.fetchall()
+        valueList = []
 
-    cur.execute("""SELECT supply_value, supply_value_id, status
-        FROM supply
-        WHERE status = 'enabled';""")
-    rows = cur.fetchall()
-    valueList = []
+        for row in rows:
+            value = {"supply_value": row[0], "supply_value_id": row[1], "status": row[2]}
+            valueList.append(value)
 
-    for row in rows:
-        value = {"supply_value": row[0], "supply_value_id": row[1], "status": row[2]}
-        valueList.append(value)
+        cur.close()
+        conn.commit()
 
-    cur.close()
-    conn.commit()
+        return {'valueList': valueList}
 
-    return {'valueList': valueList}
-    if conn is not None:
-        conn.close()
+    supply_value_id = requestParameters["supply_value_id"]
+
+    cur.execute("""SELECT supply_value
+           FROM supply
+           WHERE status = 'enabled' AND supply_value_id= %(supply_value_id)s ;""", {"supply_value_id": supply_value_id})
+    row = cur.fetchone()
+    supply_value = row[0]
+
+    return {'supply_value': supply_value}

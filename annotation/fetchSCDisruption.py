@@ -2,32 +2,43 @@ import psycopg2
 from annotation.config import config
 
 
-def fetchSCDisruption():
-    conn = None
+def fetchSCDisruption(requestParameters):
     # params = config()
     # conn = psycopg2.connect(**params)
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("SELECT EXISTS (SELECT 1 FROM sc_disruption WHERE status = 'enabled' LIMIT 1);")
+    is_null = requestParameters['is_null']
+    if is_null == 'NULL':
+        cur.execute("SELECT EXISTS (SELECT 1 FROM sc_disruption WHERE status = 'enabled' LIMIT 1);")
 
-    valueExists = cur.fetchone()
-    valueExists = valueExists[0]
+        valueExists = cur.fetchone()
+        valueExists = valueExists[0]
 
-    if not valueExists:
-        return {'message': "no values"}
+        if not valueExists:
+            return {'message': "no values"}
 
-    cur.execute("""SELECT sc_disruption_value, sc_disruption_value_id, status
-        FROM sc_disruption
-        WHERE status = 'enabled';""")
-    rows = cur.fetchall()
-    valueList = []
+        cur.execute("""SELECT sc_disruption_value, sc_disruption_value_id, status
+            FROM sc_disruption
+            WHERE status = 'enabled';""")
+        rows = cur.fetchall()
+        valueList = []
 
-    for row in rows:
-        value = {"sc_disruption_value": row[0], "sc_disruption_value_id": row[1], "status": row[2]}
-        valueList.append(value)
+        for row in rows:
+            value = {"sc_disruption_value": row[0], "sc_disruption_value_id": row[1], "status": row[2]}
+            valueList.append(value)
 
-    cur.close()
-    conn.commit()
+        cur.close()
+        conn.commit()
 
-    return {'valueList': valueList}
+        return {'valueList': valueList}
+
+    sc_disruption_value_id = requestParameters["sc_disruption_value_id"]
+
+    cur.execute("""SELECT sc_disruption_value
+           FROM sc_disruption
+           WHERE status = 'enabled' AND sc_disruption_value_id= %(sc_disruption_value_id)s ;""", {"sc_disruption_value_id": sc_disruption_value_id})
+    row = cur.fetchone()
+    sc_disruption_value = row[0]
+
+    return {'sc_disruption_value': sc_disruption_value}
