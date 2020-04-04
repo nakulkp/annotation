@@ -341,7 +341,7 @@ def api_fetchFactorValue():
 @token_required
 def api_fetchMapping():
     requestParameters = request.get_json()
-    valueList = fetchMapping()
+    valueList = fetchMapping(requestParameters)
     return jsonify(valueList)
 
 
