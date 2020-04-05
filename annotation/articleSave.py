@@ -71,5 +71,5 @@ def articleSave(requestParameters):
     cur.close()
     conn.commit()
     conn.close()
-    if isAnyMappingIdZero return "success article only"
+    if isAnyMappingIdZero: return "success article only"
     return "success"
