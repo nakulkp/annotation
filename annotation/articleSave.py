@@ -27,7 +27,7 @@ def articleSave(requestParameters):
 
     isAnyMappingIdZero = false
 
-    if user_id == 0 or article_id == 0 or country_id == 0 or commodity_id == 0 or category_id == 0 or subcategory_id == 0 or moving_factor_id == 0 or factor_value_id == 0 or price_value_id == 0 or supply_value_id == 0 or demand_value_id == 0 or sc_disruption_value_id == 0
+    if user_id == 0 or article_id == 0 or country_id == 0 or commodity_id == 0 or category_id == 0 or subcategory_id == 0 or moving_factor_id == 0 or factor_value_id == 0 or price_value_id == 0 or supply_value_id == 0 or demand_value_id == 0 or sc_disruption_value_id == 0:
         isAnyMappingIdZero = true
 
     if question == 'NULL':
