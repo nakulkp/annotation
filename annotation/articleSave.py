@@ -25,6 +25,11 @@ def articleSave(requestParameters):
     question = requestParameters['question']
     status = 'marked'
 
+    isAnyMappingIdZero = false
+
+    if user_id == 0 or article_id == 0 or country_id ==0 or commodity_id==0 or category_id==0 or subcategory_id==0 or moving_factor_id==0 or factor_value_id==0 or price_value_id==0 or supply_value_id==0 or demand_value_id==0 or sc_disruption_value_id==0
+        isAnyMappingIdZero = true
+
     if question == 'NULL':
         status = 'completed'
         question = ''
@@ -54,7 +59,7 @@ def articleSave(requestParameters):
     mappingExist = cur.fetchone()
     mappingExist = mappingExist[0]
 
-    if not mappingExist:
+    if not mappingExist and isAnyMappingIdZero:
         cur.execute("""INSERT INTO mapping_table (user_id, article_id, country_id, commodity_id, category_id, subcategory_id, moving_factor_id, factor_value_id, price_value_id, supply_value_id, demand_value_id, sc_disruption_value_id)
         VALUES (%(user_id)s, %(article_id)s, %(country_id)s, %(commodity_id)s, %(category_id)s, %(subcategory_id)s, %(moving_factor_id)s, %(factor_value_id)s, %(price_value_id)s, %(supply_value_id)s, %(demand_value_id)s, %(sc_disruption_value_id)s);""",
                     {'user_id': user_id, 'article_id': article_id, 'country_id': country_id,
@@ -66,5 +71,5 @@ def articleSave(requestParameters):
     cur.close()
     conn.commit()
     conn.close()
-
+    if isAnyMappingIdZero return "success article only"
     return "success"
