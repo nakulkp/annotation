@@ -406,7 +406,8 @@ def api_csvUpload():
 @app.route('/adminusersfetch', methods=['POST'])
 @token_required
 def api_adminUsersFetch():
-    valuesList = adminUsersFetch()
+    requestParameters = request.get_json()
+    valuesList = adminUsersFetch(requestParameters)
     return jsonify(valuesList)
 
 
