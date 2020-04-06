@@ -23,7 +23,7 @@ def login(requestParameters):
     if not userExist:
         cur.close()
         conn.close()
-        return {""}
+        return {"auth": "fail_user"}
 
     cur.execute(
         """SELECT pass_key, user_id, privilege, username FROM users WHERE email =%(email)s AND status = 'enabled';""",
@@ -41,4 +41,4 @@ def login(requestParameters):
     if passVerify(pass_key, password) == True:
         return {"user_id": user_id, "privilege": privilege, "username": username, "auth": "success"}
     else:
-        return {"auth": "failed"}
+        return {"auth": "fail_pass"}
