@@ -12,7 +12,7 @@ def adminUsersFetch(requestParameters):
     offset = (page-1)*5
     limit = offset + 5
 
-    cur.execute("""SELECT user_id, username, email, phone, pass_key, status, privilege FROM users;""")
+    cur.execute("""SELECT COUNT(user_id) FROM users;""")
     dataCount = cur.fetchall()
     dataCount = dataCount[0]
 
