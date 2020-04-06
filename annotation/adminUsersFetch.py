@@ -2,15 +2,18 @@ import psycopg2
 from annotation.config import config
 
 
-def adminUsersFetch():
+def adminUsersFetch(requestParameters):
     # params = config()
     # conn = psycopg2.connect(**params)
 
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
+    page = requestParameters['page']
+    offset = (page-1)*5
+    limit = offset + 5
 
     cur.execute("""SELECT user_id, username, email, phone, pass_key, status, privilege
-     FROM users;""")
+     FROM users LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
     valueList = []
     rows = cur.fetchall()
     for row in rows:
