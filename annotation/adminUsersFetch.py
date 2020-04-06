@@ -12,8 +12,11 @@ def adminUsersFetch(requestParameters):
     offset = (page-1)*5
     limit = offset + 5
 
-    cur.execute("""SELECT user_id, username, email, phone, pass_key, status, privilege
-     FROM users LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
+    cur.execute("""SELECT user_id, username, email, phone, pass_key, status, privilege FROM users;""")
+    dataCount = cur.fetchall()
+    dataCount = dataCount[0]
+
+    cur.execute("""SELECT user_id, username, email, phone, pass_key, status, privilege FROM users LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
     valueList = []
     rows = cur.fetchall()
     for row in rows:
@@ -23,4 +26,4 @@ def adminUsersFetch(requestParameters):
     cur.close()
     conn.commit
     conn.close()
-    return valueList
+    return {'data': valueList, 'pages': dataCount}
