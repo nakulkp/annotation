@@ -15,7 +15,9 @@ def adminUsersFetch(requestParameters):
     cur.execute("""SELECT COUNT(user_id) FROM users;""")
     dataCount = cur.fetchall()
     dataCount = dataCount[0]
-
+    pageCount = dataCount//10
+    if (dataCount % 10) != 0:
+        pageCount = pageCount + 1
     cur.execute("""SELECT user_id, username, email, phone, pass_key, status, privilege FROM users LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
     valueList = []
     rows = cur.fetchall()
@@ -26,4 +28,4 @@ def adminUsersFetch(requestParameters):
     cur.close()
     conn.commit
     conn.close()
-    return {'data': valueList, 'pages': dataCount}
+    return {'data': valueList, 'pages': pageCount}

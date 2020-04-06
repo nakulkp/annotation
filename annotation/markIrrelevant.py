@@ -15,7 +15,7 @@ def markIrrelevant(requestParameters):
         where article_id = %(article_id)s;""", {"article_id": article_id})
     cur.close()
     conn.commit()
-    conn.close()
+    conn.close().'\'
     return "Success"
     if conn is not None:
         conn.close()
