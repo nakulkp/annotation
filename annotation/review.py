@@ -12,6 +12,17 @@ def review(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
+    page = requestParameters['page']
+    offset = (page-1)*5
+    limit = offset + 5
+
+    cur.execute("""SELECT COUNT(article_id) FROM master_table;""")
+    dataCount = cur.fetchall()
+    dataCount = dataCount[0]
+    pageCount = dataCount[0]//10
+    if (dataCount[0] % 10) != 0:
+        pageCount = pageCount + 1        
+
     cur.execute("SELECT privilege FROM users WHERE user_id = %(user_id)s; ",
                 {'user_id': user_id})
     privilege = cur.fetchone()
@@ -26,9 +37,9 @@ def review(requestParameters):
         cur.execute("""SELECT article_id, headline, status, question, url
                     FROM master_table
                     WHERE user_id=%(user_id)s;""", {'user_id': user_id})
-        reviewValues = cur.fetchall()
+         = cur.fetchall()
 
     cur.close()
     conn.commit()
     conn.close()
-    return reviewValues
+    return {'data': reviewValues, 'pages': pageCount}

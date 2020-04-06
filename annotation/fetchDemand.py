@@ -9,6 +9,16 @@ def fetchDemand(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
     is_null = requestParameters['is_null']
+    page = requestParameters['page']
+    offset = (page-1)*5
+    limit = offset + 5
+
+    cur.execute("""SELECT COUNT(demand_value_id) FROM demand;""")
+    dataCount = cur.fetchall()
+    dataCount = dataCount[0]
+    pageCount = dataCount[0]//10
+    if (dataCount[0] % 10) != 0:
+        pageCount = pageCount + 1
 
     if is_null == 'NULL':
         cur.execute("SELECT EXISTS (SELECT 1 FROM demand LIMIT 1);")
@@ -43,4 +53,4 @@ def fetchDemand(requestParameters):
     row = cur.fetchone()
     demand_value = row[0]
 
-    return demand_value
+    return {'data': demand_value, 'pages': pageCount}

@@ -9,6 +9,17 @@ def fetchSCDisruption(requestParameters):
     cur = conn.cursor()
 
     is_null = requestParameters['is_null']
+    page = requestParameters['page']
+    offset = (page-1)*5
+    limit = offset + 5
+
+    cur.execute("""SELECT COUNT(sc_disruption_value_id) FROM sc_disruption;""")
+    dataCount = cur.fetchall()
+    dataCount = dataCount[0]
+    pageCount = dataCount[0]//10
+    if (dataCount[0] % 10) != 0:
+        pageCount = pageCount + 1
+
     if is_null == 'NULL':
         cur.execute("SELECT EXISTS (SELECT 1 FROM sc_disruption LIMIT 1);")
 
@@ -40,4 +51,4 @@ def fetchSCDisruption(requestParameters):
     row = cur.fetchone()
     sc_disruption_value = row[0]
 
-    return sc_disruption_value
+    return {'data': sc_disruption_value, 'pages': pageCount}

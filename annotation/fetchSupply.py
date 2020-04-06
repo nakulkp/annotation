@@ -8,6 +8,18 @@ def fetchSupply(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
     is_null = requestParameters['is_null']
+
+    page = requestParameters['page']
+    offset = (page-1)*5
+    limit = offset + 5
+
+    cur.execute("""SELECT COUNT(category_id) FROM category_table;""")
+    dataCount = cur.fetchall()
+    dataCount = dataCount[0]
+    pageCount = dataCount[0]//10
+    if (dataCount[0] % 10) != 0:
+        pageCount = pageCount + 1
+        
     if is_null == 'NULL':
         cur.execute("SELECT EXISTS (SELECT 1 FROM supply LIMIT 1);")
 
@@ -39,4 +51,4 @@ def fetchSupply(requestParameters):
     row = cur.fetchone()
     supply_value = row[0]
 
-    return supply_value
+    return {'data': supply_value, 'pages': pageCount}

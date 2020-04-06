@@ -9,6 +9,16 @@ def fetchMovingFactor(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
     is_null = requestParameters['is_null']
+    page = requestParameters['page']
+    offset = (page-1)*5
+    limit = offset + 5
+
+    cur.execute("""SELECT COUNT(moving_factor_id) FROM moving_factor_table;""")
+    dataCount = cur.fetchall()
+    dataCount = dataCount[0]
+    pageCount = dataCount[0]//10
+    if (dataCount[0] % 10) != 0:
+        pageCount = pageCount + 1
 
     if is_null == 'NULL':
         cur.execute("SELECT EXISTS (SELECT 1 FROM moving_factor_table LIMIT 1);")
@@ -42,4 +52,4 @@ def fetchMovingFactor(requestParameters):
     row = cur.fetchone()
     moving_factors = row[0]
 
-    return moving_factors
+    return {'data': moving_factor_id, 'pages': pageCount}

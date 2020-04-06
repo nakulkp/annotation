@@ -9,6 +9,18 @@ def fetchSubCategory(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
     is_null = requestParameters['is_null']
+
+    page = requestParameters['page']
+    offset = (page-1)*5
+    limit = offset + 5
+
+    cur.execute("""SELECT COUNT(sub_categories) FROM subcategory_table;""")
+    dataCount = cur.fetchall()
+    dataCount = dataCount[0]
+    pageCount = dataCount[0]//10
+    if (dataCount[0] % 10) != 0:
+        pageCount = pageCount + 1
+
     if is_null == 'NULL':
         cur.execute("SELECT EXISTS (SELECT 1 FROM subcategory_table LIMIT 1);")
 
@@ -41,4 +53,4 @@ def fetchSubCategory(requestParameters):
     row = cur.fetchone()
     sub_categories = row[0]
 
-    return sub_categories
+    return {'data': sub_categories, 'pages': pageCount}
