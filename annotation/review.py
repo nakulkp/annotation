@@ -37,7 +37,8 @@ def review(requestParameters):
         cur.execute("""SELECT article_id, headline, status, question, url
                     FROM master_table
                     WHERE user_id=%(user_id)s;""", {'user_id': user_id})
-         = cur.fetchall()
+    reviewValues = cur.fetchall()
+    reviewValues = reviewValues[0]
 
     cur.close()
     conn.commit()
