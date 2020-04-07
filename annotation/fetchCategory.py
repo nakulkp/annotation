@@ -30,7 +30,7 @@ def fetchCategory(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT categories, category_id, status
-            FROM category_table;""")
+            FROM category_table LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
         rows = cur.fetchall()
         valueList = []
         for row in rows:

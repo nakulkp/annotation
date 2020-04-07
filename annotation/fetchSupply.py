@@ -30,7 +30,7 @@ def fetchSupply(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT supply_value, supply_value_id, status
-            FROM supply;""")
+            FROM supply LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
         rows = cur.fetchall()
         valueList = []
 
