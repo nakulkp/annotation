@@ -30,7 +30,7 @@ def fetchSCDisruption(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT sc_disruption_value, sc_disruption_value_id, status
-            FROM sc_disruption WHERE status='enabled';""")
+            FROM sc_disruption LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
         rows = cur.fetchall()
         valueList = []
 
@@ -42,6 +42,29 @@ def fetchSCDisruption(requestParameters):
         conn.commit()
 
         return {'data': valueList, 'pages': pageCount}
+
+    elif is_null == 'enabled':
+        cur.execute("SELECT EXISTS (SELECT 1 FROM sc_disruption LIMIT 1);")
+
+        valueExists = cur.fetchone()
+        valueExists = valueExists[0]
+
+        if not valueExists:
+            return {'message': "no values"}
+
+        cur.execute("""SELECT sc_disruption_value, sc_disruption_value_id, status
+            FROM sc_disruption WHERE status='enabled';""")
+        rows = cur.fetchall()
+        valueList = []
+
+        for row in rows:
+            value = {"sc_disruption_value": row[0], "sc_disruption_value_id": row[1], "status": row[2]}
+            valueList.append(value)
+
+        cur.close()
+        conn.commit()
+
+        return {'data': valueList}
 
     sc_disruption_value_id = requestParameters["sc_disruption_value_id"]
 

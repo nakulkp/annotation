@@ -30,7 +30,7 @@ def fetchMovingFactor(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT moving_factors, moving_factor_id, status
-            FROM moving_factor_table WHERE status='enabled';""")
+            FROM moving_factor_table LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
         rows = cur.fetchall()
         valueList = []
 
@@ -42,6 +42,29 @@ def fetchMovingFactor(requestParameters):
         conn.commit()
 
         return {'data': valueList, 'pages': pageCount}
+
+    elif is_null == 'enabled':
+        cur.execute("SELECT EXISTS (SELECT 1 FROM moving_factor_table LIMIT 1);")
+
+        valueExists = cur.fetchone()
+        valueExists = valueExists[0]
+
+        if not valueExists:
+            return {'message': "no values"}
+
+        cur.execute("""SELECT moving_factors, moving_factor_id, status
+            FROM moving_factor_table WHERE status='enabled';""")
+        rows = cur.fetchall()
+        valueList = []
+
+        for row in rows:
+            value = {"moving_factors": row[0], "moving_factor_id": row[1], "status": row[2]}
+            valueList.append(value)
+
+        cur.close()
+        conn.commit()
+
+        return {'data': valueList}
 
     moving_factor_id = requestParameters["moving_factor_id"]
 

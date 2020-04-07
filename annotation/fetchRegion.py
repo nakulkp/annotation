@@ -30,7 +30,7 @@ def fetchRegion(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT countries, country_id, status
-            FROM region WHERE status='enabled';""")
+            FROM region LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
         rows = cur.fetchall()
         valueList = []
 
@@ -42,6 +42,29 @@ def fetchRegion(requestParameters):
         conn.commit()
 
         return {'data': valueList, 'pages': pageCount}
+
+    elif is_null == 'enabled':
+        cur.execute("SELECT EXISTS (SELECT 1 FROM region LIMIT 1);")
+
+        valueExists = cur.fetchone()
+        valueExists = valueExists[0]
+
+        if not valueExists:
+            return {'message': "no values"}
+
+        cur.execute("""SELECT countries, country_id, status
+            FROM region WHERE status='enabled';""")
+        rows = cur.fetchall()
+        valueList = []
+
+        for row in rows:
+            value = {"countries": row[0], "country_id": row[1], "status": row[2]}
+            valueList.append(value)
+
+        cur.close()
+        conn.commit()
+
+        return {'data': valueList}
 
     country_id = requestParameters["country_id"]
 

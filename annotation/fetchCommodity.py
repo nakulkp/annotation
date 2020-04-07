@@ -31,7 +31,7 @@ def fetchCommodity(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT commodities, commodity_id, status
-            FROM commodity_table WHERE status='enabled';""")
+            FROM commodity_table LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
         rows = cur.fetchall()
         valueList = []
         for row in rows:
@@ -42,6 +42,28 @@ def fetchCommodity(requestParameters):
         conn.commit()
 
         return {'data': valueList, 'pages': pageCount}
+    
+    elif is_null == 'enabled':
+        cur.execute("SELECT EXISTS (SELECT 1 FROM commodity_table LIMIT 1);")
+
+        valueExists = cur.fetchone()
+        valueExists = valueExists[0]
+
+        if not valueExists:
+            return {'message': "no values"}
+
+        cur.execute("""SELECT commodities, commodity_id, status
+            FROM commodity_table WHERE status='enabled';""")
+        rows = cur.fetchall()
+        valueList = []
+        for row in rows:
+            value = {"commodities": row[0], "commodity_id": row[1], "status": row[2]}
+            valueList.append(value)
+
+        cur.close()
+        conn.commit()
+
+        return {'data': valueList}
 
     commodity_id = requestParameters["commodity_id"]
 

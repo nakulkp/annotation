@@ -31,7 +31,7 @@ def fetchPrice(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT price_value, price_value_id, status
-            FROM price WHERE status='enabled';""")
+            FROM price LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
         rows = cur.fetchall()
         valueList = []
 
@@ -43,6 +43,29 @@ def fetchPrice(requestParameters):
         conn.commit()
 
         return {'data': valueList, 'pages': pageCount}
+
+    elif is_null == 'enabled':
+        cur.execute("SELECT EXISTS (SELECT 1 FROM price LIMIT 1);")
+
+        valueExists = cur.fetchone()
+        valueExists = valueExists[0]
+
+        if not valueExists:
+            return {'message': "no values"}
+
+        cur.execute("""SELECT price_value, price_value_id, status
+            FROM price WHERE status='enabled';""")
+        rows = cur.fetchall()
+        valueList = []
+
+        for row in rows:
+            value = {"price_value": row[0], "price_value_id": row[1], "status": row[2]}
+            valueList.append(value)
+
+        cur.close()
+        conn.commit()
+
+        return {'data': valueList}
 
     price_value_id = requestParameters["price_value_id"]
 
