@@ -11,8 +11,8 @@ def fetchSubCategory(requestParameters):
     is_null = requestParameters['is_null']
 
     page = requestParameters['page']
-    offset = (page-1)*5
-    limit = offset + 5
+    offset = (page-1)*10
+    limit = offset + 10
 
     cur.execute("""SELECT COUNT(sub_categories) FROM subcategory_table;""")
     dataCount = cur.fetchall()
@@ -43,7 +43,7 @@ def fetchSubCategory(requestParameters):
         cur.close()
         conn.commit()
 
-        return {'valueList': valueList}
+        return {'data': valueList, 'pages': pageCount}
 
     sub_category_id = requestParameters["sub_category_id"]
 
@@ -53,4 +53,4 @@ def fetchSubCategory(requestParameters):
     row = cur.fetchone()
     sub_categories = row[0]
 
-    return {'data': sub_categories, 'pages': pageCount}
+    return sub_categories

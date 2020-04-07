@@ -11,8 +11,8 @@ def fetchCommodity(requestParameters):
 
     is_null = requestParameters['is_null']
     page = requestParameters['page']
-    offset = (page-1)*5
-    limit = offset + 5
+    offset = (page-1)*10
+    limit = offset + 10
 
     cur.execute("""SELECT COUNT(commodity_id) FROM commodity_table;""")
     dataCount = cur.fetchall()
@@ -41,7 +41,7 @@ def fetchCommodity(requestParameters):
         cur.close()
         conn.commit()
 
-        return {'valueList': valueList}
+        return {'data': valueList, 'pages': pageCount}
 
     commodity_id = requestParameters["commodity_id"]
 
@@ -51,4 +51,4 @@ def fetchCommodity(requestParameters):
     row = cur.fetchone()
     commodities = row[0]
 
-    return {'data': commodities, 'pages': pageCount}
+    return commodities

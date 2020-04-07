@@ -11,8 +11,8 @@ def fetchPrice(requestParameters):
 
     is_null = requestParameters['is_null']
     page = requestParameters['page']
-    offset = (page-1)*5
-    limit = offset + 5
+    offset = (page-1)*10
+    limit = offset + 10
 
     cur.execute("""SELECT COUNT(price_value_id) FROM price;""")
     dataCount = cur.fetchall()
@@ -42,7 +42,7 @@ def fetchPrice(requestParameters):
         cur.close()
         conn.commit()
 
-        return {'valueList': valueList}
+        return {'data': valueList, 'pages': pageCount}
 
     price_value_id = requestParameters["price_value_id"]
 
@@ -52,4 +52,4 @@ def fetchPrice(requestParameters):
     row = cur.fetchone()
     price_value = row[0]
 
-    return {'data': price_value, 'pages': pageCount}
+    return price_value

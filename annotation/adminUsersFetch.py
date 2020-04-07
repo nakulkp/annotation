@@ -9,8 +9,8 @@ def adminUsersFetch(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
     page = requestParameters['page']
-    offset = (page-1)*5
-    limit = offset + 5
+    offset = (page-1)*10
+    limit = offset + 10
 
     cur.execute("""SELECT COUNT(user_id) FROM users;""")
     dataCount = cur.fetchall()

@@ -10,8 +10,8 @@ def fetchRegion(requestParameters):
 
     is_null = requestParameters['is_null']
     page = requestParameters['page']
-    offset = (page-1)*5
-    limit = offset + 5
+    offset = (page-1)*10
+    limit = offset + 10
 
     cur.execute("""SELECT COUNT(country_id) FROM region;""")
     dataCount = cur.fetchall()
@@ -41,7 +41,7 @@ def fetchRegion(requestParameters):
         cur.close()
         conn.commit()
 
-        return {'valueList': valueList}
+        return {'data': valueList, 'pages': pageCount}
 
     country_id = requestParameters["country_id"]
 
@@ -51,4 +51,4 @@ def fetchRegion(requestParameters):
     row = cur.fetchone()
     countries = row[0]
 
-    return {'data': countries, 'pages': pageCount}
+    return countries

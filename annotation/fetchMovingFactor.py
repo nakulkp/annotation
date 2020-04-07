@@ -10,8 +10,8 @@ def fetchMovingFactor(requestParameters):
     cur = conn.cursor()
     is_null = requestParameters['is_null']
     page = requestParameters['page']
-    offset = (page-1)*5
-    limit = offset + 5
+    offset = (page-1)*10
+    limit = offset + 10
 
     cur.execute("""SELECT COUNT(moving_factor_id) FROM moving_factor_table;""")
     dataCount = cur.fetchall()
@@ -41,7 +41,7 @@ def fetchMovingFactor(requestParameters):
         cur.close()
         conn.commit()
 
-        return {'valueList': valueList}
+        return {'data': valueList, 'pages': pageCount}
 
     moving_factor_id = requestParameters["moving_factor_id"]
 
@@ -52,4 +52,4 @@ def fetchMovingFactor(requestParameters):
     row = cur.fetchone()
     moving_factors = row[0]
 
-    return {'data': moving_factor_id, 'pages': pageCount}
+    return moving_factor_id

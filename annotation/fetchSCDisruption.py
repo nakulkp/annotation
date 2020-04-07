@@ -10,8 +10,8 @@ def fetchSCDisruption(requestParameters):
 
     is_null = requestParameters['is_null']
     page = requestParameters['page']
-    offset = (page-1)*5
-    limit = offset + 5
+    offset = (page-1)*10
+    limit = offset + 10
 
     cur.execute("""SELECT COUNT(sc_disruption_value_id) FROM sc_disruption;""")
     dataCount = cur.fetchall()
@@ -41,7 +41,7 @@ def fetchSCDisruption(requestParameters):
         cur.close()
         conn.commit()
 
-        return {'valueList': valueList}
+        return {'data': valueList, 'pages': pageCount}
 
     sc_disruption_value_id = requestParameters["sc_disruption_value_id"]
 
@@ -51,4 +51,4 @@ def fetchSCDisruption(requestParameters):
     row = cur.fetchone()
     sc_disruption_value = row[0]
 
-    return {'data': sc_disruption_value, 'pages': pageCount}
+    return sc_disruption_value

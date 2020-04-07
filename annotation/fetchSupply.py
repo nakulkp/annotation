@@ -10,8 +10,8 @@ def fetchSupply(requestParameters):
     is_null = requestParameters['is_null']
 
     page = requestParameters['page']
-    offset = (page-1)*5
-    limit = offset + 5
+    offset = (page-1)*10
+    limit = offset + 10
 
     cur.execute("""SELECT COUNT(category_id) FROM category_table;""")
     dataCount = cur.fetchall()
@@ -41,7 +41,7 @@ def fetchSupply(requestParameters):
         cur.close()
         conn.commit()
 
-        return {'valueList': valueList}
+        return {'data': valueList, 'pages': pageCount}
 
     supply_value_id = requestParameters["supply_value_id"]
 
@@ -51,4 +51,4 @@ def fetchSupply(requestParameters):
     row = cur.fetchone()
     supply_value = row[0]
 
-    return {'data': supply_value, 'pages': pageCount}
+    return supply_value

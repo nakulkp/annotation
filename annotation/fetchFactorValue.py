@@ -9,8 +9,8 @@ def fetchFactorValue(requestParameters):
     cur = conn.cursor()
     is_null = requestParameters['is_null']
     page = requestParameters['page']
-    offset = (page-1)*5
-    limit = offset + 5
+    offset = (page-1)*10
+    limit = offset + 10
 
     cur.execute("""SELECT COUNT(factor_value_id) FROM factor_value_table;""")
     dataCount = cur.fetchall()
@@ -40,7 +40,7 @@ def fetchFactorValue(requestParameters):
         cur.close()
         conn.commit()
 
-        return {'valueList': valueList}
+        return {'data': valueList, 'pages': pageCount}
 
     factor_value_id = requestParameters["factor_value_id"]
 
@@ -50,4 +50,4 @@ def fetchFactorValue(requestParameters):
     row = cur.fetchone()
     factor_value = row[0]
 
-    return {'data': factor_value, 'pages': pageCount}
+    return factor_value

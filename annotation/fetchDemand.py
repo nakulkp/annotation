@@ -10,8 +10,8 @@ def fetchDemand(requestParameters):
     cur = conn.cursor()
     is_null = requestParameters['is_null']
     page = requestParameters['page']
-    offset = (page-1)*5
-    limit = offset + 5
+    offset = (page-1)*10
+    limit = offset + 10
 
     cur.execute("""SELECT COUNT(demand_value_id) FROM demand;""")
     dataCount = cur.fetchall()
@@ -42,7 +42,7 @@ def fetchDemand(requestParameters):
         cur.close()
         conn.commit()
 
-        return {'valueList': valueList}
+        return {'data': valueList, 'pages': pageCount}
 
 
     demand_value_id = requestParameters["demand_value_id"]
@@ -53,4 +53,4 @@ def fetchDemand(requestParameters):
     row = cur.fetchone()
     demand_value = row[0]
 
-    return {'data': demand_value, 'pages': pageCount}
+    return demand_value

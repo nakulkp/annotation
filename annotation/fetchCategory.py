@@ -10,8 +10,8 @@ def fetchCategory(requestParameters):
     cur = conn.cursor()
     is_null = requestParameters['is_null']
     page = requestParameters['page']
-    offset = (page-1)*5
-    limit = offset + 5
+    offset = (page-1)*10
+    limit = offset + 10
 
     cur.execute("""SELECT COUNT(category_id) FROM category_table;""")
     dataCount = cur.fetchall()
@@ -38,7 +38,7 @@ def fetchCategory(requestParameters):
             valueList.append(value)
         cur.close()
         conn.commit()
-        return {'valueList': valueList}
+        return {'data': valueList, 'pages': pageCount}
 
     category_id = requestParameters["category_id"]
 
@@ -48,4 +48,4 @@ def fetchCategory(requestParameters):
     row = cur.fetchone()
     categories = row[0]
 
-    return {'data': categories, 'pages': pageCount}
+    return categories

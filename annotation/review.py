@@ -13,8 +13,8 @@ def review(requestParameters):
     cur = conn.cursor()
 
     page = requestParameters['page']
-    offset = (page-1)*5
-    limit = offset + 5
+    offset = (page-1)*10
+    limit = offset + 10
 
     cur.execute("""SELECT COUNT(article_id) FROM master_table;""")
     dataCount = cur.fetchall()
@@ -37,8 +37,7 @@ def review(requestParameters):
         cur.execute("""SELECT article_id, headline, status, question, url
                     FROM master_table
                     WHERE user_id=%(user_id)s;""", {'user_id': user_id})
-    reviewValues = cur.fetchall()
-    reviewValues = reviewValues[0]
+        reviewValues = cur.fetchall()
 
     cur.close()
     conn.commit()
