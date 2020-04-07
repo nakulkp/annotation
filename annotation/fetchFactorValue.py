@@ -29,7 +29,7 @@ def fetchFactorValue(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT factor_value, factor_value_id, status
-            FROM factor_value_table LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
+            FROM factor_value_table WHERE status='enabled';""")
         rows = cur.fetchall()
         valueList = []
         for row in rows:

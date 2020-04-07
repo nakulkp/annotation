@@ -30,7 +30,7 @@ def fetchRegion(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT countries, country_id, status
-            FROM region LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
+            FROM region WHERE status='enabled';""")
         rows = cur.fetchall()
         valueList = []
 

@@ -40,6 +40,26 @@ def fetchCategory(requestParameters):
         conn.commit()
         return {'data': valueList, 'pages': pageCount}
 
+    else if is_null == 'enabled':
+        cur.execute("SELECT EXISTS (SELECT 1 FROM category_table LIMIT 1);")
+
+        valueExists = cur.fetchone()
+        valueExists = valueExists[0]
+
+        if not valueExists:
+            return {'message': "no values"}
+
+        cur.execute("""SELECT categories, category_id, status
+            FROM category_table WHERE status='enabled';""")
+        rows = cur.fetchall()
+        valueList = []
+        for row in rows:
+            value = {"categories": row[0], "category_id": row[1], "status": row[2]}
+            valueList.append(value)
+        cur.close()
+        conn.commit()
+        return {'data': valueList, 'pages': pageCount}
+
     category_id = requestParameters["category_id"]
 
     cur.execute("""SELECT categories

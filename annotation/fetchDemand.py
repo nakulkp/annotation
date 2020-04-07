@@ -30,7 +30,7 @@ def fetchDemand(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT demand_value, demand_value_id, status
-            FROM demand LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
+            FROM demand WHERE status='enabled';""")
         rows = cur.fetchall()
         valueList = []
 

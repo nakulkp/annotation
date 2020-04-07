@@ -30,7 +30,7 @@ def fetchMovingFactor(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT moving_factors, moving_factor_id, status
-            FROM moving_factor_table LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
+            FROM moving_factor_table WHERE status='enabled';""")
         rows = cur.fetchall()
         valueList = []
 

@@ -31,7 +31,7 @@ def fetchPrice(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT price_value, price_value_id, status
-            FROM price LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
+            FROM price WHERE status='enabled';""")
         rows = cur.fetchall()
         valueList = []
 
