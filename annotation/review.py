@@ -3,7 +3,6 @@ from annotation.config import config
 
 
 def review(requestParameters):
-    conn = None
     user_id = requestParameters["user_id"]
 
     #params = config()

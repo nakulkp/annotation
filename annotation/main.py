@@ -94,7 +94,7 @@ def api_login():
     email = requestParameters['email']
     if loginStatus['auth'] == 'success':
         token = jwt.encode(
-            {'email': email, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
+            {'email': email, 'exp': datetime.datetime.utcnow() + datetime.timedelta(days=30)},
             app.config["SECRET_KEY"])
         return jsonify({'token': token.decode('UTF-8')}, loginStatus)
     return jsonify(loginStatus)
