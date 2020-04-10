@@ -18,7 +18,7 @@ def fetchSubCategory(requestParameters):
     dataCount = cur.fetchall()
     dataCount = dataCount[0]
     pageCount = dataCount[0]//10
-    if (dataCount[0] % 10) != 0 and dataCount > 10:
+    if (dataCount[0] % 10) != 0 and dataCount[0] > 10:
         pageCount = pageCount + 1
 
     if is_null == 'NULL':
