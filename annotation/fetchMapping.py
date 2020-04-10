@@ -58,16 +58,16 @@ def fetchMapping(requestParameters):
                    'moving_factor_id': moving_factor_id, 'factor_value_id': factor_value_id,
                    'price_value_id': price_value_id, 'supply_value_id': supply_value_id,
                    'demand_value_id': demand_value_id, 'sc_disruption_value_id': sc_disruption_value_id,
-                   "categories" : fetchCategory({'is_null' : "no", 'category_id':category_id}),
-                    "commodities" : fetchCommodity({'is_null' : "no", 'commodity_id': commodity_id}),
-                    "demand_value" : fetchDemand({'is_null' : "no", 'demand_value_id': demand_value_id}),
-                    "factor_value" : fetchFactorValue({'is_null' : "no", 'factor_value_id': factor_value_id}),
-                    "moving_factors" : fetchMovingFactor({'is_null' : "no", 'moving_factor_id': moving_factor_id}),
-                    "price_value" : fetchPrice({'is_null' : "no", 'price_value_id': price_value_id}),
-                    "countries" : fetchRegion({'is_null' : "no", 'country_id': country_id}),
-                    "sc_disruption_value" : fetchSCDisruption({'is_null' : "no", 'sc_disruption_value_id': sc_disruption_value_id}),
-                    "sub_categories" : fetchSubCategory({'is_null' : "no", 'sub_category_id': subcategory_id}),
-                    "supply_value" : fetchSupply({'is_null' : "no", 'supply_value_id': supply_value_id})
+                   "categories" : fetchCategory({'is_null' : "no", 'category_id':category_id, 'page': 0}),
+                    "commodities" : fetchCommodity({'is_null' : "no", 'commodity_id': commodity_id, 'page': 0}),
+                    "demand_value" : fetchDemand({'is_null' : "no", 'demand_value_id': demand_value_id, 'page': 0}),
+                    "factor_value" : fetchFactorValue({'is_null' : "no", 'factor_value_id': factor_value_id, 'page': 0}),
+                    "moving_factors" : fetchMovingFactor({'is_null' : "no", 'moving_factor_id': moving_factor_id, 'page': 0}),
+                    "price_value" : fetchPrice({'is_null' : "no", 'price_value_id': price_value_id, 'page': 0}),
+                    "countries" : fetchRegion({'is_null' : "no", 'country_id': country_id, 'page': 0}),
+                    "sc_disruption_value" : fetchSCDisruption({'is_null' : "no", 'sc_disruption_value_id': sc_disruption_value_id, 'page': 0}),
+                    "sub_categories" : fetchSubCategory({'is_null' : "no", 'sub_category_id': subcategory_id, 'page': 0}),
+                    "supply_value" : fetchSupply({'is_null' : "no", 'supply_value_id': supply_value_id, 'page': 0})
                }
         returnList.append(loopVal)
 
