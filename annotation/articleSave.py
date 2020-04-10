@@ -68,6 +68,9 @@ def articleSave(requestParameters):
                      'factor_value_id': factor_value_id, 'price_value_id': price_value_id,
                      'supply_value_id': supply_value_id,
                      'demand_value_id': demand_value_id, 'sc_disruption_value_id': sc_disruption_value_id})
+                     
+    else: return "success article only"
+
     cur.close()
     conn.commit()
     conn.close()

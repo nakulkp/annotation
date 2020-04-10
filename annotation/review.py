@@ -19,7 +19,7 @@ def review(requestParameters):
     dataCount = cur.fetchall()
     dataCount = dataCount[0]
     pageCount = dataCount[0]//10
-    if (dataCount[0] % 10) != 0:
+    if (dataCount[0] % 10) != 0 and dataCount > 10:
         pageCount = pageCount + 1        
 
     cur.execute("SELECT privilege FROM users WHERE user_id = %(user_id)s; ",
