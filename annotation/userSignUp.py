@@ -4,52 +4,44 @@ from annotation.passHash import passHash
 
 
 def userSignUp(requestParameters):
-    conn = None
-    try:
-        username = requestParameters["username"]
-        email = requestParameters["email"]
-        phone = requestParameters["phone"]
-        password = requestParameters["password"]
-        privilege = requestParameters["privilege"]
-        pass_key = passHash(password)
-        status = 'enabled'
+    username = requestParameters["username"]
+    email = requestParameters["email"]
+    phone = requestParameters["phone"]
+    password = requestParameters["password"]
+    privilege = requestParameters["privilege"]
+    pass_key = passHash(password)
+    status = 'enabled'
 
-        # params = config()
-        # conn = psycopg2.connect(**params)
-        conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
-        cur = conn.cursor()
+    # params = config()
+    # conn = psycopg2.connect(**params)
+    conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
+    cur = conn.cursor()
 
-        cur.execute("""SELECT EXISTS (SELECT 1 FROM users
-        WHERE email = %(email)s LIMIT 1);""", {'email': email})
-        userExists = cur.fetchone()
-        userExists = userExists[0]
+    cur.execute("""SELECT EXISTS (SELECT 1 FROM users
+    WHERE email = %(email)s LIMIT 1);""", {'email': email})
+    userExists = cur.fetchone()
+    userExists = userExists[0]
 
-        if userExists:
-            cur.close()
-            conn.close()
-            return "email already exists"
-
-        cur.execute(
-            "INSERT INTO users (username, email, phone, pass_key, status, privilege) VALUES (%s, %s, %s, %s, %s, %s);",
-            (username, email, phone, pass_key, status, privilege))
-        conn.commit()
-        cur.execute("SELECT EXISTS (SELECT 1 FROM users WHERE email = %(email)s LIMIT 1);",
-                    {'email': email})
-        userExists = cur.fetchone()
-        userExists = userExists[0]
-
-        conn.commit()
+    if userExists:
         cur.close()
         conn.close()
+        return "email already exists"
 
-        if userExists:
-            return "successful"
-        else:
-            return "failed"
+    cur.execute(
+        "INSERT INTO users (username, email, phone, pass_key, status, privilege) VALUES (%s, %s, %s, %s, %s, %s);",
+        (username, email, phone, pass_key, status, privilege))
+    conn.commit()
+    cur.execute("SELECT EXISTS (SELECT 1 FROM users WHERE email = %(email)s LIMIT 1);",
+                {'email': email})
+    userExists = cur.fetchone()
+    userExists = userExists[0]
 
-    except Exception as error:
-        return "error"
+    conn.commit()
+    cur.close()
+    conn.close()
 
-    finally:
-        if conn is not None:
-            conn.close()
+    if userExists:
+        return "successful"
+    else:
+        return "failed"
+
