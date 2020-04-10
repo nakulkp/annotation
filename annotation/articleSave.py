@@ -59,7 +59,7 @@ def articleSave(requestParameters):
     mappingExist = cur.fetchone()
     mappingExist = mappingExist[0]
 
-    if not mappingExist and isAnyMappingIdZero:
+    if not mappingExist and not isAnyMappingIdZero:
         cur.execute("""INSERT INTO mapping_table (user_id, article_id, country_id, commodity_id, category_id, subcategory_id, moving_factor_id, factor_value_id, price_value_id, supply_value_id, demand_value_id, sc_disruption_value_id)
         VALUES (%(user_id)s, %(article_id)s, %(country_id)s, %(commodity_id)s, %(category_id)s, %(subcategory_id)s, %(moving_factor_id)s, %(factor_value_id)s, %(price_value_id)s, %(supply_value_id)s, %(demand_value_id)s, %(sc_disruption_value_id)s);""",
                     {'user_id': user_id, 'article_id': article_id, 'country_id': country_id,
@@ -68,7 +68,7 @@ def articleSave(requestParameters):
                      'factor_value_id': factor_value_id, 'price_value_id': price_value_id,
                      'supply_value_id': supply_value_id,
                      'demand_value_id': demand_value_id, 'sc_disruption_value_id': sc_disruption_value_id})
-                     
+
     else: return "success article only"
 
     cur.close()
