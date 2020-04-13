@@ -43,6 +43,7 @@ def articleContent(requestParameters):
         WHERE article_id= %(article_id)s AND status='todo';""",
         {"article_id": article_id}
     )
+
     row = cur.fetchall()
     owner = row[0][0]
     release_date = row[0][1]
@@ -51,8 +52,15 @@ def articleContent(requestParameters):
     headline = row[0][4]
     content = row[0][5]
     question = row[0][6]
+    
+    cur.execute(
+        """SELECT username FROM users WHERE user_id = %(user_id)s LIMIT 1;""",
+        {"user_id": owner}
+    )
+    row = cur.fetchall()
+    ownername = row[0][0]
 
-    returnList = {'owner': owner, 'release_date': release_date, 'source': source, 'url': url, 'headline': headline,
+    returnList = {'owner': ownername, 'release_date': release_date, 'source': source, 'url': url, 'headline': headline,
                   'content': content, 'question': question, 'article_id': article_id, 'count': todoCount}
 
     cur.close()
