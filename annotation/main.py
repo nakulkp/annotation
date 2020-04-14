@@ -44,6 +44,7 @@ from annotation.fetchRegion import fetchRegion
 from annotation.fetchSCDisruption import fetchSCDisruption
 from annotation.fetchSubCategory import fetchSubCategory
 from annotation.fetchSupply import fetchSupply
+from annotation.fetchUsers import fetchUsers
 from annotation.markIrrelevant import markIrrelevant
 from annotation.markWithQuestion import markWithQuestion
 from annotation.review import review
@@ -393,6 +394,13 @@ def api_fetchSubCategory():
 def api_fetchSupply():
     requestParameters = request.get_json()
     valueList = fetchSupply(requestParameters)
+    return jsonify(valueList)
+
+@app.route('/fetchusers', methods=['POST'])
+@token_required
+def api_fetchSupply():
+    requestParameters = request.get_json()
+    valueList = fetchUsers(requestParameters)
     return jsonify(valueList)
 
 
