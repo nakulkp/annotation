@@ -396,9 +396,10 @@ def api_fetchSupply():
     valueList = fetchSupply(requestParameters)
     return jsonify(valueList)
 
+
 @app.route('/fetchusers', methods=['POST'])
 @token_required
-def api_fetchSupply():
+def api_fetchUsers():
     requestParameters = request.get_json()
     valueList = fetchUsers(requestParameters)
     return jsonify(valueList)
