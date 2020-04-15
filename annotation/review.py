@@ -27,7 +27,7 @@ def review(requestParameters):
     privilege = cur.fetchone()
     privilege = privilege[0]
 
-    if privilege == 'admin':
+    if privilege == '1':
         cur.execute("""SELECT article_id, headline, status, question, url
             FROM master_table LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
         reviewValues = cur.fetchall()
