@@ -48,7 +48,7 @@ def review(requestParameters):
         )
         row = cur.fetchall()
         ownername = row[0][0]
-        rv.append(row)
+        rv[0].append(row)
 
     cur.close()
     conn.commit()
