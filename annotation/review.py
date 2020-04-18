@@ -41,7 +41,7 @@ def review(requestParameters):
         reviewValues = cur.fetchall()
 
     for rv in reviewValues:
-        owner = reviewValues[0]
+        owner = reviewValues[0][0]
         cur.execute(
             """SELECT username FROM users WHERE user_id = %(user_id)s LIMIT 1;""",
             {"user_id": owner}
