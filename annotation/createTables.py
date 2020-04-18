@@ -50,6 +50,11 @@ def createTables():
             supply_value_id INTEGER NOT NULL,
             demand_value_id INTEGER NOT NULL,
             sc_disruption_value_id INTEGER NOT NULL,
+            last_modified DATE,
+            last_modified_by varchar,
+            status varchar,
+            deleted_on_date DATE,
+            deleted_by varchar,
             CONSTRAINT mapping_table_pkey PRIMARY KEY (mapping_id)
         );   
         """,
