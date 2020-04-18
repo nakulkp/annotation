@@ -2,9 +2,10 @@ import psycopg2
 from annotation.config import config
 
 
-def articleContentBack(requestParameters):
+def articleContentNav(requestParameters):
     conn = None
     article_id = requestParameters['article_id']
+    direction = requestParameters['flag']
 
     # params = config()
     # conn = psycopg2.connect(**params)
@@ -20,11 +21,19 @@ def articleContentBack(requestParameters):
     if todoCount == 0:
         return {"message": "empty"}
 
-    cur.execute("""SELECT owner, release_date, source, url, headline, content, question 
-        FROM master_table 
-        WHERE article_id <= %(article_id)s ORDER BY article_id ASC LIMIT 1;""",
-                {"article_id": article_id}
-                )
+    if direction == 0:
+        cur.execute("""SELECT owner, release_date, source, url, headline, content, question 
+            FROM master_table 
+            WHERE article_id <= %(article_id)s ORDER BY article_id ASC LIMIT 1;""",
+                    {"article_id": article_id}
+                    )
+    elif direction == 1:
+        cur.execute("""SELECT owner, release_date, source, url, headline, content, question 
+            FROM master_table 
+            WHERE article_id >= %(article_id)s AND status='todo' ORDER BY article_id ASC LIMIT 1;""",
+                    {"article_id": article_id}
+                    )
+        
     row = cur.fetchall()
     owner = row[0][0]
     release_date = row[0][1]
