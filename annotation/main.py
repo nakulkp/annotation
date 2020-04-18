@@ -32,6 +32,7 @@ from annotation.annotationCount import annotationCount
 from annotation.articleContent import articleContent
 from annotation.articleContentId import articleContentId
 from annotation.articleContentBack import articleContentBack
+from annotation.articleCount import articleCount
 from annotation.articleSave import articleSave
 from annotation.csvUpload import csvUpload
 from annotation.fetchCategory import fetchCategory
@@ -118,11 +119,19 @@ def api_articleContentId():
     return jsonify(resultList)
 
 
-@app.route('/articleContentBack', methods=['POST'])
+@app.route('/articleContentback', methods=['POST'])
 @token_required
 def api_articleContentBack():
     requestParameters = request.get_json()
     resultList = articleContentBack(requestParameters)
+    return jsonify(resultList)
+
+
+@app.route('/articleCount', methods=['POST'])
+@token_required
+def api_articleCount():
+    requestParameters = request.get_json()
+    resultList = articleCount(requestParameters)
     return jsonify(resultList)
 
 @app.route('/markirrelevant', methods=['POST'])
