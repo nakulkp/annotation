@@ -2,7 +2,7 @@ import psycopg2
 from annotation.config import config
 
 
-def articleContentId(requestParameters):
+def articleContentBack(requestParameters):
     conn = None
     article_id = requestParameters['article_id']
 
