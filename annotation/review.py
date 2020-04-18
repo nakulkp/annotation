@@ -53,4 +53,4 @@ def review(requestParameters):
     cur.close()
     conn.commit()
     conn.close()
-    return {'data': reviewValues, 'pages': pageCount}
+    return {'data': reviewValues, 'pages': pageCount, 'limit': limit, 'offset': offset},
