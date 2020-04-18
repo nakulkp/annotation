@@ -22,7 +22,7 @@ def articleContentId(requestParameters):
 
     cur.execute("""SELECT owner, release_date, source, url, headline, content, question 
         FROM master_table 
-        WHERE article_id >= %(article_id)s ORDER BY article_id ASC;""",
+        WHERE article_id >= %(article_id)s AND status='todo' ORDER BY article_id ASC;""",
                 {"article_id": article_id}
                 )
     row = cur.fetchall()
