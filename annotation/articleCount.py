@@ -39,4 +39,4 @@ def articleCount(requestParameters):
     cur.close()
     conn.commit()
 
-    return {data:['todo':todoCount, 'irrelevant': irrelevantCount, 'completed': completedCount, 'marked':markedCount]}
+    return {'todo':todoCount, 'irrelevant': irrelevantCount, 'completed': completedCount, 'marked':markedCount}
