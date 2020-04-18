@@ -15,7 +15,7 @@ def csvUpload(requestParameters):
         content = dictionary["description"]
         owner = dictionary["author"]
         release_date = dictionary["releaseDate"]
-        source = ''
+        source = dictionary["source"]
         url = dictionary["url"]
         question = ''
         status = 'todo'
