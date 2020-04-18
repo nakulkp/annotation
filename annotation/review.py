@@ -31,13 +31,13 @@ def review(requestParameters):
 
     if privilege == '1':
         cur.execute("""SELECT article_id, headline, status, question, url, created_date
-            FROM master_table LIMIT %(limit)s OFFSET %(offset)s ORDER BY created_date DESC;""", {"limit": limit, "offset": offset})
+            FROM master_table ORDER BY created_date DESC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
         reviewValues = cur.fetchall()
 
     else:
         cur.execute("""SELECT article_id, headline, status, question, url, created_date
                     FROM master_table
-                    WHERE user_id=%(user_id)s LIMIT %(limit)s OFFSET %(offset)s ORDER BY created_date DESC;""", {'user_id': user_id, "limit": limit, "offset": offset})
+                    WHERE user_id=%(user_id)s ORDER BY created_date DESC LIMIT %(limit)s OFFSET %(offset)s;""", {'user_id': user_id, "limit": limit, "offset": offset})
         reviewValues = cur.fetchall()
 
     cur.close()
