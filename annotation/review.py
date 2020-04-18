@@ -41,14 +41,14 @@ def review(requestParameters):
         reviewValues = cur.fetchall()
 
     for rv in reviewValues:
-        owner = reviewValues[0][0]
+        owner = rv[0]
         cur.execute(
             """SELECT username FROM users WHERE user_id = %(user_id)s LIMIT 1;""",
             {"user_id": owner}
         )
         row = cur.fetchall()
         ownername = row[0][0]
-        rv[0].append(row)
+        rv.append(row)
 
     cur.close()
     conn.commit()
