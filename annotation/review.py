@@ -40,7 +40,7 @@ def review(requestParameters):
                     WHERE user_id=%(user_id)s ORDER BY created_date DESC LIMIT %(limit)s OFFSET %(offset)s;""", {'user_id': user_id, "limit": limit, "offset": offset})
         reviewValues = cur.fetchall()
 
-    for rv in reviewValues
+    for rv in reviewValues:
         cur.execute(
             """SELECT username FROM users WHERE user_id = %(user_id)s LIMIT 1;""",
             {"user_id": owner}
