@@ -30,17 +30,18 @@ def review(requestParameters):
     privilege = privilege[0]
 
     if privilege == '1':
-        cur.execute("""SELECT article_id, headline, status, question, url, release_date
+        cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
             FROM master_table ORDER BY created_date DESC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
         reviewValues = cur.fetchall()
 
     else:
-        cur.execute("""SELECT article_id, headline, status, question, url, release_date
+        cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
                     FROM master_table
                     WHERE user_id=%(user_id)s ORDER BY created_date DESC LIMIT %(limit)s OFFSET %(offset)s;""", {'user_id': user_id, "limit": limit, "offset": offset})
         reviewValues = cur.fetchall()
 
     for rv in reviewValues:
+        owner = reviewValues[]
         cur.execute(
             """SELECT username FROM users WHERE user_id = %(user_id)s LIMIT 1;""",
             {"user_id": owner}
