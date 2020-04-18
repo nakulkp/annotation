@@ -120,7 +120,7 @@ def api_articleContentId():
 
 @app.route('/articleContentBack', methods=['POST'])
 @token_required
-def api_articleContentId():
+def api_articleContentBack():
     requestParameters = request.get_json()
     resultList = articleContentBack(requestParameters)
     return jsonify(resultList)
