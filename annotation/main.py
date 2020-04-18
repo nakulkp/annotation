@@ -127,7 +127,7 @@ def api_articleContentNav():
     return jsonify(resultList)
 
 
-@app.route('/articleCount', methods=['POST'])
+@app.route('/articlecount', methods=['POST'])
 @token_required
 def api_articleCount():
     requestParameters = request.get_json()
