@@ -21,7 +21,7 @@ def fetchMapping(requestParameters):
 
     article_id = requestParameters["article_id"]
     cur.execute("""SELECT exists (SELECT 1 FROM mapping_table
-                WHERE article_id= %(article_id)s LIMIT 1);""", {'article_id': article_id})
+                WHERE article_id= %(article_id)s AND status = 'enabled' LIMIT 1);""", {'article_id': article_id})
     articleExist = cur.fetchone()
     articleExist = articleExist[0]
 
@@ -33,7 +33,7 @@ def fetchMapping(requestParameters):
     cur.execute(
         """SELECT country_id, commodity_id, category_id, subcategory_id, moving_factor_id, factor_value_id, price_value_id, supply_value_id, demand_value_id, sc_disruption_value_id, mapping_id, user_id 
         FROM mapping_table 
-        WHERE article_id= %(article_id)s;""", {"article_id": article_id}
+        WHERE article_id= %(article_id)s AND status = 'enabled';""", {"article_id": article_id}
     )
 
     rows = cur.fetchall()

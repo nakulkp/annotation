@@ -35,6 +35,7 @@ from annotation.articleContentNav import articleContentNav
 from annotation.articleCount import articleCount
 from annotation.articleSave import articleSave
 from annotation.csvUpload import csvUpload
+from annotation.deleteMapping import deleteMapping
 from annotation.fetchCategory import fetchCategory
 from annotation.fetchCommodity import fetchCommodity
 from annotation.fetchDemand import fetchDemand
@@ -426,6 +427,13 @@ def api_fetchUsers():
 def api_csvUpload():
     requestParameters = request.get_json()
     status = csvUpload(requestParameters)
+    return jsonify(status)
+    
+
+@app.route('/deletemapping', methods=['POST'])
+def api_deleteMapping():
+    requestParameters = request.get_json()
+    status = deleteMapping(requestParameters)
     return jsonify(status)
 
 
