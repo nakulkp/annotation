@@ -75,4 +75,4 @@ def fetchMovingFactor(requestParameters):
     row = cur.fetchone()
     moving_factors = row[0]
 
-    return moving_factor_id
+    return moving_factors
