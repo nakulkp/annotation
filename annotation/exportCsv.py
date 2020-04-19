@@ -20,9 +20,9 @@ def exportCsv(requestParameters):
     filename = timestampStr + '.csv'
     
     with open(filename, 'w+', newline='') as file:
-    writer = csv.writer(file)
-    writer.writerow(["Article Id", "Content", "Title", "Release Date", "Source", "URL", "Question", "Status", "Last Modified", "Last Modified By", "Is Deleted", "Deleted On Date", "Deleted By", "Region", "Commodity", "Category", "Sub Category", "Moving Factors", "Factor Value", "Price", "Supply", "Demand", "SC Disruption"])
-    for row in exportValues:
-        writer.writerow(row)
+        writer = csv.writer(file)
+        writer.writerow(["Article Id", "Content", "Title", "Release Date", "Source", "URL", "Question", "Status", "Last Modified", "Last Modified By", "Is Deleted", "Deleted On Date", "Deleted By", "Region", "Commodity", "Category", "Sub Category", "Moving Factors", "Factor Value", "Price", "Supply", "Demand", "SC Disruption"])
+        for row in exportValues:
+            writer.writerow(row)
 
     return 'success';
