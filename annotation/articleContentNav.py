@@ -13,21 +13,17 @@ def articleContentNav(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    todoCount = 0
-    
     if direction == 0:
-        if article_id != 1:
-            article_id -= article_id
-            cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE article_id <= %(article_id)s;""", {"article_id": article_id})
-            todoCount = cur.fetchone()
-        else:
-            cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE article_id = %(article_id)s;""", {"article_id": article_id})
-            todoCount = cur.fetchone()
-        todoCount = todoCount[0]        
+        cur.execute("""SELECT COUNT(article_id)
+            FROM master_table
+            WHERE article_id <= %(article_id)s;""", {"article_id": article_id})
+        todoCount = cur.fetchone()
+        todoCount = todoCount[0]
 
     elif direction == 1:
-        article_id += article_id
-        cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE article_id >= %(article_id)s;""", {"article_id": article_id})
+        cur.execute("""SELECT COUNT(article_id)
+            FROM master_table
+            WHERE article_id >= %(article_id)s;""", {"article_id": article_id})
         todoCount = cur.fetchone()
         todoCount = todoCount[0]
 
