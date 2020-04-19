@@ -22,4 +22,4 @@ def exportCsv(requestParameters):
     for row in exportValues:
         writer.writerow(row)
 
-    return si.getvalue()
+    return {'data': si.getvalue()}

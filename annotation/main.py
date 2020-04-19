@@ -474,13 +474,4 @@ def api_updateMapping():
 def api_exportCsv():
     requestParameters = request.get_json()
     status = exportCsv(requestParameters)
-    output = make_response(status)
-    output.headers["content-disposition"] = "attachment; filename=export.csv"
-    output.headers["content-type"] = "text/csv"
-    output.headers['Access-Control-Allow-Origin'] = '*'
-    return Response(
-        status,
-        mimetype="text/csv",
-        headers={"content-disposition":
-                 "attachment; filename=export.csv"})
-    #return output
+    return jsonify(status)
