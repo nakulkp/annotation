@@ -1,5 +1,5 @@
 import flask
-from flask import request, jsonify
+from flask import request, jsonify, Response
 from flask import make_response
 from flask_cors import CORS
 import jwt
