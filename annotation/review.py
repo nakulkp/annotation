@@ -30,7 +30,7 @@ def review(requestParameters):
     privilege = cur.fetchone()
     privilege = privilege[0]
 
-    if filter == 'all':
+    if filter_ == 'all':
         if privilege == '1':
             cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
                 FROM master_table ORDER BY created_date DESC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
@@ -42,7 +42,7 @@ def review(requestParameters):
                         WHERE user_id=%(user_id)s ORDER BY created_date DESC LIMIT %(limit)s OFFSET %(offset)s;""", {'user_id': user_id, "limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
 
-    elif filter == 'todo':
+    elif filter_ == 'todo':
         if privilege == '1':
             cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
                 FROM master_table WHERE status='todo' ORDER BY created_date DESC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
@@ -54,7 +54,7 @@ def review(requestParameters):
                         WHERE user_id=%(user_id)s AND WHERE status='todo' ORDER BY created_date DESC LIMIT %(limit)s OFFSET %(offset)s;""", {'user_id': user_id, "limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
 
-    elif filter == 'irrelevant':
+    elif filter_ == 'irrelevant':
         if privilege == '1':
             cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
                 FROM master_table WHERE status='irrelevant' ORDER BY created_date DESC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
@@ -66,7 +66,7 @@ def review(requestParameters):
                         WHERE user_id=%(user_id)s AND WHERE status='irrelevant' ORDER BY created_date DESC LIMIT %(limit)s OFFSET %(offset)s;""", {'user_id': user_id, "limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
 
-    elif filter == 'completed':
+    elif filter_ == 'completed':
         if privilege == '1':
             cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
                 FROM master_table WHERE status='completed' ORDER BY created_date DESC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
@@ -78,7 +78,7 @@ def review(requestParameters):
                         WHERE user_id=%(user_id)s AND WHERE status='completed' ORDER BY created_date DESC LIMIT %(limit)s OFFSET %(offset)s;""", {'user_id': user_id, "limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
 
-    elif filter == 'marked':
+    elif filter_ == 'marked':
         if privilege == '1':
             cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
                 FROM master_table WHERE status='marked' ORDER BY created_date DESC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
