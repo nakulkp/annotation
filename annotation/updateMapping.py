@@ -33,7 +33,7 @@ def updateMapping(requestParameters):
         return {'message': "no matching mapping"}
 
     cur.execute("""UPDATE mapping_table 
-                SET status = 'enabled', last_modified_by= %(user_id)s, article_id = %(article_id)s, country_id = %(country_id)s, commodity_id = %(commodity_id)s, category_id = %(category_id)s, subcategory_id = %(subcategory_id)s, moving_factor_id = %(moving_factor_id)s, factor_value_id = %(factor_value_id)s, price_value_id = %(price_value_id)s, supply_value_id = %(supply_value_id)s, demand_value_id = %(demand_value_id)s, sc_disruption_value_id = %(sc_disruption_value_id)s, last_modified = current_timestamp AT TIME ZONE 'UTC'
+                SET status = 'enabled', last_modified_by= %(user_id)s, article_id = %(article_id)s, country_id = %(country_id)s, commodity_id = %(commodity_id)s, category_id = %(category_id)s, subcategory_id = %(subcategory_id)s, moving_factor_id = %(moving_factor_id)s, factor_value_id = %(factor_value_id)s, price_value_id = %(price_value_id)s, supply_value_id = %(supply_value_id)s, demand_value_id = %(demand_value_id)s, sc_disruption_value_id = %(sc_disruption_value_id)s, last_modified = timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC')
                 WHERE mapping_id = %(mapping_id)s;""",
                 {'user_id': user_id, 'article_id': article_id, 'country_id': country_id, 'commodity_id': commodity_id,
                  'category_id': category_id, 'subcategory_id': subcategory_id, 'moving_factor_id': moving_factor_id,
