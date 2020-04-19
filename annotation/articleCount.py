@@ -36,7 +36,13 @@ def articleCount(requestParameters):
     valueList = cur.fetchall()
     markedCount = valueList[0]
 
+    cur.execute("""SELECT COUNT(article_id)
+        FROM master_table;""")
+
+    valueList = cur.fetchall()
+    allCount = valueList[0]
+
     cur.close()
     conn.commit()
 
-    return {'todo':todoCount[0], 'irrelevant': irrelevantCount[0], 'completed': completedCount[0], 'marked':markedCount[0]}
+    return {'todo':todoCount[0], 'irrelevant': irrelevantCount[0], 'completed': completedCount[0], 'marked':markedCount[0], 'all': allCount[0]}
