@@ -1,5 +1,6 @@
 import flask
 from flask import request, jsonify
+from flask import make_response
 from flask_cors import CORS
 import jwt
 import datetime
@@ -58,7 +59,6 @@ from annotation.exportCsv import exportCsv
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
-app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config["SECRET_KEY"] = "!5@adjh@#!@QSQsw1!@c"
 app.config["SALT"] = "3@v2p#nc@asD!@$D%42a5%^Aa6AGU&Y"
 cors = CORS(app)
@@ -474,4 +474,7 @@ def api_updateMapping():
 def api_exportCsv():
     requestParameters = request.get_json()
     status = exportCsv(requestParameters)
-    return jsonify(status)
+    output = make_response(status)
+    output.headers["Content-Disposition"] = "attachment; filename=export.csv"
+    output.headers["Content-type"] = "text/csv"
+    return output
