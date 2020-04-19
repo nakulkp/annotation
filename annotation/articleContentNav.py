@@ -37,26 +37,26 @@ def articleContentNav(requestParameters):
     
     if privilege == '1':
         if direction == 0:
-            cur.execute("""SELECT owner, release_date, source, url, headline, content, question 
+            cur.execute("""SELECT owner, release_date, source, url, headline, content, question, article_id
                 FROM master_table 
                 WHERE article_id <= %(article_id)s ORDER BY article_id ASC LIMIT 1;""",
                         {"article_id": article_id}
                         )
         elif direction == 1:
-            cur.execute("""SELECT owner, release_date, source, url, headline, content, question 
+            cur.execute("""SELECT owner, release_date, source, url, headline, content, question, article_id
                 FROM master_table 
                 WHERE article_id >= %(article_id)s AND status='todo' ORDER BY article_id ASC LIMIT 1;""",
                         {"article_id": article_id}
                         )
     else:
         if direction == 0:
-            cur.execute("""SELECT owner, release_date, source, url, headline, content, question 
+            cur.execute("""SELECT owner, release_date, source, url, headline, content, question , article_id
                 FROM master_table 
                 WHERE article_id <= %(article_id)s AND user_id= %(user_id)s ORDER BY article_id ASC LIMIT 1;""",
                         {"article_id": article_id, "user_id": user_id}
                         )
         elif direction == 1:
-            cur.execute("""SELECT owner, release_date, source, url, headline, content, question 
+            cur.execute("""SELECT owner, release_date, source, url, headline, content, question, article_id 
                 FROM master_table 
                 WHERE article_id >= %(article_id)s AND user_id= %(user_id)s AND status='todo' ORDER BY article_id ASC LIMIT 1;""",
                         {"article_id": article_id, "user_id": user_id}
@@ -70,6 +70,7 @@ def articleContentNav(requestParameters):
     headline = row[0][4]
     content = row[0][5]
     question = row[0][6]
+    article_id = row[0][7]
     
     cur.execute(
         """SELECT username FROM users WHERE user_id = %(user_id)s LIMIT 1;""",
