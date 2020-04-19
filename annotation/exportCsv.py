@@ -16,8 +16,8 @@ def exportCsv(requestParameters):
     exportValues = cur.fetchall()
 
     dateTimeObj = datetime.now()
-    timestampStr = dateTimeObj.strftime("%Y%b%d%H%M%S%f)")
-    filename = timestampStr + '.csv'
+    timestampStr = dateTimeObj.strftime("%Y%b%d%H%M%S%f")
+    filename = "/annotation/exports/" timestampStr + '.csv'
     
     with open(filename, 'w+', newline='') as file:
         writer = csv.writer(file)
@@ -25,4 +25,4 @@ def exportCsv(requestParameters):
         for row in exportValues:
             writer.writerow(row)
 
-    return 'success';
+    return 'success'
