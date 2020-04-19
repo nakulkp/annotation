@@ -17,7 +17,8 @@ def exportCsv(requestParameters):
 
     dateTimeObj = datetime.now()
     timestampStr = dateTimeObj.strftime("%Y%b%d%H%M%S%f")
-    filename = "/annotation/exports/" + timestampStr + '.csv'
+    proper_filename = "/annotation/exports/" + timestampStr + '.csv'
+    filename = os.path.join(current_app.config['UPLOAD_FOLDER'], proper_filename)
     
     with open(filename, 'w+', newline='') as file:
         writer = csv.writer(file)
