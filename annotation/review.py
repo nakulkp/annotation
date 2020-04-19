@@ -90,6 +90,7 @@ def review(requestParameters):
                         WHERE user_id=%(user_id)s AND WHERE status='marked' ORDER BY created_date DESC LIMIT %(limit)s OFFSET %(offset)s;""", {'user_id': user_id, "limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
 
+    finalValues = []
     for rv in reviewValues:
         owner = rv[0]
         cur.execute(
@@ -100,9 +101,9 @@ def review(requestParameters):
         ownername = row[0][0]
         lst = list(rv)
         lst[0] = ownername
-        rv = tuple(lst)
+        finalValues.append(lst)
 
     cur.close()
     conn.commit()
     conn.close()
-    return {'data': reviewValues, 'pages': pageCount, 'limit': limit, 'offset': offset},
+    return {'data': finalValues, 'pages': pageCount, 'limit': limit, 'offset': offset},
