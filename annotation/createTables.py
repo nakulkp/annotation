@@ -25,7 +25,7 @@ def createTables():
             article_id SERIAL NOT NULL,
             headline varchar NOT NULL,
             content varchar NOT NULL,
-            owner varchar NOT NULL,
+            owner INTEGER NOT NULL,
             release_date date NOT NULL,
             source text,
             url text,
@@ -51,10 +51,10 @@ def createTables():
             demand_value_id INTEGER NOT NULL,
             sc_disruption_value_id INTEGER NOT NULL,
             last_modified DATE,
-            last_modified_by varchar,
+            last_modified_by INTEGER,
             status varchar,
             deleted_on_date DATE,
-            deleted_by varchar,
+            deleted_by INTEGER,
             CONSTRAINT mapping_table_pkey PRIMARY KEY (mapping_id)
         );   
         """,
