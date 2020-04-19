@@ -39,7 +39,7 @@ def articleContentNav(requestParameters):
         if direction == 0:
             cur.execute("""SELECT owner, release_date, source, url, headline, content, question, article_id
                 FROM master_table 
-                WHERE article_id <= %(article_id)s ORDER BY article_id ASC LIMIT 1;""",
+                WHERE article_id <= %(article_id)s ORDER BY article_id DESC LIMIT 1;""",
                         {"article_id": article_id}
                         )
         elif direction == 1:
@@ -52,7 +52,7 @@ def articleContentNav(requestParameters):
         if direction == 0:
             cur.execute("""SELECT owner, release_date, source, url, headline, content, question , article_id
                 FROM master_table 
-                WHERE article_id <= %(article_id)s AND user_id= %(user_id)s ORDER BY article_id ASC LIMIT 1;""",
+                WHERE article_id <= %(article_id)s AND user_id= %(user_id)s ORDER BY article_id DESC LIMIT 1;""",
                         {"article_id": article_id, "user_id": user_id}
                         )
         elif direction == 1:
