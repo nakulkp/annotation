@@ -14,19 +14,16 @@ def articleContentNav(requestParameters):
     cur = conn.cursor()
 
     if direction == 0:
-        if article_id != 1:
-            article_id -= article_id
-            cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE article_id = %(article_id)s;""", {"article_id": article_id})
-            todoCount = cur.fetchone()
-        else:
-            article_id -= article_id
-            cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE article_id <= %(article_id)s;""", {"article_id": article_id})
-            todoCount = cur.fetchone()
-        todoCount = todoCount[0]        
+        cur.execute("""SELECT COUNT(article_id)
+            FROM master_table
+            WHERE article_id <= %(article_id)s;""", {"article_id": article_id})
+        todoCount = cur.fetchone()
+        todoCount = todoCount[0]
 
     elif direction == 1:
-        article_id += article_id
-        cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE article_id >= %(article_id)s;""", {"article_id": article_id})
+        cur.execute("""SELECT COUNT(article_id)
+            FROM master_table
+            WHERE article_id >= %(article_id)s;""", {"article_id": article_id})
         todoCount = cur.fetchone()
         todoCount = todoCount[0]
 
