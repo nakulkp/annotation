@@ -54,6 +54,7 @@ from annotation.review import review
 from annotation.updateMapping import updateMapping
 from annotation.userSignUp import userSignUp
 from annotation.login import login
+from annotation.exportCsv import exportCsv
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
@@ -465,4 +466,11 @@ def api_annotationCount():
 def api_updateMapping():
     requestParameters = request.get_json()
     status = updateMapping(requestParameters)
+    return jsonify(status)
+
+@app.route('/exportcsv', methods=['POST'])
+@token_required
+def api_exportCsv():
+    requestParameters = request.get_json()
+    status = exportCsv(requestParameters)
     return jsonify(status)
