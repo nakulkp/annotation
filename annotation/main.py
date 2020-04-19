@@ -474,8 +474,8 @@ def api_updateMapping():
 def api_exportCsv():
     requestParameters = request.get_json()
     status = exportCsv(requestParameters)
-    output = make_response("Hellooooooooooooo")
-    output.headers["Content-Disposition"] = "attachment; filename=export.csv"
-    output.headers["Content-type"] = "text/csv"
+    output = make_response(status)
+    output.headers["content-disposition"] = "attachment; filename=export.csv"
+    output.headers["content-type"] = "text/csv"
     output.headers['Access-Control-Allow-Origin'] = '*'
     return output
