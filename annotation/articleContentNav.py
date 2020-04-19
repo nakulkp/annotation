@@ -18,23 +18,17 @@ def articleContentNav(requestParameters):
     if direction == 0:
         if article_id != 1:
             article_id -= article_id
-            cur.execute("""SELECT COUNT(article_id)
-                FROM master_table
-                WHERE article_id <= %(article_id)s;""", {"article_id": article_id})
+            cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE article_id <= %(article_id)s;""", {"article_id": article_id})
             todoCount = cur.fetchone()
         else:
             article_id -= article_id
-            cur.execute("""SELECT COUNT(article_id)
-                FROM master_table
-                WHERE article_id = %(article_id)s;""", {"article_id": article_id})
+            cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE article_id = %(article_id)s;""", {"article_id": article_id})
             todoCount = cur.fetchone()
         todoCount = todoCount[0]        
 
     elif direction == 1:
         article_id += article_id
-        cur.execute("""SELECT COUNT(article_id)
-            FROM master_table
-            WHERE article_id >= %(article_id)s;""", {"article_id": article_id})
+        cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE article_id >= %(article_id)s;""", {"article_id": article_id})
         todoCount = cur.fetchone()
         todoCount = todoCount[0]
 
@@ -48,28 +42,20 @@ def articleContentNav(requestParameters):
     
     if privilege == '1':
         if direction == 0:
-            cur.execute("""SELECT owner, release_date, source, url, headline, content, question 
-                FROM master_table 
-                WHERE article_id <= %(article_id)s ORDER BY article_id ASC LIMIT 1;""",
+            cur.execute("""SELECT owner, release_date, source, url, headline, content, question FROM master_table WHERE article_id <= %(article_id)s ORDER BY article_id ASC LIMIT 1;""",
                         {"article_id": article_id}
                         )
         elif direction == 1:
-            cur.execute("""SELECT owner, release_date, source, url, headline, content, question 
-                FROM master_table 
-                WHERE article_id >= %(article_id)s AND status='todo' ORDER BY article_id ASC LIMIT 1;""",
+            cur.execute("""SELECT owner, release_date, source, url, headline, content, question FROM master_table WHERE article_id >= %(article_id)s AND status='todo' ORDER BY article_id ASC LIMIT 1;""",
                         {"article_id": article_id}
                         )
     else:
         if direction == 0:
-            cur.execute("""SELECT owner, release_date, source, url, headline, content, question 
-                FROM master_table 
-                WHERE article_id <= %(article_id)s AND user_id= %(user_id)s ORDER BY article_id ASC LIMIT 1;""",
+            cur.execute("""SELECT owner, release_date, source, url, headline, content, question FROM master_table WHERE article_id <= %(article_id)s AND user_id= %(user_id)s ORDER BY article_id ASC LIMIT 1;""",
                         {"article_id": article_id, "user_id": user_id}
                         )
         elif direction == 1:
-            cur.execute("""SELECT owner, release_date, source, url, headline, content, question 
-                FROM master_table 
-                WHERE article_id >= %(article_id)s AND user_id= %(user_id)s AND status='todo' ORDER BY article_id ASC LIMIT 1;""",
+            cur.execute("""SELECT owner, release_date, source, url, headline, content, question FROM master_table WHERE article_id >= %(article_id)s AND user_id= %(user_id)s AND status='todo' ORDER BY article_id ASC LIMIT 1;""",
                         {"article_id": article_id, "user_id": user_id}
                         )
         
