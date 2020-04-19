@@ -15,7 +15,7 @@ def review(requestParameters):
     factor = requestParameters['factor']
 
     offset = (page-1)*factor
-    limit = offset + factor
+    limit = factor
 
     cur.execute("""SELECT COUNT(article_id) FROM master_table;""")
     dataCount = cur.fetchall()
