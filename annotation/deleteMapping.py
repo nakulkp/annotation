@@ -20,8 +20,7 @@ def deleteMapping(requestParameters):
         return {'message': "no matching mapping"}
 
     cur.execute("""UPDATE mapping_table 
-                SET status = 'disabled', deleted_by= %(user_id)s, deleted_on_date = timestamp without time zone
-                WHERE mapping_id = %(mapping_id)s;""",
+                SET status = 'disabled', deleted_by= %(user_id)s, deleted_on_date = timestamp without time zone WHERE mapping_id = %(mapping_id)s;""",
                 {'user_id': user_id, 'mapping_id': mapping_id}
                 )
     cur.close()
