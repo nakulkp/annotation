@@ -10,14 +10,14 @@ def fetchCategory(requestParameters):
     cur = conn.cursor()
     is_null = requestParameters['is_null']
     page = requestParameters['page']
-    offset = (page-1)*10
-    limit = 10
+    offset = (page-1)*20
+    limit = 20
 
     cur.execute("""SELECT COUNT(category_id) FROM category_table;""")
     dataCount = cur.fetchall()
     dataCount = dataCount[0]
-    pageCount = dataCount[0]//10
-    if (dataCount[0] % 10) != 0 and dataCount[0] > 10:
+    pageCount = dataCount[0]//20
+    if (dataCount[0] % 20) != 0 and dataCount[0] > 20:
         pageCount = pageCount + 1
 
     if is_null == 'NULL':
