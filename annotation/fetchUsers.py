@@ -10,7 +10,7 @@ def fetchUsers(requestParameters):
 
     #page = requestParameters['page']
     #offset = (page-1)*10
-    #limit = offset + 10
+    #limit = 10
 
     #cur.execute("""SELECT COUNT(category_id) FROM category_table;""")
     #dataCount = cur.fetchall()

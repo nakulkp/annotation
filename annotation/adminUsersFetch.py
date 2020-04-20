@@ -10,7 +10,7 @@ def adminUsersFetch(requestParameters):
     cur = conn.cursor()
     page = requestParameters['page']
     offset = (page-1)*10
-    limit = offset + 10
+    limit = 10
 
     cur.execute("""SELECT COUNT(user_id) FROM users;""")
     dataCount = cur.fetchall()

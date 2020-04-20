@@ -12,7 +12,7 @@ def fetchPrice(requestParameters):
     is_null = requestParameters['is_null']
     page = requestParameters['page']
     offset = (page-1)*10
-    limit = offset + 10
+    limit = 10
 
     cur.execute("""SELECT COUNT(price_value_id) FROM price;""")
     dataCount = cur.fetchall()

@@ -10,7 +10,7 @@ def fetchFactorValue(requestParameters):
     is_null = requestParameters['is_null']
     page = requestParameters['page']
     offset = (page-1)*10
-    limit = offset + 10
+    limit = 10
 
     cur.execute("""SELECT COUNT(factor_value_id) FROM factor_value_table;""")
     dataCount = cur.fetchall()

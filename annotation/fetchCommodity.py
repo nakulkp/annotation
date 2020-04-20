@@ -12,7 +12,7 @@ def fetchCommodity(requestParameters):
     is_null = requestParameters['is_null']
     page = requestParameters['page']
     offset = (page-1)*10
-    limit = offset + 10
+    limit = 10
 
     cur.execute("""SELECT COUNT(commodity_id) FROM commodity_table;""")
     dataCount = cur.fetchall()

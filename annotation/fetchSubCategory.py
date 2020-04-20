@@ -12,7 +12,7 @@ def fetchSubCategory(requestParameters):
 
     page = requestParameters['page']
     offset = (page-1)*10
-    limit = offset + 10
+    limit = 10
 
     cur.execute("""SELECT COUNT(sub_categories) FROM subcategory_table;""")
     dataCount = cur.fetchall()

@@ -11,7 +11,7 @@ def fetchMovingFactor(requestParameters):
     is_null = requestParameters['is_null']
     page = requestParameters['page']
     offset = (page-1)*10
-    limit = offset + 10
+    limit = 10
 
     cur.execute("""SELECT COUNT(moving_factor_id) FROM moving_factor_table;""")
     dataCount = cur.fetchall()
