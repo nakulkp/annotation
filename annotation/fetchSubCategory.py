@@ -31,7 +31,7 @@ def fetchSubCategory(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT sub_categories, sub_category_id, status
-            FROM subcategory_table LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
+            FROM subcategory_table ORDER BY sub_category_id ASC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
         rows = cur.fetchall()
         valueList = []
 
@@ -55,7 +55,7 @@ def fetchSubCategory(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT sub_categories, sub_category_id, status
-            FROM subcategory_table WHERE status='enabled';""")
+            FROM subcategory_table WHERE status='enabled' ORDER BY sub_category_id ASC;""")
         rows = cur.fetchall()
         valueList = []
 

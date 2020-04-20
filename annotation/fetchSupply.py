@@ -30,7 +30,7 @@ def fetchSupply(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT supply_value, supply_value_id, status
-            FROM supply LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
+            FROM supply ORDER BY supply_value_id ASC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
         rows = cur.fetchall()
         valueList = []
 
@@ -53,7 +53,7 @@ def fetchSupply(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT supply_value, supply_value_id, status
-            FROM supply WHERE status='enabled';""")
+            FROM supply WHERE status='enabled' ORDER BY supply_value_id ASC;""")
         rows = cur.fetchall()
         valueList = []
 

@@ -31,7 +31,7 @@ def fetchCommodity(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT commodities, commodity_id, status
-            FROM commodity_table LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
+            FROM commodity_table ORDER BY commodity_id ASC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
         rows = cur.fetchall()
         valueList = []
         for row in rows:
@@ -53,7 +53,7 @@ def fetchCommodity(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT commodities, commodity_id, status
-            FROM commodity_table WHERE status='enabled';""")
+            FROM commodity_table WHERE status='enabled' ORDER BY commodity_id ASC;""")
         rows = cur.fetchall()
         valueList = []
         for row in rows:

@@ -30,7 +30,7 @@ def fetchSCDisruption(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT sc_disruption_value, sc_disruption_value_id, status
-            FROM sc_disruption LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
+            FROM sc_disruption ORDER BY sc_disruption_value_id ASC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
         rows = cur.fetchall()
         valueList = []
 
@@ -53,7 +53,7 @@ def fetchSCDisruption(requestParameters):
             return {'message': "no values"}
 
         cur.execute("""SELECT sc_disruption_value, sc_disruption_value_id, status
-            FROM sc_disruption WHERE status='enabled';""")
+            FROM sc_disruption WHERE status='enabled' ORDER BY sc_disruption_value_id ASC;""")
         rows = cur.fetchall()
         valueList = []
 
