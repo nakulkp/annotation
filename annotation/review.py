@@ -18,17 +18,26 @@ def review(requestParameters):
     offset = (page-1)*factor
     limit = factor
 
-    cur.execute("""SELECT COUNT(article_id) FROM master_table;""")
-    dataCount = cur.fetchall()
-    dataCount = dataCount[0]
-    pageCount = dataCount[0]//factor
-    if (dataCount[0] % factor) != 0 and dataCount[0] > factor:
-        pageCount = pageCount + 1        
-
     cur.execute("SELECT privilege FROM users WHERE user_id = %(user_id)s; ",
-                {'user_id': user_id})
+                 WHERE user_id = %(user_id)s)
     privilege = cur.fetchone()
     privilege = privilege[0]
+    
+    if privilege == '1':
+        cur.execute("""SELECT COUNT(article_id) FROM master_table;""")
+        dataCount = cur.fetchall()
+        dataCount = dataCount[0]
+        pageCount = dataCount[0]//factor
+        if (dataCount[0] % factor) != 0 and dataCount[0] > factor:
+            pageCount = pageCount + 1    
+            
+    else:
+        cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s;""", WHERE user_id = %(user_id)s)
+        dataCount = cur.fetchall()
+        dataCount = dataCount[0]
+        pageCount = dataCount[0]//factor
+        if (dataCount[0] % factor) != 0 and dataCount[0] > factor:
+            pageCount = pageCount + 1           
 
     if filter_ == 'all':
         if privilege == '1':

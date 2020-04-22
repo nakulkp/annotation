@@ -30,3 +30,4 @@ def adminUsersFetch(requestParameters):
     conn.commit
     conn.close()
     return {'data': valueList, 'pages': pageCount}
+    

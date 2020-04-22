@@ -17,6 +17,19 @@ def adminUserEdit(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
+    if(pass_key = 'NULL'):
+        cur.execute(
+            """UPDATE users
+            SET username = %(username)s, email = %(email)s, phone = %(phone)s, status = %(status)s, privilege = %(privilege)s
+            WHERE user_id = %(user_id)s;""",
+            {'user_id': user_id, 'username': username, 'email': email, 'phone': phone,
+            'status': status, 'privilege': privilege})
+        conn.commit()
+        cur.close()
+        conn.close()
+        return ({"message": "success"})
+
+    pass_key = passHash(password)
     cur.execute(
         """UPDATE users
          SET username = %(username)s, email = %(email)s, phone = %(phone)s, pass_key = %(pass_key)s, status = %(status)s, privilege = %(privilege)s
