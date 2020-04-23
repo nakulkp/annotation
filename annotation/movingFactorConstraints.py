@@ -2,7 +2,7 @@ import psycopg2
 from annotation.config import config
 
 
-def factorValueConstraints(requestParameters):
+def movingFactorConstraints(requestParameters):
     conn = None
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()

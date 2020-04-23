@@ -56,6 +56,8 @@ from annotation.updateMapping import updateMapping
 from annotation.userSignUp import userSignUp
 from annotation.login import login
 from annotation.exportCsv import exportCsv
+from annotation.movingFactorConstraints import movingFactorConstraints
+from annotation.subCategoryConstraints import subCategoryConstraints
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
@@ -474,4 +476,18 @@ def api_updateMapping():
 def api_exportCsv():
     requestParameters = request.get_json()
     status = exportCsv(requestParameters)
+    return jsonify(status)
+
+@app.route('/subcatconstraints', methods=['POST'])
+@token_required
+def api_subCategoryConstraints():
+    requestParameters = request.get_json()
+    status = subCategoryConstraints(requestParameters)
+    return jsonify(status)
+
+@app.route('/mfactorconstraints', methods=['POST'])
+@token_required
+def api_movingFactorConstraints():
+    requestParameters = request.get_json()
+    status = movingFactorConstraints(requestParameters)
     return jsonify(status)
