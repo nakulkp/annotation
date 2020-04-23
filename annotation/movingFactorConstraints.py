@@ -44,6 +44,9 @@ def movingFactorConstraints(requestParameters):
             FROM moving_factor_table WHERE status='enabled' AND sub_category_id = %(scat_id)s) ORDER BY moving_factor_id ASC;""", {'scat_id': scat_id})
             
         rows = cur.fetchall()
+        for row in rows:
+            value = {"moving_factors": row[0], "moving_factor_id": row[1], "status": row[2], "sub_category_id": row[3], "commodity_id": row[4]}
+            valueList.append(value)
 
         cur.close()
         conn.commit()
@@ -76,6 +79,9 @@ def movingFactorConstraints(requestParameters):
             FROM moving_factor_table WHERE status='enabled' AND commodity_id = %(cmd_id)s) ORDER BY moving_factor_id ASC;""", {'cmd_id': cmd_id})
             
         rows = cur.fetchall()
+        for row in rows:
+            value = {"moving_factors": row[0], "moving_factor_id": row[1], "status": row[2], "sub_category_id": row[3], "commodity_id": row[4]}
+            valueList.append(value)
 
         cur.close()
         conn.commit()
@@ -108,6 +114,9 @@ def movingFactorConstraints(requestParameters):
             FROM moving_factor_table WHERE status='enabled' AND commodity_id = %(cmd_id)s OR sub_category_id = %(scat_id)s) ORDER BY moving_factor_id ASC;""", {'cmd_id': cmd_id, 'scat_id': scat_id})
             
         rows = cur.fetchall()
+        for row in rows:
+            value = {"moving_factors": row[0], "moving_factor_id": row[1], "status": row[2], "sub_category_id": row[3], "commodity_id": row[4]}
+            valueList.append(value)
 
         cur.close()
         conn.commit()
