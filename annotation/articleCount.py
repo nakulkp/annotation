@@ -15,7 +15,7 @@ def articleCount(requestParameters):
     privilege = cur.fetchone()
     privilege = privilege[0]
 
-    if privilege = '1':
+    if privilege == '1':
         cur.execute("""SELECT COUNT(article_id)
             FROM master_table
             WHERE status = 'todo';""")
