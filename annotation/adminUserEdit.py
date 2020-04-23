@@ -17,7 +17,7 @@ def adminUserEdit(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    if(pass_key = 'NULL'):
+    if pass_key == 'NULL':
         cur.execute(
             """UPDATE users
             SET username = %(username)s, email = %(email)s, phone = %(phone)s, status = %(status)s, privilege = %(privilege)s
