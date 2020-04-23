@@ -90,6 +90,7 @@ def createTables():
             created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
             sub_categories varchar NOT NULL,
             sub_category_id SERIAL NOT NULL,
+            category_id INTEGER DEFAULT NULL,
             status varchar NOT NULL,
             CONSTRAINT subcategory_table_pkey PRIMARY KEY (sub_category_id)
         );
@@ -99,6 +100,8 @@ def createTables():
             created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
             moving_factors varchar NOT NULL,
             moving_factor_id SERIAL NOT NULL,
+            commodity_id INTEGER DEFAULT NULL,
+            sub_category_id INTEGER DEFAULT NULL,
             status varchar NOT NULL,
             CONSTRAINT moving_factor_table_pkey PRIMARY KEY (moving_factor_id)
         );
