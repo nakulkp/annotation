@@ -39,8 +39,8 @@ def movingFactorConstraints(requestParameters):
 
             value = {"moving_factors": "-------------------", "moving_factor_id": -1, "status": 'none', "sub_category_id": -1, "commodity_id": -1}
 
-        cur.execute("""SELECT moving_factors, moving_factor_id, status, , sub_category_id, commodity_id
-            FROM moving_factor_table WHERE status='enabled' EXCEPT (SELECT moving_factor_id
+        cur.execute("""SELECT moving_factors, moving_factor_id, status, sub_category_id, commodity_id
+            FROM moving_factor_table WHERE status='enabled' EXCEPT (SELECT moving_factors, moving_factor_id, status, sub_category_id, commodity_id
             FROM moving_factor_table WHERE status='enabled' AND sub_category_id = %(scat_id)s) ORDER BY moving_factor_id ASC;""", {'scat_id': scat_id})
             
         rows = cur.fetchall()
@@ -71,8 +71,8 @@ def movingFactorConstraints(requestParameters):
 
             value = {"moving_factors": "-------------------", "moving_factor_id": -1, "status": 'none', "sub_category_id": -1, "commodity_id": -1}
 
-        cur.execute("""SELECT moving_factors, moving_factor_id, status, , sub_category_id, commodity_id
-            FROM moving_factor_table WHERE status='enabled' EXCEPT (SELECT moving_factor_id
+        cur.execute("""SELECT moving_factors, moving_factor_id, status, sub_category_id, commodity_id
+            FROM moving_factor_table WHERE status='enabled' EXCEPT (SELECT moving_factors, moving_factor_id, status, sub_category_id, commodity_id
             FROM moving_factor_table WHERE status='enabled' AND commodity_id = %(cmd_id)s) ORDER BY moving_factor_id ASC;""", {'cmd_id': cmd_id})
             
         rows = cur.fetchall()
@@ -103,8 +103,8 @@ def movingFactorConstraints(requestParameters):
 
             value = {"moving_factors": "-------------------", "moving_factor_id": -1, "status": 'none', "sub_category_id": -1, "commodity_id": -1}
 
-        cur.execute("""SELECT moving_factors, moving_factor_id, status, , sub_category_id, commodity_id
-            FROM moving_factor_table WHERE status='enabled' EXCEPT (SELECT moving_factor_id
+        cur.execute("""SELECT moving_factors, moving_factor_id, status, sub_category_id, commodity_id
+            FROM moving_factor_table WHERE status='enabled' EXCEPT (SELECT moving_factors, moving_factor_id, status, sub_category_id, commodity_id
             FROM moving_factor_table WHERE status='enabled' AND commodity_id = %(cmd_id)s OR sub_category_id = %(scat_id)s) ORDER BY moving_factor_id ASC;""", {'cmd_id': cmd_id, 'scat_id': scat_id})
             
         rows = cur.fetchall()

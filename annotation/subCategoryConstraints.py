@@ -32,7 +32,7 @@ def subCategoryConstraints(requestParameters):
     valueList.append(value)
         
     cur.execute("""SELECT sub_categories, sub_category_id, category_id, status
-        FROM subcategory_table WHERE status='enabled' EXCEPT (SELECT sub_category_id
+        FROM subcategory_table WHERE status='enabled' EXCEPT (SELECT sub_categories, sub_category_id, category_id, status
         FROM subcategory_table WHERE status='enabled' AND category_id = %(cat_id)s) ORDER BY sub_category_id ASC;""",  {"cat_id": cat_id})
     rows = cur.fetchall()
 
