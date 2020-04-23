@@ -19,7 +19,7 @@ def review(requestParameters):
     limit = factor
 
     cur.execute("SELECT privilege FROM users WHERE user_id = %(user_id)s; ",
-                 WHERE user_id = %(user_id)s)
+                 {'user_id': user_id})
     privilege = cur.fetchone()
     privilege = privilege[0]
     
