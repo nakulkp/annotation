@@ -38,6 +38,7 @@ def movingFactorConstraints(requestParameters):
             valueList.append(value)
 
         value = {"moving_factors": "-------------------", "moving_factor_id": -1, "status": 'none', "sub_category_id": -1, "commodity_id": -1}
+        valueList.append(value)
 
         cur.execute("""SELECT moving_factors, moving_factor_id, status, sub_category_id, commodity_id
             FROM moving_factor_table WHERE status='enabled' EXCEPT (SELECT moving_factors, moving_factor_id, status, sub_category_id, commodity_id
@@ -73,6 +74,7 @@ def movingFactorConstraints(requestParameters):
             valueList.append(value)
 
         value = {"moving_factors": "-------------------", "moving_factor_id": -1, "status": 'none', "sub_category_id": -1, "commodity_id": -1}
+        valueList.append(value)
 
         cur.execute("""SELECT moving_factors, moving_factor_id, status, sub_category_id, commodity_id
             FROM moving_factor_table WHERE status='enabled' EXCEPT (SELECT moving_factors, moving_factor_id, status, sub_category_id, commodity_id
@@ -108,6 +110,7 @@ def movingFactorConstraints(requestParameters):
             valueList.append(value)
 
         value = {"moving_factors": "-------------------", "moving_factor_id": -1, "status": 'none', "sub_category_id": -1, "commodity_id": -1}
+        valueList.append(value)
 
         cur.execute("""SELECT moving_factors, moving_factor_id, status, sub_category_id, commodity_id
             FROM moving_factor_table WHERE status='enabled' EXCEPT (SELECT moving_factors, moving_factor_id, status, sub_category_id, commodity_id
