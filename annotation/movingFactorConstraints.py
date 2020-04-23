@@ -37,7 +37,7 @@ def movingFactorConstraints(requestParameters):
             value = {"moving_factors": row[0], "moving_factor_id": row[1], "status": row[2], "sub_category_id": row[3], "commodity_id": row[4]}
             valueList.append(value)
 
-            value = {"moving_factors": "-------------------", "moving_factor_id": -1, "status": 'none', "sub_category_id": -1, "commodity_id": -1}
+        value = {"moving_factors": "-------------------", "moving_factor_id": -1, "status": 'none', "sub_category_id": -1, "commodity_id": -1}
 
         cur.execute("""SELECT moving_factors, moving_factor_id, status, sub_category_id, commodity_id
             FROM moving_factor_table WHERE status='enabled' EXCEPT (SELECT moving_factors, moving_factor_id, status, sub_category_id, commodity_id
@@ -72,7 +72,7 @@ def movingFactorConstraints(requestParameters):
             value = {"moving_factors": row[0], "moving_factor_id": row[1], "status": row[2], "sub_category_id": row[3], "commodity_id": row[4]}
             valueList.append(value)
 
-            value = {"moving_factors": "-------------------", "moving_factor_id": -1, "status": 'none', "sub_category_id": -1, "commodity_id": -1}
+        value = {"moving_factors": "-------------------", "moving_factor_id": -1, "status": 'none', "sub_category_id": -1, "commodity_id": -1}
 
         cur.execute("""SELECT moving_factors, moving_factor_id, status, sub_category_id, commodity_id
             FROM moving_factor_table WHERE status='enabled' EXCEPT (SELECT moving_factors, moving_factor_id, status, sub_category_id, commodity_id
@@ -107,7 +107,7 @@ def movingFactorConstraints(requestParameters):
             value = {"moving_factors": row[0], "moving_factor_id": row[1], "status": row[2], "sub_category_id": row[3], "commodity_id": row[4]}
             valueList.append(value)
 
-            value = {"moving_factors": "-------------------", "moving_factor_id": -1, "status": 'none', "sub_category_id": -1, "commodity_id": -1}
+        value = {"moving_factors": "-------------------", "moving_factor_id": -1, "status": 'none', "sub_category_id": -1, "commodity_id": -1}
 
         cur.execute("""SELECT moving_factors, moving_factor_id, status, sub_category_id, commodity_id
             FROM moving_factor_table WHERE status='enabled' EXCEPT (SELECT moving_factors, moving_factor_id, status, sub_category_id, commodity_id
