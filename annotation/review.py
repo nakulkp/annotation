@@ -32,7 +32,7 @@ def review(requestParameters):
             pageCount = pageCount + 1    
             
     else:
-        cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s;""", WHERE user_id = %(user_id)s)
+        cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s;""", {'user_id': user_id})
         dataCount = cur.fetchall()
         dataCount = dataCount[0]
         pageCount = dataCount[0]//factor
