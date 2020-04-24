@@ -1,5 +1,5 @@
 import psycopg2
-from annotation.config import config
+#from annotation.config import config
 
 
 def csvUpload(requestParameters):
