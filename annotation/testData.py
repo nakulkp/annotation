@@ -13,7 +13,7 @@ def testData():
 
     headline = "Test Headline"
     content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sed feugiat risus. Nunc mauris nisi, gravida non nulla dapibus, laoreet pretium purus. Donec aliquam orci at ipsum congue, at bibendum metus lobortis."
-    owner = "John Doe"
+    owner = 999
     release_date = "2020-04-24"
     source = "Test Source"
     url = "Test URL"
