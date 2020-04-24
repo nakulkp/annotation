@@ -26,8 +26,8 @@ def testData():
                     {'user_id': user_id, 'headline': headline, 'content': content, 'owner': owner,
                     'release_date': release_date, 'source': source, 'url': url, 'question': question,
                     'status': status})
-        cur.close()
-        conn.commit()
+    cur.close()
+    conn.commit()
 
     conn.close()
     return "success"
