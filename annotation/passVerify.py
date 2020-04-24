@@ -6,4 +6,7 @@ bcrypt = Bcrypt(app)
 
 
 def passVerify(pass_key, password):
-    return bcrypt.check_password_hash(pass_key, password)
+    try:
+        return bcrypt.check_password_hash(pass_key, password)
+    except:
+        return False;
