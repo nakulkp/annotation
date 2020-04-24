@@ -29,13 +29,13 @@ def fetchMovingFactor(requestParameters):
         if not valueExists:
             return {'message': "no values"}
 
-        cur.execute("""SELECT moving_factors, moving_factor_id, status
+        cur.execute("""SELECT moving_factors, moving_factor_id, status, sub_category_id, commodity_id
             FROM moving_factor_table ORDER BY moving_factor_id ASC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
         rows = cur.fetchall()
         valueList = []
 
         for row in rows:
-            value = {"moving_factors": row[0], "moving_factor_id": row[1], "status": row[2]}
+            value = {"moving_factors": row[0], "moving_factor_id": row[1], "status": row[2], "sub_category_id": row[3], "commodity_id": row[4]}
             valueList.append(value)
 
         cur.close()

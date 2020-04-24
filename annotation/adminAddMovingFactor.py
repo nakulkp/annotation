@@ -5,14 +5,16 @@ from annotation.config import config
 def adminAddMovingFactor(requestParameters):
     conn = None
     moving_factors = requestParameters['moving_factors']
+    sub_category_id  requestParameters['sub_category_id']
+    commodity_id  requestParameters['commodity_id']
 
     # params = config()
     # conn = psycopg2.connect(**params)
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
     cur.execute(
-        "INSERT INTO moving_factor_table (moving_factors,status) VALUES (%(moving_factors)s,'enabled');",
-        {'moving_factors': moving_factors})
+        "INSERT INTO moving_factor_table (moving_factors,status,sub_category_id,commodity_id) VALUES (%(moving_factors)s,'enabled');",
+        {'moving_factors': moving_factors, 'sub_category_id': sub_category_id, 'commodity_id': commodity_id})
     conn.commit()
 
     cur.execute("SELECT EXISTS (SELECT 1 FROM moving_factor_table WHERE moving_factors = %(moving_factors)s LIMIT 1);",

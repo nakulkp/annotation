@@ -30,13 +30,13 @@ def fetchSubCategory(requestParameters):
         if not valueExists:
             return {'message': "no values"}
 
-        cur.execute("""SELECT sub_categories, sub_category_id, status
+        cur.execute("""SELECT sub_categories, sub_category_id, status, category_id
             FROM subcategory_table ORDER BY sub_category_id ASC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
         rows = cur.fetchall()
         valueList = []
 
         for row in rows:
-            value = {"sub_categories": row[0], "sub_category_id": row[1], "status": row[2]}
+            value = {"sub_categories": row[0], "sub_category_id": row[1], "status": row[2], "category_id": row[3]}
             valueList.append(value)
 
 
