@@ -107,7 +107,7 @@ def review(requestParameters):
     elif filter_ == 'completed':
         if privilege == '1':
             cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
-                FROM master_table WHERE status='completed' ORDER BY created_date DESC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
+                FROM master_table WHERE status ='completed' ORDER BY created_date DESC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
             
             cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE status='completed';""")

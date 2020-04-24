@@ -84,7 +84,7 @@ def articleCount(requestParameters):
         markedCount = valueList[0]
 
         cur.execute("""SELECT COUNT(article_id)
-            FROM master_table AND user_id = %(user_id)s;""",
+            FROM master_table user_id = %(user_id)s;""",
                 {'user_id': user_id})
 
         valueList = cur.fetchall()
