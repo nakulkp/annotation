@@ -2,7 +2,7 @@ import psycopg2
 #from annotation.config import config
 
 
-def csvUpload(requestParameters):
+def testData():
     # params = config()
     # conn = psycopg2.connect(**params)
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
