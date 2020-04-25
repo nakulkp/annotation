@@ -37,11 +37,11 @@ def fetchMovingFactor(requestParameters):
         valueList = []
 
         for row in rows:
-            if row[3] != None and row[4] != None:
+            if row[3] != -1 and row[4] != -1:
                 value = {"moving_factors": row[0], "moving_factor_id": row[1], "status": row[2], "sub_category_id": row[3], "commodity_id": row[4], "sub_category" : fetchSubCategory({'is_null' : "no", 'sub_category_id': row[3], 'page': 0}),"commodity" : fetchCommodity({'is_null' : "no", 'commodity_id': row[4], 'page': 0})}
-            elif row[3] == None and row[4] != None:
+            elif row[3] == -1 and row[4] != -1:
                 value = {"moving_factors": row[0], "moving_factor_id": row[1], "status": row[2], "sub_category_id": row[3], "commodity_id": row[4], "sub_category" : "","commodity" : fetchCommodity({'is_null' : "no", 'commodity_id': row[4], 'page': 0})}
-            elif row[3] != None and row[4] == None:
+            elif row[3] != -1 and row[4] == -1:
                 value = {"moving_factors": row[0], "moving_factor_id": row[1], "status": row[2], "sub_category_id": row[3], "commodity_id": row[4], "sub_category" : fetchSubCategory({'is_null' : "no", 'sub_category_id': row[3], 'page': 0}),"commodity" : ""}
             else:
                 value = {"moving_factors": row[0], "moving_factor_id": row[1], "status": row[2], "sub_category_id": row[3], "commodity_id": row[4], "sub_category" : "","commodity" : ""}
