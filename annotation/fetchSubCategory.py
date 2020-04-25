@@ -36,7 +36,7 @@ def fetchSubCategory(requestParameters):
         valueList = []
 
         for row in rows:
-            value = {"sub_categories": row[0], "sub_category_id": row[1], "status": row[2], "category_id": row[3]}
+            value = {"sub_categories": row[0], "sub_category_id": row[1], "status": row[2], "category_id": row[3], "category": fetchCategory({'is_null' : "no", 'category_id':category_id, 'page': 0})}
             valueList.append(value)
 
 
