@@ -13,7 +13,7 @@ def adminAddMovingFactor(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
     cur.execute(
-        "INSERT INTO moving_factor_table (moving_factors,status,sub_category_id,commodity_id) VALUES (%(moving_factors)s,'enabled');",
+        "INSERT INTO moving_factor_table (moving_factors,status,sub_category_id,commodity_id) VALUES (%(moving_factors)s,'enabled',%(sub_category_id)s,%(commodity_id)s);",
         {'moving_factors': moving_factors, 'sub_category_id': sub_category_id, 'commodity_id': commodity_id})
     conn.commit()
 
