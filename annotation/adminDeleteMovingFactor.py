@@ -7,8 +7,8 @@ def adminDeleteMovingFactor(requestParameters):
     moving_factor_id = requestParameters['moving_factor_id']
     status = requestParameters['status']
     moving_factors = requestParameters['moving_factors']
-    sub_category_id  requestParameters['sub_category_id']
-    commodity_id  requestParameters['commodity_id']
+    sub_category_id = requestParameters['sub_category_id']
+    commodity_id = requestParameters['commodity_id']
 
     #params = config()
     #conn = psycopg2.connect(**params)
