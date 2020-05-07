@@ -97,7 +97,7 @@ def review(requestParameters):
                         WHERE user_id=%(user_id)s AND status='irrelevant' ORDER BY created_date DESC LIMIT %(limit)s OFFSET %(offset)s;""", {'user_id': user_id, "limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
             
-            cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s AND WHERE status='irrelevant';""", {'user_id': user_id})
+            cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s AND status='irrelevant';""", {'user_id': user_id})
             dataCount = cur.fetchall()
             dataCount = dataCount[0]
             pageCount = dataCount[0]//factor
