@@ -10,12 +10,12 @@ def movingFactorConstraints(requestParameters):
     scat_id = requestParameters['sub_category_id']
 
     fetchCase = -1;
-    if cmd_id != 'NULL':
-        if scat_id != 'NULL':
+    if cmd_id != '':
+        if scat_id != '':
             fetchCase = 2
         else:
             fetchCase = 1
-    elif scat_id != 'NULL':
+    elif scat_id != '':
         fetchCase = 0
 
     if fetchCase == 0:
