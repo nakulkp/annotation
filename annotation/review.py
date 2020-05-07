@@ -71,7 +71,7 @@ def review(requestParameters):
                         WHERE user_id=%(user_id)s AND status='todo' ORDER BY created_date DESC LIMIT %(limit)s OFFSET %(offset)s;""", {'user_id': user_id, "limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
             
-            cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s AND WHERE status='todo';""", {'user_id': user_id})
+            cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s AND status='todo';""", {'user_id': user_id})
             dataCount = cur.fetchall()
             dataCount = dataCount[0]
             pageCount = dataCount[0]//factor
@@ -123,7 +123,7 @@ def review(requestParameters):
                         WHERE user_id=%(user_id)s AND status='completed' ORDER BY created_date DESC LIMIT %(limit)s OFFSET %(offset)s;""", {'user_id': user_id, "limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
             
-            cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s AND WHERE status='completed';""", {'user_id': user_id})
+            cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s AND status='completed';""", {'user_id': user_id})
             dataCount = cur.fetchall()
             dataCount = dataCount[0]
             pageCount = dataCount[0]//factor
@@ -149,7 +149,7 @@ def review(requestParameters):
                         WHERE user_id=%(user_id)s AND status='marked' ORDER BY created_date DESC LIMIT %(limit)s OFFSET %(offset)s;""", {'user_id': user_id, "limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
             
-            cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s AND WHERE status='marked';""", {'user_id': user_id})
+            cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s AND status='marked';""", {'user_id': user_id})
             dataCount = cur.fetchall()
             dataCount = dataCount[0]
             pageCount = dataCount[0]//factor
