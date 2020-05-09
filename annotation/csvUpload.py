@@ -20,6 +20,9 @@ def csvUpload(requestParameters):
         question = ''
         status = 'todo'
 
+        if content == '':
+            content = ' '
+
         if release_date == '':
             cur.execute("""INSERT INTO master_table (user_id, headline, content, owner, release_date, source, url, question, status) 
             VALUES ( %(user_id)s, %(headline)s, %(content)s, %(owner)s, now, %(source)s, %(url)s, %(question)s, %(status)s );""",
