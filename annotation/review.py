@@ -161,7 +161,7 @@ def review(requestParameters):
                 cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
                             FROM master_table
                             WHERE user_id=%(user_id)s AND status='completed' ORDER BY %(sort_by)s ASC LIMIT %(limit)s OFFSET %(offset)s;""", {'user_id': user_id, "limit": limit, "offset": offset, "sort_by": sort_by})
-            else
+            else:
                 cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
                             FROM master_table
                             WHERE user_id=%(user_id)s AND status='completed' ORDER BY %(sort_by)s DESC LIMIT %(limit)s OFFSET %(offset)s;""", {'user_id': user_id, "limit": limit, "offset": offset, "sort_by": sort_by})
