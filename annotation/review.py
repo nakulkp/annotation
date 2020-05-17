@@ -38,10 +38,10 @@ def review(requestParameters):
         if privilege == '1':
             if order_by == 'asc':
                 cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
-                    FROM master_table ORDER BY %(sort_by)s ASC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset, "sort_by": sort_by})
+                    FROM master_table ORDER BY %s ASC LIMIT %(limit)s OFFSET %(offset)s;""" % sort_by, {"limit": limit, "offset": offset})
             else:                    
                 cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
-                    FROM master_table ORDER BY %(sort_by)s DESC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset, "sort_by": sort_by})
+                    FROM master_table ORDER BY %s DESC LIMIT %(limit)s OFFSET %(offset)s;""" % sort_by, {"limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
             
             cur.execute("""SELECT COUNT(article_id) FROM master_table;""")
@@ -55,14 +55,14 @@ def review(requestParameters):
             if order_by == 'asc':
                 cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
                             FROM master_table
-                            WHERE user_id=%(user_id)s ORDER BY %(sort_by)s ASC LIMIT %(limit)s OFFSET %(offset)s;""", {'user_id': user_id, "limit": limit, "offset": offset, "sort_by": sort_by})
+                            WHERE user_id=%(user_id)s ORDER BY %s ASC LIMIT %(limit)s OFFSET %(offset)s;""" % sort_by, {'user_id': user_id, "limit": limit, "offset": offset})
             else:
                 cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
                             FROM master_table
-                            WHERE user_id=%(user_id)s ORDER BY %(sort_by)s DESC LIMIT %(limit)s OFFSET %(offset)s;""", {'user_id': user_id, "limit": limit, "offset": offset, "sort_by": sort_by})
+                            WHERE user_id=%(user_id)s ORDER BY %s DESC LIMIT %(limit)s OFFSET %(offset)s;""" % sort_by, {'user_id': user_id, "limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
             
-            cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s;""", {'user_id': user_id})
+            cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s;""" % sort_by, {'user_id': user_id})
             dataCount = cur.fetchall()
             dataCount = dataCount[0]
             pageCount = dataCount[0]//factor
@@ -73,10 +73,10 @@ def review(requestParameters):
         if privilege == '1':
             if order_by == 'asc':
                 cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
-                    FROM master_table WHERE status='todo' ORDER BY %(sort_by)s ASC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset, "sort_by": sort_by})
+                    FROM master_table WHERE status='todo' ORDER BY %s ASC LIMIT %(limit)s OFFSET %(offset)s;""" % sort_by, {"limit": limit, "offset": offset})
             else:
                 cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
-                    FROM master_table WHERE status='todo' ORDER BY %(sort_by)s DESC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset, "sort_by": sort_by})
+                    FROM master_table WHERE status='todo' ORDER BY %s DESC LIMIT %(limit)s OFFSET %(offset)s;""" % sort_by, {"limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
             
             cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE status='todo';""")
@@ -90,11 +90,11 @@ def review(requestParameters):
             if order_by == 'asc':
                 cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
                             FROM master_table
-                            WHERE user_id=%(user_id)s AND status='todo' ORDER BY %(sort_by)s ASC LIMIT %(limit)s OFFSET %(offset)s;""", {'user_id': user_id, "limit": limit, "offset": offset, "sort_by":sort_by})
+                            WHERE user_id=%(user_id)s AND status='todo' ORDER BY %s ASC LIMIT %(limit)s OFFSET %(offset)s;""" % sort_by, {'user_id': user_id, "limit": limit, "offset": offset, "sort_by":sort_by})
             else:
                 cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
                             FROM master_table
-                            WHERE user_id=%(user_id)s AND status='todo' ORDER BY %(sort_by)s DESC LIMIT %(limit)s OFFSET %(offset)s;""", {'user_id': user_id, "limit": limit, "offset": offset, "sort_by":sort_by})
+                            WHERE user_id=%(user_id)s AND status='todo' ORDER BY %s DESC LIMIT %(limit)s OFFSET %(offset)s;""" % sort_by, {'user_id': user_id, "limit": limit, "offset": offset, "sort_by":sort_by})
             reviewValues = cur.fetchall()
             
             cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s AND status='todo';""", {'user_id': user_id})
@@ -108,10 +108,10 @@ def review(requestParameters):
         if privilege == '1':
             if order_by == 'asc':
                 cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
-                    FROM master_table WHERE status='irrelevant' ORDER BY %(sort_by)s ASC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset, "sort_by": sort_by})
+                    FROM master_table WHERE status='irrelevant' ORDER BY %s ASC LIMIT %(limit)s OFFSET %(offset)s;""" % sort_by, {"limit": limit, "offset": offset})
             else:
                 cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
-                    FROM master_table WHERE status='irrelevant' ORDER BY %(sort_by)s DESC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset, "sort_by": sort_by})
+                    FROM master_table WHERE status='irrelevant' ORDER BY %s DESC LIMIT %(limit)s OFFSET %(offset)s;""" % sort_by, {"limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
             
             cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE status='irrelevant';""")
@@ -125,11 +125,11 @@ def review(requestParameters):
             if order_by == 'asc':
                 cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
                             FROM master_table
-                            WHERE user_id=%(user_id)s AND status='irrelevant' ORDER BY %(sort_by)s ASC LIMIT %(limit)s OFFSET %(offset)s;""", {'user_id': user_id, "limit": limit, "offset": offset, "sort_by": sort_by})
+                            WHERE user_id=%(user_id)s AND status='irrelevant' ORDER BY %s ASC LIMIT %(limit)s OFFSET %(offset)s;""" % sort_by, {'user_id': user_id, "limit": limit, "offset": offset})
             else:
                 cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
                             FROM master_table
-                            WHERE user_id=%(user_id)s AND status='irrelevant' ORDER BY %(sort_by)s DESC LIMIT %(limit)s OFFSET %(offset)s;""", {'user_id': user_id, "limit": limit, "offset": offset, "sort_by": sort_by})
+                            WHERE user_id=%(user_id)s AND status='irrelevant' ORDER BY %s DESC LIMIT %(limit)s OFFSET %(offset)s;""" % sort_by, {'user_id': user_id, "limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
             
             cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s AND status='irrelevant';""", {'user_id': user_id})
@@ -143,10 +143,10 @@ def review(requestParameters):
         if privilege == '1':
             if order_by == 'asc':
                 cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
-                    FROM master_table WHERE status ='completed' ORDER BY %(sort_by)s ASC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset, "sort_by":sort_by})
+                    FROM master_table WHERE status ='completed' ORDER BY %s ASC LIMIT %(limit)s OFFSET %(offset)s;""" % sort_by, {"limit": limit, "offset": offset, "sort_by":sort_by})
             else:
                 cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
-                            FROM master_table WHERE status ='completed' ORDER BY %(sort_by)s DESC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset, "sort_by":sort_by})
+                            FROM master_table WHERE status ='completed' ORDER BY %s DESC LIMIT %(limit)s OFFSET %(offset)s;""" % sort_by, {"limit": limit, "offset": offset, "sort_by":sort_by})
             reviewValues = cur.fetchall()
             
             cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE status='completed';""")
@@ -160,11 +160,11 @@ def review(requestParameters):
             if order_by == 'asc':
                 cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
                             FROM master_table
-                            WHERE user_id=%(user_id)s AND status='completed' ORDER BY %(sort_by)s ASC LIMIT %(limit)s OFFSET %(offset)s;""", {'user_id': user_id, "limit": limit, "offset": offset, "sort_by": sort_by})
+                            WHERE user_id=%(user_id)s AND status='completed' ORDER BY %s ASC LIMIT %(limit)s OFFSET %(offset)s;""" % sort_by, {'user_id': user_id, "limit": limit, "offset": offset})
             else:
                 cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
                             FROM master_table
-                            WHERE user_id=%(user_id)s AND status='completed' ORDER BY %(sort_by)s DESC LIMIT %(limit)s OFFSET %(offset)s;""", {'user_id': user_id, "limit": limit, "offset": offset, "sort_by": sort_by})
+                            WHERE user_id=%(user_id)s AND status='completed' ORDER BY %s DESC LIMIT %(limit)s OFFSET %(offset)s;""" % sort_by, {'user_id': user_id, "limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
             
             cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s AND status='completed';""", {'user_id': user_id})
@@ -178,10 +178,10 @@ def review(requestParameters):
         if privilege == '1':
             if order_by == 'asc':
                 cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
-                    FROM master_table WHERE status='marked' ORDER BY %(sort_by)s ASC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset, "sort_by": sort_by})
+                    FROM master_table WHERE status='marked' ORDER BY %s ASC LIMIT %(limit)s OFFSET %(offset)s;""" % sort_by, {"limit": limit, "offset": offset})
             else:
                 cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
-                    FROM master_table WHERE status='marked' ORDER BY %(sort_by)s DESC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset, "sort_by": sort_by})
+                    FROM master_table WHERE status='marked' ORDER BY %s DESC LIMIT %(limit)s OFFSET %(offset)s;""" % sort_by, {"limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
             
             cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE status='marked';""")
@@ -195,11 +195,11 @@ def review(requestParameters):
             if order_by == 'asc':
                 cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
                             FROM master_table
-                            WHERE user_id=%(user_id)s AND status='marked' ORDER BY %(sort_by)s ASC LIMIT %(limit)s OFFSET %(offset)s;""", {'user_id': user_id, "limit": limit, "offset": offset, "sort_by": sort_by})
+                            WHERE user_id=%(user_id)s AND status='marked' ORDER BY %s ASC LIMIT %(limit)s OFFSET %(offset)s;""" % sort_by, {'user_id': user_id, "limit": limit, "offset": offset})
             else:
                 cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
                             FROM master_table
-                            WHERE user_id=%(user_id)s AND status='marked' ORDER BY %(sort_by)s DESC LIMIT %(limit)s OFFSET %(offset)s;""", {'user_id': user_id, "limit": limit, "offset": offset, "sort_by": sort_by})
+                            WHERE user_id=%(user_id)s AND status='marked' ORDER BY %s DESC LIMIT %(limit)s OFFSET %(offset)s;""" % sort_by, {'user_id': user_id, "limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
             
             cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s AND status='marked';""", {'user_id': user_id})
