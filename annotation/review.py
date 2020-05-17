@@ -5,8 +5,8 @@ from annotation.config import config
 def review(requestParameters):
     user_id = requestParameters["user_id"]
     filter_ = requestParameters["filter"]
-    sort_by = requestParameters["filter"]
-    order_by = requestParameters["filter"]
+    sort_by = requestParameters["sort_by"]
+    order_by = requestParameters["order_by"]
 
     #params = config()
     #conn = psycopg2.connect(**params)
