@@ -32,7 +32,7 @@ def review(requestParameters):
         sort_by = 'created_date';
         
     if order_by == '':
-        order_by = 'desc';
+        order_by = 'asc';
     
     if filter_ == 'all':
         if privilege == '1':
