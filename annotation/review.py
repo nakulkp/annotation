@@ -39,7 +39,7 @@ def review(requestParameters):
             if order_by == 'asc':
                 cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
                     FROM master_table ORDER BY %(sort_by)s ASC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset, "sort_by": sort_by})
-            else :                    
+            else:                    
                 cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
                     FROM master_table ORDER BY %(sort_by)s DESC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset, "sort_by": sort_by})
             reviewValues = cur.fetchall()
@@ -146,7 +146,7 @@ def review(requestParameters):
                     FROM master_table WHERE status ='completed' ORDER BY %(sort_by)s ASC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset, "sort_by":sort_by})
             else:
                 cur.execute("""SELECT owner, article_id, headline, status, question, url, release_date
-                    FROM master_table WHERE status ='completed' ORDER BY %(sort_by)s DESC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset, "sort_by":sort_by
+                            FROM master_table WHERE status ='completed' ORDER BY %(sort_by)s DESC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset, "sort_by":sort_by})
             reviewValues = cur.fetchall()
             
             cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE status='completed';""")
