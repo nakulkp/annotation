@@ -1,0 +1,20 @@
+created_date,categories,category_id,status
+2020-04-19 21:41:07.516702,Energy,2,enabled
+2020-04-19 21:41:07.538876,Gas,3,enabled
+2020-04-19 21:41:07.561382,Metal,4,enabled
+2020-04-19 21:41:07.585465,General,5,enabled
+2020-04-19 21:41:11.240025,Specific,6,enabled
+2020-04-20 04:56:24.889721,N/A,7,enabled
+2020-04-20 04:56:24.952899,Political Factors,8,enabled
+2020-04-20 04:56:24.957954,Financial Factors,9,enabled
+2020-04-20 04:56:24.986418,Economical Factors,10,enabled
+2020-04-20 04:56:30.352821,Commodity Specific Factors,11,enabled
+2020-04-19 21:41:07.491872,Chemical,1,enabled
+root@162-241-222-215:/tmp# ^C
+root@162-241-222-215:/tmp# cat commodity.csv
+created_date,commodities,commodity_id,status
+2020-04-19 21:42:43.307616,Aluminum,1,enabled
+2020-04-19 21:42:43.33244,Antimony,2,enabled
+2020-04-19 21:42:43.360195,Cobalt,3,enabled
+2020-04-19 21:42:43.386212,Copper,4,enabled
+2020-04-19 21:42:44.686687,Gallium,5,enabled

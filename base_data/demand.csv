@@ -1,0 +1,13 @@
+created_date,factor_value,factor_value_id,status
+2020-04-20 05:07:28.303345,N/A,1,enabled
+2020-04-20 05:07:28.334016,Increase,2,enabled
+2020-04-20 05:07:28.384575,Decrease,3,enabled
+2020-04-20 05:07:28.392939,No Change,4,enabled
+2020-04-20 05:07:28.419148,Yes,5,enabled
+2020-04-20 05:07:28.446773,No,6,enabled
+2020-04-20 05:07:28.475439,Low,7,enabled
+2020-04-20 05:07:28.503498,Medium,8,enabled
+2020-04-20 05:07:28.531971,High,9,enabled
+2020-04-20 05:07:28.565662,Positive,10,enabled
+2020-04-20 05:07:28.600407,Negative,11,enabled
+2020-04-20 05:07:31.122702,Neutral,12,enabled

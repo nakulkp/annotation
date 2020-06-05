@@ -1,0 +1,10 @@
+created_date,sub_categories,sub_category_id,category_id,status
+2020-04-23 15:16:25.191283,Government Policy,2,8,enabled
+2020-04-23 15:16:25.233162,Geopolitical Issues,3,8,enabled
+2020-04-23 15:16:25.299327,Duty/Tax/Bank Interest,4,9,enabled
+2020-04-23 15:16:25.433813,Local Economics,6,10,enabled
+2020-04-23 15:16:25.498436,Global Economics,7,10,enabled
+2020-04-23 15:16:28.194454,Commodity Specific Factors,8,11,enabled
+2020-04-23 15:16:25.36714,Company Specific Factors,5,9,enabled
+2020-04-25 05:54:27.364591,test,9,1,enabled
+2020-04-23 15:16:25.169857,N/A,1,1,enabled

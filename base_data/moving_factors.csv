@@ -1,0 +1,13 @@
+created_date,price_value,price_value_id,status
+2020-04-20 05:08:31.201326,Increase,2,enabled
+2020-04-20 05:08:31.226488,Decrease,3,enabled
+2020-04-20 05:08:31.259495,No Change,4,enabled
+2020-04-20 05:08:31.288929,Yes,5,enabled
+2020-04-20 05:08:31.310944,No,6,enabled
+2020-04-20 05:08:31.370461,Low,7,enabled
+2020-04-20 05:08:31.374297,Medium,8,enabled
+2020-04-20 05:08:31.37757,High,9,enabled
+2020-04-20 05:08:31.400431,Positive,10,enabled
+2020-04-20 05:08:31.426025,Negative,11,enabled
+2020-04-20 05:08:35.602598,Neutral,12,enabled
+2020-04-20 05:08:31.177271,N/A,1,disabled

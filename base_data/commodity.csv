@@ -1,0 +1,13 @@
+created_date,demand_value,demand_value_id,status
+2020-04-20 05:10:16.219168,N/A,1,enabled
+2020-04-20 05:10:16.645076,Increase,2,enabled
+2020-04-20 05:10:16.647642,Decrease,3,enabled
+2020-04-20 05:10:16.649333,No Change,4,enabled
+2020-04-20 05:10:16.650926,Yes,5,enabled
+2020-04-20 05:10:16.65273,No,6,enabled
+2020-04-20 05:10:16.654394,Low,7,enabled
+2020-04-20 05:10:16.656919,Medium,8,enabled
+2020-04-20 05:10:16.659439,High,9,enabled
+2020-04-20 05:10:16.662869,Positive,10,enabled
+2020-04-20 05:10:16.667054,Negative,11,enabled
+2020-04-20 05:10:17.644293,Neutral,12,enabled

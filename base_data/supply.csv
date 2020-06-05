@@ -1,0 +1,13 @@
+created_date,supply_value,supply_value_id,status
+2020-04-20 05:09:10.56584,N/A,1,enabled
+2020-04-20 05:09:10.589305,Increase,2,enabled
+2020-04-20 05:09:10.611957,Decrease,3,enabled
+2020-04-20 05:09:10.634212,No Change,4,enabled
+2020-04-20 05:09:10.693238,Yes,5,enabled
+2020-04-20 05:09:10.697213,No,6,enabled
+2020-04-20 05:09:10.70729,Low,7,enabled
+2020-04-20 05:09:10.731295,Medium,8,enabled
+2020-04-20 05:09:10.754026,High,9,enabled
+2020-04-20 05:09:10.775683,Positive,10,enabled
+2020-04-20 05:09:10.797899,Negative,11,enabled
+2020-04-20 05:09:13.068291,Neutral,12,enabled

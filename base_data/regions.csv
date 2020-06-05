@@ -1,0 +1,13 @@
+created_date,sc_disruption_value,sc_disruption_value_id,status
+2020-04-20 05:10:43.56854,N/A,1,enabled
+2020-04-20 05:10:43.595803,Increase,2,enabled
+2020-04-20 05:10:43.622388,Decrease,3,enabled
+2020-04-20 05:10:43.673166,No Change,4,enabled
+2020-04-20 05:10:43.676233,Yes,5,enabled
+2020-04-20 05:10:43.700026,No,6,enabled
+2020-04-20 05:10:43.726936,Low,7,enabled
+2020-04-20 05:10:43.752688,Medium,8,enabled
+2020-04-20 05:10:43.777711,High,9,enabled
+2020-04-20 05:10:43.806134,Positive,10,enabled
+2020-04-20 05:10:43.832429,Negative,11,enabled
+2020-04-20 05:10:45.451368,Neutral,12,enabled
