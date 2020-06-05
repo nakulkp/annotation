@@ -1,6 +1,6 @@
 import psycopg2
-from annotation.config import config
-from annotation.passVerify import passVerify
+from config import config
+from passVerify import passVerify
 
 
 def login(requestParameters):

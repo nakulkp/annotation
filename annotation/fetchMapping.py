@@ -1,16 +1,16 @@
 import psycopg2
-from annotation.config import config
+from config import config
 
-from annotation.fetchCategory import fetchCategory
-from annotation.fetchCommodity import fetchCommodity
-from annotation.fetchDemand import fetchDemand
-from annotation.fetchFactorValue import fetchFactorValue
-from annotation.fetchMovingFactor import fetchMovingFactor
-from annotation.fetchPrice import fetchPrice
-from annotation.fetchRegion import fetchRegion
-from annotation.fetchSCDisruption import fetchSCDisruption
-from annotation.fetchSubCategory import fetchSubCategory
-from annotation.fetchSupply import fetchSupply
+from fetchCategory import fetchCategory
+from fetchCommodity import fetchCommodity
+from fetchDemand import fetchDemand
+from fetchFactorValue import fetchFactorValue
+from fetchMovingFactor import fetchMovingFactor
+from fetchPrice import fetchPrice
+from fetchRegion import fetchRegion
+from fetchSCDisruption import fetchSCDisruption
+from fetchSubCategory import fetchSubCategory
+from fetchSupply import fetchSupply
 
 
 def fetchMapping(requestParameters):

@@ -1,5 +1,5 @@
 import psycopg2
-from annotation.config import config
+from config import config
 
 
 def adminAddSubCategory(requestParameters):

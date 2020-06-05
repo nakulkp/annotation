@@ -1,6 +1,6 @@
 import psycopg2
-from annotation.config import config
-from annotation.fetchCategory import fetchCategory
+from config import config
+from fetchCategory import fetchCategory
 
 
 def fetchSubCategory(requestParameters):

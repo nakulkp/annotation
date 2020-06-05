@@ -1,6 +1,6 @@
 import psycopg2
-from annotation.config import config
-from annotation.passHash import passHash
+from config import config
+from passHash import passHash
 
 
 def userSignUp(requestParameters):

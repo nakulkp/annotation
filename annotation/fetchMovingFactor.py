@@ -1,7 +1,7 @@
 import psycopg2
-from annotation.config import config
-from annotation.fetchCommodity import fetchCommodity
-from annotation.fetchSubCategory import fetchSubCategory
+from config import config
+from fetchCommodity import fetchCommodity
+from fetchSubCategory import fetchSubCategory
 
 
 def fetchMovingFactor(requestParameters):

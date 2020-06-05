@@ -2,7 +2,7 @@ import io;
 import csv
 from datetime import datetime
 import psycopg2
-from annotation.config import config
+from config import config
 
 
 def exportCsv(requestParameters):
