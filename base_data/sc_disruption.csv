@@ -1,10 +1,13 @@
-created_date,sub_categories,sub_category_id,category_id,status
-2020-04-23 15:16:25.191283,Government Policy,2,8,enabled
-2020-04-23 15:16:25.233162,Geopolitical Issues,3,8,enabled
-2020-04-23 15:16:25.299327,Duty/Tax/Bank Interest,4,9,enabled
-2020-04-23 15:16:25.433813,Local Economics,6,10,enabled
-2020-04-23 15:16:25.498436,Global Economics,7,10,enabled
-2020-04-23 15:16:28.194454,Commodity Specific Factors,8,11,enabled
-2020-04-23 15:16:25.36714,Company Specific Factors,5,9,enabled
-2020-04-25 05:54:27.364591,test,9,1,enabled
-2020-04-23 15:16:25.169857,N/A,1,1,enabled
+created_date,sc_disruption_value,sc_disruption_value_id,status
+2020-04-20 05:10:43.56854,N/A,1,enabled
+2020-04-20 05:10:43.595803,Increase,2,enabled
+2020-04-20 05:10:43.622388,Decrease,3,enabled
+2020-04-20 05:10:43.673166,No Change,4,enabled
+2020-04-20 05:10:43.676233,Yes,5,enabled
+2020-04-20 05:10:43.700026,No,6,enabled
+2020-04-20 05:10:43.726936,Low,7,enabled
+2020-04-20 05:10:43.752688,Medium,8,enabled
+2020-04-20 05:10:43.777711,High,9,enabled
+2020-04-20 05:10:43.806134,Positive,10,enabled
+2020-04-20 05:10:43.832429,Negative,11,enabled
+2020-04-20 05:10:45.451368,Neutral,12,enabled
