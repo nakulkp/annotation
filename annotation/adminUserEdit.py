@@ -1,5 +1,6 @@
 import psycopg2
 from config import config
+from passHash import passHash
 
 
 def adminUserEdit(requestParameters):
