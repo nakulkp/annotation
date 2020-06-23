@@ -19,7 +19,7 @@ def fetchUsers(requestParameters):
     #if (dataCount[0] % 10) != 0 and dataCount[0] > 10:
         #pageCount = pageCount + 1
         
-    cur.execute("""SELECT username, user_id FROM users;""")
+    cur.execute("""SELECT username, user_id FROM users where status = 'enabled';""")
     rows = cur.fetchall()
     valueList = []
 
