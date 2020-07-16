@@ -1,5 +1,5 @@
 import psycopg2
-from config import config
+#from config import config
 #Run this program to create database
 
 def createTables():
@@ -40,16 +40,16 @@ def createTables():
             mapping_id SERIAL NOT NULL,            
             user_id INTEGER NOT NULL,
             article_id INTEGER NOT NULL,
-            country_id INTEGER NOT NULL,
+            region_id INTEGER NOT NULL,
             commodity_id INTEGER NOT NULL,
-            category_id INTEGER NOT NULL,
-            subcategory_id INTEGER NOT NULL,
-            moving_factor_id INTEGER NOT NULL,
-            factor_value_id INTEGER NOT NULL,
+            comm_desc_id INTEGER NOT NULL,
+            factor_id INTEGER NOT NULL,
+            subfactor_id INTEGER NOT NULL,
+            subfactorvalue_id INTEGER NOT NULL,
+            impact_region_id INTEGER NOT NULL,
             price_value_id INTEGER NOT NULL,
             supply_value_id INTEGER NOT NULL,
             demand_value_id INTEGER NOT NULL,
-            sc_disruption_value_id INTEGER NOT NULL,
             last_modified DATE,
             last_modified_by INTEGER,
             status varchar,
@@ -59,12 +59,12 @@ def createTables():
         );   
         """,
         """
-        CREATE TABLE region( 
+        CREATE TABLE region_of_event( 
             created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
-            countries varchar NOT NULL,
-            country_id SERIAL NOT NULL,
+            region varchar NOT NULL,
+            region_id SERIAL NOT NULL,
             status varchar NOT NULL,
-            CONSTRAINT region_pkey PRIMARY KEY (country_id)
+            CONSTRAINT region_pkey PRIMARY KEY (region_id)
         );
         """,
         """
@@ -73,46 +73,55 @@ def createTables():
             commodities varchar NOT NULL,
             commodity_id SERIAL NOT NULL,
             status varchar NOT NULL,
-            CONSTRAINT "commodityTable_pkey" PRIMARY KEY (commodity_id)
+            CONSTRAINT commodityTable_pkey PRIMARY KEY (commodity_id)
         );
         """,
         """
-        CREATE TABLE category_table ( 
+        CREATE TABLE commodity_description_table ( 
             created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
-            categories varchar NOT NULL,
-            category_id SERIAL NOT NULL,
+            comm_desc varchar NOT NULL,
+            comm_desc_id SERIAL NOT NULL,
+            commodity_id INTEGER NOT NULL,
             status varchar NOT NULL,
-            CONSTRAINT category_table_pkey PRIMARY KEY (category_id)
+            CONSTRAINT commodity_description_table_pkey PRIMARY KEY (comm_desc_id)
         );
         """,
         """
-        CREATE TABLE subcategory_table ( 
+        CREATE TABLE factor_table ( 
             created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
-            sub_categories varchar NOT NULL,
-            sub_category_id SERIAL NOT NULL,
-            category_id INTEGER DEFAULT NULL,
+            factor varchar NOT NULL,
+            factor_id SERIAL NOT NULL,
             status varchar NOT NULL,
-            CONSTRAINT subcategory_table_pkey PRIMARY KEY (sub_category_id)
+            CONSTRAINT factor_table_pkey PRIMARY KEY (factor_id)
         );
         """,
         """
-        CREATE TABLE moving_factor_table ( 
+        CREATE TABLE subfactor_table ( 
             created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
-            moving_factors varchar NOT NULL,
-            moving_factor_id SERIAL NOT NULL,
-            commodity_id INTEGER DEFAULT NULL,
-            sub_category_id INTEGER DEFAULT NULL,
+            subfactor varchar NOT NULL,
+            subfactor_id SERIAL NOT NULL,
+            factor_id INTEGER NOT NULL,
             status varchar NOT NULL,
-            CONSTRAINT moving_factor_table_pkey PRIMARY KEY (moving_factor_id)
+            CONSTRAINT subfactor_table_pkey PRIMARY KEY (subfactor_id)
         );
         """,
         """
-        CREATE TABLE factor_value_table ( 
+        CREATE TABLE subfactorvalue_table ( 
             created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
-            factor_value varchar NOT NULL,
-            factor_value_id SERIAL NOT NULL,
+            subfactorvalue varchar NOT NULL,
+            subfactorvalue_id SERIAL NOT NULL,
+            subfactor_id INTEGER NOT NULL,
             status varchar NOT NULL,
-            CONSTRAINT factor_value_table_pkey PRIMARY KEY (factor_value_id)
+            CONSTRAINT subfactorvalue_table_pkey PRIMARY KEY (subfactorvalue_id)
+        );
+        """,
+        """
+        CREATE TABLE impact_region_table ( 
+            created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
+            impact_region varchar NOT NULL,
+            impact_region_id SERIAL NOT NULL,
+            status varchar NOT NULL,
+            CONSTRAINT impact_region_table_pkey PRIMARY KEY (impact_region_id)
         );
         """,
         """
@@ -140,15 +149,6 @@ def createTables():
             demand_value_id SERIAL NOT NULL,
             status varchar NOT NULL,
             CONSTRAINT demand_pkey PRIMARY KEY (demand_value_id)
-        );
-        """,
-        """
-        CREATE TABLE sc_disruption ( 
-            created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
-            sc_disruption_value varchar NOT NULL,
-            sc_disruption_value_id SERIAL NOT NULL,
-            status varchar NOT NULL,
-            CONSTRAINT sc_disruption_pkey PRIMARY KEY (sc_disruption_value_id)
         );
         """
     )

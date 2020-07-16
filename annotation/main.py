@@ -139,6 +139,7 @@ def api_articleCount():
     resultList = articleCount(requestParameters)
     return jsonify(resultList)
 
+
 @app.route('/markirrelevant', methods=['POST'])
 @token_required
 def api_markIrrelevant():
@@ -227,14 +228,6 @@ def api_adminDeleteRegion():
     return jsonify(status)
 
 
-@app.route('/admindeletescdisruption', methods=['POST'])
-@token_required
-def api_adminDeleteSCDisruption():
-    requestParameters = request.get_json()
-    status = adminDeleteSCDisruption(requestParameters)
-    return jsonify(status)
-
-
 @app.route('/admindeletesubcategory', methods=['POST'])
 @token_required
 def api_adminDeleteSubCategory():
@@ -304,14 +297,6 @@ def api_adminAddPrice():
 def api_adminAddRegion():
     requestParameters = request.get_json()
     status = adminAddRegion(requestParameters)
-    return jsonify(status)
-
-
-@app.route('/adminaddscdisruption', methods=['POST'])
-@token_required
-def api_adminAddSCDisruption():
-    requestParameters = request.get_json()
-    status = adminAddSCDisruption(requestParameters)
     return jsonify(status)
 
 
@@ -395,14 +380,6 @@ def api_fetchRegion():
     return jsonify(valueList)
 
 
-@app.route('/fetchscdisruption', methods=['POST'])
-@token_required
-def api_fetchSCDisruption():
-    requestParameters = request.get_json()
-    valueList = fetchSCDisruption(requestParameters)
-    return jsonify(valueList)
-
-
 @app.route('/fetchsubcategory', methods=['POST'])
 @token_required
 def api_fetchSubCategory():
@@ -432,7 +409,7 @@ def api_csvUpload():
     requestParameters = request.get_json()
     status = csvUpload(requestParameters)
     return jsonify(status)
-    
+
 
 @app.route('/deletemapping', methods=['POST'])
 def api_deleteMapping():
@@ -464,12 +441,14 @@ def api_annotationCount():
     status = annotationCount(requestParameters)
     return jsonify(status)
 
+
 @app.route('/updatemapping', methods=['POST'])
 @token_required
 def api_updateMapping():
     requestParameters = request.get_json()
     status = updateMapping(requestParameters)
     return jsonify(status)
+
 
 @app.route('/exportcsv', methods=['POST'])
 @token_required
@@ -478,12 +457,14 @@ def api_exportCsv():
     status = exportCsv(requestParameters)
     return jsonify(status)
 
+
 @app.route('/subcatconstraints', methods=['POST'])
 @token_required
 def api_subCategoryConstraints():
     requestParameters = request.get_json()
     status = subCategoryConstraints(requestParameters)
     return jsonify(status)
+
 
 @app.route('/mfactorconstraints', methods=['POST'])
 @token_required
