@@ -24,7 +24,7 @@ def adminUserEdit(requestParameters):
             SET username = %(username)s, email = %(email)s, phone = %(phone)s, status = %(status)s, privilege = %(privilege)s
             WHERE user_id = %(user_id)s;""",
             {'user_id': user_id, 'username': username, 'email': email, 'phone': phone,
-            'status': status, 'privilege': privilege})
+             'status': status, 'privilege': privilege})
         conn.commit()
         cur.close()
         conn.close()

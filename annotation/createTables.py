@@ -163,6 +163,9 @@ def createTables():
             cur.execute(command)
         cur.close()
         conn.commit()
+        cur = conn.cursor()
+        cur.execute()
+
     except(Exception, psycopg2.DatabaseError)as error:
         print(error)
     finally:

@@ -7,14 +7,12 @@ import datetime
 
 from functools import wraps
 
-from adminAddCategory import adminAddCategory
 from adminAddCommodity import adminAddCommodity
 from adminAddDemand import adminAddDemand
 from adminAddFactorValue import adminAddFactorValue
 from adminAddMovingFactor import adminAddMovingFactor
 from adminAddPrice import adminAddPrice
 from adminAddRegion import adminAddRegion
-from adminAddSCDisruption import adminAddSCDisruption
 from adminAddSubCategory import adminAddSubCategory
 from adminAddSupply import adminAddSupply
 from adminDeleteCategory import adminDeleteCategory
@@ -24,7 +22,6 @@ from adminDeleteFactorValue import adminDeleteFactorValue
 from adminDeleteMovingFactor import adminDeleteMovingFactor
 from adminDeletePrice import adminDeletePrice
 from adminDeleteRegion import adminDeleteRegion
-from adminDeleteSCDisruption import adminDeleteSCDisruption
 from adminDeleteSubCategory import adminDeleteSubCategory
 from adminDeleteSupply import adminDeleteSupply
 from adminUserEdit import adminUserEdit
@@ -45,7 +42,6 @@ from fetchMapping import fetchMapping
 from fetchMovingFactor import fetchMovingFactor
 from fetchPrice import fetchPrice
 from fetchRegion import fetchRegion
-from fetchSCDisruption import fetchSCDisruption
 from fetchSubCategory import fetchSubCategory
 from fetchSupply import fetchSupply
 from fetchUsers import fetchUsers
@@ -58,6 +54,8 @@ from login import login
 from exportCsv import exportCsv
 from movingFactorConstraints import movingFactorConstraints
 from subCategoryConstraints import subCategoryConstraints
+
+from annotation.adminAddCommodityDescription import adminAddCommodityDescription
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
@@ -244,11 +242,11 @@ def api_adminDeleteSupply():
     return jsonify(status)
 
 
-@app.route('/adminaddcategory', methods=['POST'])
+@app.route('/adminaddcommoditydescription', methods=['POST'])
 @token_required
-def api_adminAddCategory():
+def api_adminAddCommodityDescription():
     requestParameters = request.get_json()
-    status = adminAddCategory(requestParameters)
+    status = adminAddCommodityDescription(requestParameters)
     return jsonify(status)
 
 
