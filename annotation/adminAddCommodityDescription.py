@@ -32,4 +32,7 @@ def adminAddCommodityDescription(requestParameters):
         return {'comm_desc_id': comm_desc_id}
     else:
         conn.close()
-        return "failed"
+        return {"message": "failed"}
+
+
+

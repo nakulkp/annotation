@@ -7,55 +7,60 @@ import datetime
 
 from functools import wraps
 
-from adminAddCommodity import adminAddCommodity
-from adminAddDemand import adminAddDemand
-from adminAddFactorValue import adminAddFactorValue
-from adminAddMovingFactor import adminAddMovingFactor
-from adminAddPrice import adminAddPrice
-from adminAddRegion import adminAddRegion
-from adminAddSubCategory import adminAddSubCategory
-from adminAddSupply import adminAddSupply
-from adminDeleteCategory import adminDeleteCategory
-from adminDeleteCommodity import adminDeleteCommodity
-from adminDeleteDemand import adminDeleteDemand
-from adminDeleteFactorValue import adminDeleteFactorValue
-from adminDeleteMovingFactor import adminDeleteMovingFactor
-from adminDeletePrice import adminDeletePrice
-from adminDeleteRegion import adminDeleteRegion
-from adminDeleteSubCategory import adminDeleteSubCategory
-from adminDeleteSupply import adminDeleteSupply
-from adminUserEdit import adminUserEdit
-from adminUsersFetch import adminUsersFetch
-from annotationCount import annotationCount
-from articleContent import articleContent
-from articleContentId import articleContentId
-from articleContentNav import articleContentNav
-from articleCount import articleCount
-from articleSave import articleSave
-from csvUpload import csvUpload
-from deleteMapping import deleteMapping
-from fetchCategory import fetchCategory
-from fetchCommodity import fetchCommodity
-from fetchDemand import fetchDemand
-from fetchFactorValue import fetchFactorValue
-from fetchMapping import fetchMapping
-from fetchMovingFactor import fetchMovingFactor
-from fetchPrice import fetchPrice
-from fetchRegion import fetchRegion
-from fetchSubCategory import fetchSubCategory
-from fetchSupply import fetchSupply
-from fetchUsers import fetchUsers
-from markIrrelevant import markIrrelevant
-from markWithQuestion import markWithQuestion
-from review import review
-from updateMapping import updateMapping
-from userSignUp import userSignUp
-from login import login
-from exportCsv import exportCsv
-from movingFactorConstraints import movingFactorConstraints
-from subCategoryConstraints import subCategoryConstraints
+from annotation.adminAddCommodity import adminAddCommodity
+from annotation.adminAddDemand import adminAddDemand
+from annotation.adminAddFactorValue import adminAddFactorValue
+from annotation.adminAddMovingFactor import adminAddMovingFactor
+
+from annotation.adminAddFactor import adminAddFactor
+from annotation.adminAddPrice import adminAddPrice
+from annotation.adminAddSubCategory import adminAddSubCategory
+
+from annotation.adminAddSubFactor import adminAddSubFactor
+from annotation.adminAddSubFactorValue import adminAddSubFactorValue
+from annotation.adminAddSupply import adminAddSupply
+from annotation.adminDeleteCategory import adminDeleteCategory
+from annotation.adminDeleteCommodity import adminDeleteCommodity
+from annotation.adminDeleteDemand import adminDeleteDemand
+from annotation.adminDeleteFactorValue import adminDeleteFactorValue
+from annotation.adminDeleteMovingFactor import adminDeleteMovingFactor
+from annotation.adminDeletePrice import adminDeletePrice
+from annotation.adminDeleteRegion import adminDeleteRegion
+from annotation.adminDeleteSubCategory import adminDeleteSubCategory
+from annotation.adminDeleteSupply import adminDeleteSupply
+from annotation.adminUserEdit import adminUserEdit
+from annotation.adminUsersFetch import adminUsersFetch
+from annotation.annotationCount import annotationCount
+from annotation.articleContent import articleContent
+from annotation.articleContentId import articleContentId
+from annotation.articleContentNav import articleContentNav
+from annotation.articleCount import articleCount
+from annotation.articleSave import articleSave
+from annotation.csvUpload import csvUpload
+from annotation.deleteMapping import deleteMapping
+from annotation.fetchCategory import fetchCategory
+from annotation.fetchCommodity import fetchCommodity
+from annotation.fetchDemand import fetchDemand
+from annotation.fetchFactorValue import fetchFactorValue
+from annotation.fetchMapping import fetchMapping
+from annotation.fetchMovingFactor import fetchMovingFactor
+from annotation.fetchPrice import fetchPrice
+from annotation.fetchRegion import fetchRegion
+from annotation.fetchSubCategory import fetchSubCategory
+from annotation.fetchSupply import fetchSupply
+from annotation.fetchUsers import fetchUsers
+from annotation.markIrrelevant import markIrrelevant
+from annotation.markWithQuestion import markWithQuestion
+from annotation.review import review
+from annotation.updateMapping import updateMapping
+from annotation.userSignUp import userSignUp
+from annotation.login import login
+from annotation.exportCsv import exportCsv
+from annotation.movingFactorConstraints import movingFactorConstraints
+from annotation.subCategoryConstraints import subCategoryConstraints
 
 from annotation.adminAddCommodityDescription import adminAddCommodityDescription
+from annotation.adminAddRegionOfEvent import adminAddRegionofEvent
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
@@ -266,22 +271,6 @@ def api_adminAddDemand():
     return jsonify(status)
 
 
-@app.route('/adminaddfactorvalue', methods=['POST'])
-@token_required
-def api_adminAddFactorValue():
-    requestParameters = request.get_json()
-    status = adminAddFactorValue(requestParameters)
-    return jsonify(status)
-
-
-@app.route('/adminaddmovingfactor', methods=['POST'])
-@token_required
-def api_adminAddMovingFactor():
-    requestParameters = request.get_json()
-    status = adminAddMovingFactor(requestParameters)
-    return jsonify(status)
-
-
 @app.route('/adminaddprice', methods=['POST'])
 @token_required
 def api_adminAddPrice():
@@ -290,19 +279,11 @@ def api_adminAddPrice():
     return jsonify(status)
 
 
-@app.route('/adminaddregion', methods=['POST'])
+@app.route('/adminaddregionofevent', methods=['POST'])
 @token_required
-def api_adminAddRegion():
+def api_adminAddRegionofEvent():
     requestParameters = request.get_json()
-    status = adminAddRegion(requestParameters)
-    return jsonify(status)
-
-
-@app.route('/adminaddsubcategory', methods=['POST'])
-@token_required
-def api_adminAddSubCategory():
-    requestParameters = request.get_json()
-    status = adminAddSubCategory(requestParameters)
+    status = adminAddRegionofEvent(requestParameters)
     return jsonify(status)
 
 
@@ -311,6 +292,30 @@ def api_adminAddSubCategory():
 def api_adminAddSupply():
     requestParameters = request.get_json()
     status = adminAddSupply(requestParameters)
+    return jsonify(status)
+
+
+@app.route('/adminaddfactor', methods=['POST'])
+@token_required
+def api_adminAddFactor():
+    requestParameters = request.get_json()
+    status = adminAddFactor(requestParameters)
+    return jsonify(status)
+
+
+@app.route('/adminaddsubfactor', methods=['POST'])
+@token_required
+def api_adminAddSubFactor():
+    requestParameters = request.get_json()
+    status = adminAddSubFactor(requestParameters)
+    return jsonify(status)
+
+
+@app.route('/adminaddsubfactorvalue', methods=['POST'])
+@token_required
+def api_adminAddSubFactorValue():
+    requestParameters = request.get_json()
+    status = adminAddSubFactorValue(requestParameters)
     return jsonify(status)
 
 

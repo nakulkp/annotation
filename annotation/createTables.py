@@ -61,10 +61,10 @@ def createTables():
         """
         CREATE TABLE region_of_event( 
             created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
-            region varchar NOT NULL,
-            region_id SERIAL NOT NULL,
+            event_region varchar NOT NULL,
+            event_region_id SERIAL NOT NULL,
             status varchar NOT NULL,
-            CONSTRAINT region_pkey PRIMARY KEY (region_id)
+            CONSTRAINT region_of_event_pkey PRIMARY KEY (event_region_id)
         );
         """,
         """
@@ -116,12 +116,12 @@ def createTables():
         );
         """,
         """
-        CREATE TABLE impact_region_table ( 
+        CREATE TABLE region_of_impact_table ( 
             created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
             impact_region varchar NOT NULL,
             impact_region_id SERIAL NOT NULL,
             status varchar NOT NULL,
-            CONSTRAINT impact_region_table_pkey PRIMARY KEY (impact_region_id)
+            CONSTRAINT region_of_impact_table_pkey PRIMARY KEY (impact_region_id)
         );
         """,
         """
