@@ -43,20 +43,15 @@ from annotation.csvUpload import csvUpload
 
 from annotation.deleteMapping import deleteMapping
 
-from annotation.fetchCategory import fetchCategory
 from annotation.fetchCommodity import fetchCommodity
 from annotation.fetchCommodityDescription import fetchCommodityDescription
 from annotation.fetchDemand import fetchDemand
-from annotation.fetchFactorValue import fetchFactorValue
 
 from annotation.fetchFactor import fetchFactor
 from annotation.fetchMapping import fetchMapping
-from annotation.fetchMovingFactor import fetchMovingFactor
 from annotation.fetchPrice import fetchPrice
-from annotation.fetchRegion import fetchRegion
-from annotation.fetchSubCategory import fetchSubCategory
-
 from annotation.fetchRegionOfEvent import fetchRegionOfEvent
+from annotation.fetchRegionOfImpact import fetchRegionOfImpact
 from annotation.fetchSubFactor import fetchSubFactor
 from annotation.fetchSubFactorValue import fetchSubFactorValue
 from annotation.fetchSupply import fetchSupply
@@ -69,7 +64,6 @@ from annotation.updateMapping import updateMapping
 from annotation.userSignUp import userSignUp
 from annotation.login import login
 from annotation.exportCsv import exportCsv
-from annotation.movingFactorConstraints import movingFactorConstraints
 from annotation.subCategoryConstraints import subCategoryConstraints
 
 app = flask.Flask(__name__)
@@ -386,9 +380,9 @@ def api_fetchSubFactorValue():
 
 @app.route('/fetchregionofimpact', methods=['POST'])
 @token_required
-def api_fetchSubFactorValue():
+def api_fetchRegionOfImpact():
     requestParameters = request.get_json()
-    valueList = fetchSubFactorValue(requestParameters)
+    valueList = fetchRegionOfImpact(requestParameters)
     return jsonify(valueList)
 
 
@@ -399,15 +393,6 @@ def api_fetchDemand():
     valueList = fetchDemand(requestParameters)
     return jsonify(valueList)
 
-
-@app.route('/fetchfactorvalue', methods=['POST'])
-@token_required
-def api_fetchFactorValue():
-    requestParameters = request.get_json()
-    valueList = fetchFactorValue(requestParameters)
-    return jsonify(valueList)
-
-
 @app.route('/fetchmapping', methods=['POST'])
 @token_required
 def api_fetchMapping():
@@ -416,35 +401,11 @@ def api_fetchMapping():
     return jsonify(valueList)
 
 
-@app.route('/fetchmovingfactor', methods=['POST'])
-@token_required
-def api_fetchMovingFactor():
-    requestParameters = request.get_json()
-    valueList = fetchMovingFactor(requestParameters)
-    return jsonify(valueList)
-
-
 @app.route('/fetchprice', methods=['POST'])
 @token_required
 def api_fetchPrice():
     requestParameters = request.get_json()
     valueList = fetchPrice(requestParameters)
-    return jsonify(valueList)
-
-
-@app.route('/fetchregion', methods=['POST'])
-@token_required
-def api_fetchRegion():
-    requestParameters = request.get_json()
-    valueList = fetchRegion(requestParameters)
-    return jsonify(valueList)
-
-
-@app.route('/fetchsubcategory', methods=['POST'])
-@token_required
-def api_fetchSubCategory():
-    requestParameters = request.get_json()
-    valueList = fetchSubCategory(requestParameters)
     return jsonify(valueList)
 
 
@@ -533,10 +494,3 @@ def api_subCategoryConstraints():
     status = subCategoryConstraints(requestParameters)
     return jsonify(status)
 
-
-@app.route('/mfactorconstraints', methods=['POST'])
-@token_required
-def api_movingFactorConstraints():
-    requestParameters = request.get_json()
-    status = movingFactorConstraints(requestParameters)
-    return jsonify(status)
