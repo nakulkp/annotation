@@ -9,8 +9,8 @@ def review(requestParameters):
     sort_by = requestParameters["sort_by"]
     order_by = requestParameters["order_by"]
 
-    #params = config()
-    #conn = psycopg2.connect(**params)
+    # params = config()
+    # conn = psycopg2.connect(**params)
 
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
@@ -18,11 +18,11 @@ def review(requestParameters):
     page = requestParameters['page']
     factor = requestParameters['factor']
 
-    offset = (page-1)*factor
+    offset = (page - 1) * factor
     limit = factor
 
     cur.execute("SELECT privilege FROM users WHERE user_id = %(user_id)s; ",
-                 {'user_id': user_id})
+                {'user_id': user_id})
     privilege = cur.fetchone()
     privilege = privilege[0]
 
@@ -31,174 +31,270 @@ def review(requestParameters):
 
     if sort_by == '':
         sort_by = 'created_date';
-        
+
     if order_by == '':
         order_by = 'asc';
-    
+
     if filter_ == 'all':
         if privilege == '1':
             if order_by == 'asc':
-                query = sql.SQL("SELECT owner, article_id, headline, status, question, url, release_date FROM master_table ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;").format(field=sql.Identifier(sort_by))
+                query = sql.SQL("""SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
+                 FROM master_table 
+                 ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;""").format(field=sql.Identifier(sort_by))
                 cur.execute(query, {"limit": limit, "offset": offset})
-            else:                    
-                query = sql.SQL("SELECT owner, article_id, headline, status, question, url, release_date FROM master_table ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;").format(field=sql.Identifier(sort_by))
+            else:
+                query = sql.SQL("""SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
+                 FROM master_table 
+                 ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;""").format(field=sql.Identifier(sort_by))
                 cur.execute(query, {"limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
-            
+
             cur.execute("""SELECT COUNT(article_id) FROM master_table;""")
             dataCount = cur.fetchall()
             dataCount = dataCount[0]
-            pageCount = dataCount[0]//factor
+            pageCount = dataCount[0] // factor
             if (dataCount[0] % factor) != 0 and dataCount[0] > factor:
-                pageCount = pageCount + 1    
+                pageCount = pageCount + 1
 
         else:
             if order_by == 'asc':
-                query = sql.SQL("SELECT owner, article_id, headline, status, question, url, release_date FROM master_table WHERE user_id=%(user_id)s ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;").format(field=sql.Identifier(sort_by))
+                query = sql.SQL("""SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
+                 FROM master_table 
+                 WHERE user_id=%(user_id)s 
+                 ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;""").format(field=sql.Identifier(sort_by))
                 cur.execute(query, {'user_id': user_id, "limit": limit, "offset": offset})
             else:
-                query = sql.SQL("SELECT owner, article_id, headline, status, question, url, release_date FROM master_table WHERE user_id=%(user_id)s ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;").format(field=sql.Identifier(sort_by))
+                query = sql.SQL("""SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date 
+                FROM master_table
+                 WHERE user_id=%(user_id)s 
+                 ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;""").format(field=sql.Identifier(sort_by))
                 cur.execute(query, {'user_id': user_id, "limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
-            
-            cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s;""", {'user_id': user_id})
+
+            cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s;""",
+                        {'user_id': user_id})
             dataCount = cur.fetchall()
             dataCount = dataCount[0]
-            pageCount = dataCount[0]//factor
+            pageCount = dataCount[0] // factor
             if (dataCount[0] % factor) != 0 and dataCount[0] > factor:
-                pageCount = pageCount + 1     
+                pageCount = pageCount + 1
 
     elif filter_ == 'todo':
         if privilege == '1':
             if order_by == 'asc':
-                query = sql.SQL("SELECT owner, article_id, headline, status, question, url, release_date FROM master_table WHERE status='todo' ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;").format(field=sql.Identifier(sort_by))
+                query = sql.SQL(
+                    """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
+                     FROM master_table
+                      WHERE status='todo' 
+                      ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;""").format(
+                    field=sql.Identifier(sort_by))
                 cur.execute(query, {"limit": limit, "offset": offset})
             else:
-                query = sql.SQL("SELECT owner, article_id, headline, status, question, url, release_date FROM master_table WHERE status='todo' ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;").format(field=sql.Identifier(sort_by))
+                query = sql.SQL(
+                    """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date 
+                    FROM master_table
+                     WHERE status='todo' 
+                     ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;""").format(
+                    field=sql.Identifier(sort_by))
                 cur.execute(query, {"limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
-            
+
             cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE status='todo';""")
             dataCount = cur.fetchall()
             dataCount = dataCount[0]
-            pageCount = dataCount[0]//factor
+            pageCount = dataCount[0] // factor
             if (dataCount[0] % factor) != 0 and dataCount[0] > factor:
-                pageCount = pageCount + 1    
+                pageCount = pageCount + 1
 
         else:
             if order_by == 'asc':
-                query = sql.SQL("SELECT owner, article_id, headline, status, question, url, release_date FROM master_table WHERE user_id=%(user_id)s AND status='todo' ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;").format(field=sql.Identifier(sort_by))
-                cur.execute(query, {'user_id': user_id, "limit": limit, "offset": offset, "sort_by":sort_by})
+                query = sql.SQL(
+                    """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
+                     FROM master_table
+                      WHERE user_id=%(user_id)s AND status='todo'
+                       ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;""").format(
+                    field=sql.Identifier(sort_by))
+                cur.execute(query, {'user_id': user_id, "limit": limit, "offset": offset, "sort_by": sort_by})
             else:
-                query = sql.SQL("SELECT owner, article_id, headline, status, question, url, release_date FROM master_table WHERE user_id=%(user_id)s AND status='todo' ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;").format(field=sql.Identifier(sort_by))
-                cur.execute(query, {'user_id': user_id, "limit": limit, "offset": offset, "sort_by":sort_by})
+                query = sql.SQL(
+                    """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
+                     FROM master_table
+                      WHERE user_id=%(user_id)s AND status='todo'
+                       ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;""").format(
+                    field=sql.Identifier(sort_by))
+                cur.execute(query, {'user_id': user_id, "limit": limit, "offset": offset, "sort_by": sort_by})
             reviewValues = cur.fetchall()
-            
-            cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s AND status='todo';""", {'user_id': user_id})
+
+            cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s AND status='todo';""",
+                        {'user_id': user_id})
             dataCount = cur.fetchall()
             dataCount = dataCount[0]
-            pageCount = dataCount[0]//factor
+            pageCount = dataCount[0] // factor
             if (dataCount[0] % factor) != 0 and dataCount[0] > factor:
-                pageCount = pageCount + 1     
+                pageCount = pageCount + 1
 
     elif filter_ == 'irrelevant':
         if privilege == '1':
             if order_by == 'asc':
-                query = sql.SQL("SELECT owner, article_id, headline, status, question, url, release_date FROM master_table WHERE status='irrelevant' ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;").format(field=sql.Identifier(sort_by))
+                query = sql.SQL(
+                    """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
+                     FROM master_table
+                      WHERE status='irrelevant'
+                       ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;""").format(
+                    field=sql.Identifier(sort_by))
                 cur.execute(query, {"limit": limit, "offset": offset})
             else:
-                query = sql.SQL("SELECT owner, article_id, headline, status, question, url, release_date FROM master_table WHERE status='irrelevant' ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;").format(field=sql.Identifier(sort_by))
+                query = sql.SQL(
+                    """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
+                     FROM master_table
+                      WHERE status='irrelevant'
+                       ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;""").format(
+                    field=sql.Identifier(sort_by))
                 cur.execute(query, {"limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
-            
+
             cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE status='irrelevant';""")
             dataCount = cur.fetchall()
             dataCount = dataCount[0]
-            pageCount = dataCount[0]//factor
+            pageCount = dataCount[0] // factor
             if (dataCount[0] % factor) != 0 and dataCount[0] > factor:
-                pageCount = pageCount + 1    
+                pageCount = pageCount + 1
 
         else:
             if order_by == 'asc':
-                query = sql.SQL("SELECT owner, article_id, headline, status, question, url, release_date FROM master_table WHERE user_id=%(user_id)s AND status='irrelevant' ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;").format(field=sql.Identifier(sort_by))
+                query = sql.SQL(
+                    """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
+                     FROM master_table
+                      WHERE user_id=%(user_id)s AND status='irrelevant'
+                       ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;""").format(
+                    field=sql.Identifier(sort_by))
                 cur.execute(query, {'user_id': user_id, "limit": limit, "offset": offset})
             else:
-                query = sql.SQL("SELECT owner, article_id, headline, status, question, url, release_date FROM master_table WHERE user_id=%(user_id)s AND status='irrelevant' ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;").format(field=sql.Identifier(sort_by))
+                query = sql.SQL(
+                    """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date FROM master_table
+                     WHERE user_id=%(user_id)s AND status='irrelevant'
+                      ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;""").format(
+                    field=sql.Identifier(sort_by))
                 cur.execute(query, {'user_id': user_id, "limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
-            
-            cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s AND status='irrelevant';""", {'user_id': user_id})
+
+            cur.execute(
+                """SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s AND status='irrelevant';""",
+                {'user_id': user_id})
             dataCount = cur.fetchall()
             dataCount = dataCount[0]
-            pageCount = dataCount[0]//factor
+            pageCount = dataCount[0] // factor
             if (dataCount[0] % factor) != 0 and dataCount[0] > factor:
-                pageCount = pageCount + 1     
+                pageCount = pageCount + 1
 
     elif filter_ == 'completed':
         if privilege == '1':
             if order_by == 'asc':
-                query = sql.SQL("SELECT owner, article_id, headline, status, question, url, release_date FROM master_table WHERE status ='completed' ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;").format(field=sql.Identifier(sort_by))
-                cur.execute(query, {"limit": limit, "offset": offset, "sort_by":sort_by})
+                query = sql.SQL(
+                    """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
+                     FROM master_table
+                      WHERE status ='completed'
+                       ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;""").format(
+                    field=sql.Identifier(sort_by))
+                cur.execute(query, {"limit": limit, "offset": offset, "sort_by": sort_by})
             else:
-                query = sql.SQL("SELECT owner, article_id, headline, status, question, url, release_date FROM master_table WHERE status ='completed' ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;").format(field=sql.Identifier(sort_by))
-                cur.execute(query, {"limit": limit, "offset": offset, "sort_by":sort_by})
+                query = sql.SQL(
+                    """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
+                     FROM master_table
+                      WHERE status ='completed'
+                       ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;""").format(
+                    field=sql.Identifier(sort_by))
+                cur.execute(query, {"limit": limit, "offset": offset, "sort_by": sort_by})
             reviewValues = cur.fetchall()
-            
+
             cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE status='completed';""")
             dataCount = cur.fetchall()
             dataCount = dataCount[0]
-            pageCount = dataCount[0]//factor
+            pageCount = dataCount[0] // factor
             if (dataCount[0] % factor) != 0 and dataCount[0] > factor:
-                pageCount = pageCount + 1    
+                pageCount = pageCount + 1
 
         else:
             if order_by == 'asc':
-                query = sql.SQL("SELECT owner, article_id, headline, status, question, url, release_date FROM master_table WHERE user_id=%(user_id)s AND status='completed' ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;").format(field=sql.Identifier(sort_by))
+                query = sql.SQL(
+                    """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
+                     FROM master_table
+                      WHERE user_id=%(user_id)s AND status='completed'
+                       ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;""").format(
+                    field=sql.Identifier(sort_by))
                 cur.execute(query, {'user_id': user_id, "limit": limit, "offset": offset})
             else:
-                query = sql.SQL("SELECT owner, article_id, headline, status, question, url, release_date FROM master_table WHERE user_id=%(user_id)s AND status='completed' ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;").format(field=sql.Identifier(sort_by))
+                query = sql.SQL(
+                    """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
+                     FROM master_table
+                      WHERE user_id=%(user_id)s AND status='completed'
+                       ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;""").format(
+                    field=sql.Identifier(sort_by))
                 cur.execute(query, {'user_id': user_id, "limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
-            
-            cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s AND status='completed';""", {'user_id': user_id})
+
+            cur.execute(
+                """SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s AND status='completed';""",
+                {'user_id': user_id})
             dataCount = cur.fetchall()
             dataCount = dataCount[0]
-            pageCount = dataCount[0]//factor
+            pageCount = dataCount[0] // factor
             if (dataCount[0] % factor) != 0 and dataCount[0] > factor:
-                pageCount = pageCount + 1     
+                pageCount = pageCount + 1
 
     elif filter_ == 'marked':
         if privilege == '1':
             if order_by == 'asc':
-                query = sql.SQL("SELECT owner, article_id, headline, status, question, url, release_date FROM master_table WHERE status='marked' ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;").format(field=sql.Identifier(sort_by))
+                query = sql.SQL(
+                    """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
+                     FROM master_table
+                      WHERE status='marked'
+                       ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;""").format(
+                    field=sql.Identifier(sort_by))
                 cur.execute(query, {"limit": limit, "offset": offset})
             else:
-                query = sql.SQL("SELECT owner, article_id, headline, status, question, url, release_date FROM master_table WHERE status='marked' ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;").format(field=sql.Identifier(sort_by))
+                query = sql.SQL(
+                    """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
+                     FROM master_table WHERE status='marked'
+                      ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;""").format(
+                    field=sql.Identifier(sort_by))
                 cur.execute(query, {"limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
-            
+
             cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE status='marked';""")
             dataCount = cur.fetchall()
             dataCount = dataCount[0]
-            pageCount = dataCount[0]//factor
+            pageCount = dataCount[0] // factor
             if (dataCount[0] % factor) != 0 and dataCount[0] > factor:
-                pageCount = pageCount + 1    
+                pageCount = pageCount + 1
 
         else:
             if order_by == 'asc':
-                query = sql.SQL("SELECT owner, article_id, headline, status, question, url, release_date FROM master_table WHERE user_id=%(user_id)s AND status='marked' ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;").format(field=sql.Identifier(sort_by))
+                query = sql.SQL(
+                    """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
+                     FROM master_table
+                      WHERE user_id=%(user_id)s AND status='marked'
+                       ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;""").format(
+                    field=sql.Identifier(sort_by))
                 cur.execute(query, {'user_id': user_id, "limit": limit, "offset": offset})
             else:
-                query = sql.SQL("SELECT owner, article_id, headline, status, question, url, release_date FROM master_table WHERE user_id=%(user_id)s AND status='marked' ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;").format(field=sql.Identifier(sort_by))
+                query = sql.SQL(
+                    """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
+                     FROM master_table
+                      WHERE user_id=%(user_id)s AND status='marked'
+                       ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;""").format(
+                    field=sql.Identifier(sort_by))
                 cur.execute(query, {'user_id': user_id, "limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
-            
-            cur.execute("""SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s AND status='marked';""", {'user_id': user_id})
+
+            cur.execute(
+                """SELECT COUNT(article_id) FROM master_table WHERE user_id = %(user_id)s AND status='marked';""",
+                {'user_id': user_id})
             dataCount = cur.fetchall()
             dataCount = dataCount[0]
-            pageCount = dataCount[0]//factor
+            pageCount = dataCount[0] // factor
             if (dataCount[0] % factor) != 0 and dataCount[0] > factor:
-                pageCount = pageCount + 1     
+                pageCount = pageCount + 1
 
     finalValues = []
     for rv in reviewValues:

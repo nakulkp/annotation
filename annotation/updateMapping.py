@@ -6,16 +6,16 @@ def updateMapping(requestParameters):
     mapping_id = requestParameters["mapping_id"]
     user_id = requestParameters['user_id']
     article_id = requestParameters['article_id']
-    country_id = requestParameters['country_id']
+    comm_desc_id = requestParameters['comm_desc_id']
     commodity_id = requestParameters['commodity_id']
-    category_id = requestParameters['category_id']
-    subcategory_id = requestParameters['subcategory_id']
-    moving_factor_id = requestParameters['moving_factor_id']
-    factor_value_id = requestParameters['factor_value_id']
+    factor_id = requestParameters['factor_id']
+    subfactor_id = requestParameters['subfactor_id']
+    subfactorvalue_id = requestParameters['subfactorvalue_id']
+    impact_region_id = requestParameters['impact_region_id']
     price_value_id = requestParameters['price_value_id']
     supply_value_id = requestParameters['supply_value_id']
     demand_value_id = requestParameters['demand_value_id']
-    sc_disruption_value_id = requestParameters['sc_disruption_value_id']
+    event_region_id = requestParameters['event_region_id']
 
     # params = config()
     # conn = psycopg2.connect(**params)
@@ -33,13 +33,13 @@ def updateMapping(requestParameters):
         return {'message': "no matching mapping"}
 
     cur.execute("""UPDATE mapping_table 
-                SET status = 'enabled', last_modified_by= %(user_id)s, article_id = %(article_id)s, country_id = %(country_id)s, commodity_id = %(commodity_id)s, category_id = %(category_id)s, subcategory_id = %(subcategory_id)s, moving_factor_id = %(moving_factor_id)s, factor_value_id = %(factor_value_id)s, price_value_id = %(price_value_id)s, supply_value_id = %(supply_value_id)s, demand_value_id = %(demand_value_id)s, sc_disruption_value_id = %(sc_disruption_value_id)s, last_modified = current_timestamp AT TIME ZONE 'UTC'
+                SET status = 'enabled', last_modified_by= %(user_id)s, article_id = %(article_id)s, comm_desc_id = %(comm_desc_id)s, commodity_id = %(commodity_id)s, factor_id = %(factor_id)s, subfactor_id = %(subfactor_id)s, subfactorvalue_id = %(subfactorvalue_id)s, impact_region_id = %(impact_region_id)s, price_value_id = %(price_value_id)s, supply_value_id = %(supply_value_id)s, demand_value_id = %(demand_value_id)s, event_region_id = %(event_region_id)s, last_modified = current_timestamp AT TIME ZONE 'UTC'
                 WHERE mapping_id = %(mapping_id)s;""",
-                {'user_id': user_id, 'article_id': article_id, 'country_id': country_id, 'commodity_id': commodity_id,
-                 'category_id': category_id, 'subcategory_id': subcategory_id, 'moving_factor_id': moving_factor_id,
-                 'factor_value_id': factor_value_id, 'price_value_id': price_value_id,
+                {'user_id': user_id, 'article_id': article_id, 'comm_desc_id': comm_desc_id, 'commodity_id': commodity_id,
+                 'factor_id': factor_id, 'subfactor_id': subfactor_id, 'subfactorvalue_id': subfactorvalue_id,
+                 'impact_region_id': impact_region_id, 'price_value_id': price_value_id,
                  'supply_value_id': supply_value_id, 'demand_value_id': demand_value_id,
-                 'sc_disruption_value_id': sc_disruption_value_id, 'mapping_id': mapping_id}
+                 'event_region_id': event_region_id, 'mapping_id': mapping_id}
                 )
     cur.close()
     conn.commit()
