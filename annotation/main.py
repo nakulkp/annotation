@@ -27,6 +27,7 @@ from annotation.adminDeleteRegionOfImpact import adminDeleteRegionOfImpact
 from annotation.adminDeleteSubFactor import adminDeleteSubFactor
 from annotation.adminDeleteSubFactorValue import adminDeleteSubFactorValue
 from annotation.adminDeleteSupply import adminDeleteSupply
+from annotation.adminUserDelete import adminUserDelete
 
 from annotation.adminUserEdit import adminUserEdit
 from annotation.adminUsersFetch import adminUsersFetch
@@ -438,6 +439,13 @@ def api_adminUsersFetch():
 def api_adminUsersEdit():
     requestParameters = request.get_json()
     status = adminUserEdit(requestParameters)
+    return jsonify(status)
+
+@app.route('/adminuserdelete', methods=['POST'])
+@token_required
+def api_adminUserDelete():
+    requestParameters = request.get_json()
+    status = adminUserDelete(requestParameters)
     return jsonify(status)
 
 
