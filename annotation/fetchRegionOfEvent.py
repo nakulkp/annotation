@@ -2,17 +2,19 @@ import psycopg2
 from config import config
 
 
-def fetchFactorValue(requestParameters):
+def fetchRegionOfEvent(requestParameters):
+    conn = None
     # params = config()
     # conn = psycopg2.connect(**params)
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
+
     is_null = requestParameters['is_null']
     page = requestParameters['page']
     offset = (page-1)*20
     limit = 20
 
-    cur.execute("""SELECT COUNT(factor_value_id) FROM factor_value_table;""")
+    cur.execute("""SELECT COUNT(event_region_id) FROM region_of_event;""")
     dataCount = cur.fetchall()
     dataCount = dataCount[0]
     pageCount = dataCount[0]//20
@@ -20,7 +22,7 @@ def fetchFactorValue(requestParameters):
         pageCount = pageCount + 1
 
     if is_null == 'NULL':
-        cur.execute("SELECT EXISTS (SELECT 1 FROM factor_value_table LIMIT 1);")
+        cur.execute("SELECT EXISTS (SELECT 1 FROM region_of_event LIMIT 1);")
 
         valueExists = cur.fetchone()
         valueExists = valueExists[0]
@@ -28,22 +30,21 @@ def fetchFactorValue(requestParameters):
         if not valueExists:
             return {'message': "no values"}
 
-        cur.execute("""SELECT factor_value, factor_value_id, status
-            FROM factor_value_table ORDER BY factor_value_id ASC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
+        cur.execute("""SELECT event_region, event_region_id, status
+            FROM region_of_event ORDER BY event_region_id ASC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
         rows = cur.fetchall()
         valueList = []
         for row in rows:
-            value = {"factor_value": row[0], "factor_value_id": row[1], "status": row[2]}
+            value = {"event_region": row[0], "event_region_id": row[1], "status": row[2]}
             valueList.append(value)
-
 
         cur.close()
         conn.commit()
 
         return {'data': valueList, 'pages': pageCount}
-        
+    
     elif is_null == 'enabled':
-        cur.execute("SELECT EXISTS (SELECT 1 FROM factor_value_table LIMIT 1);")
+        cur.execute("SELECT EXISTS (SELECT 1 FROM region_of_event LIMIT 1);")
 
         valueExists = cur.fetchone()
         valueExists = valueExists[0]
@@ -51,26 +52,25 @@ def fetchFactorValue(requestParameters):
         if not valueExists:
             return {'message': "no values"}
 
-        cur.execute("""SELECT factor_value, factor_value_id, status
-            FROM factor_value_table WHERE status='enabled' ORDER BY factor_value_id ASC;""")
+        cur.execute("""SELECT event_region, event_region_id, status
+            FROM region_of_event WHERE status='enabled' ORDER BY event_region_id ASC;""")
         rows = cur.fetchall()
         valueList = []
         for row in rows:
-            value = {"factor_value": row[0], "factor_value_id": row[1], "status": row[2]}
+            value = {"event_region": row[0], "event_region_id": row[1], "status": row[2]}
             valueList.append(value)
-
 
         cur.close()
         conn.commit()
 
         return {'data': valueList}
 
-    factor_value_id = requestParameters["factor_value_id"]
+    event_region_id = requestParameters["event_region_id"]
 
-    cur.execute("""SELECT factor_value
-           FROM factor_value_table
-           WHERE factor_value_id= %(factor_value_id)s ;""", {"factor_value_id": factor_value_id})
+    cur.execute("""SELECT event_region
+           FROM region_of_event
+           WHERE event_region_id= %(event_region_id)s ;""", {"event_region_id": event_region_id})
     row = cur.fetchone()
-    factor_value = row[0]
+    event_region = row[0]
 
-    return factor_value
+    return event_region

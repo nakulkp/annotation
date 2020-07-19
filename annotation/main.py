@@ -45,13 +45,20 @@ from annotation.deleteMapping import deleteMapping
 
 from annotation.fetchCategory import fetchCategory
 from annotation.fetchCommodity import fetchCommodity
+from annotation.fetchCommodityDescription import fetchCommodityDescription
 from annotation.fetchDemand import fetchDemand
 from annotation.fetchFactorValue import fetchFactorValue
+
+from annotation.fetchFactor import fetchFactor
 from annotation.fetchMapping import fetchMapping
 from annotation.fetchMovingFactor import fetchMovingFactor
 from annotation.fetchPrice import fetchPrice
 from annotation.fetchRegion import fetchRegion
 from annotation.fetchSubCategory import fetchSubCategory
+
+from annotation.fetchRegionOfEvent import fetchRegionOfEvent
+from annotation.fetchSubFactor import fetchSubFactor
+from annotation.fetchSubFactorValue import fetchSubFactorValue
 from annotation.fetchSupply import fetchSupply
 from annotation.fetchUsers import fetchUsers
 
@@ -193,12 +200,14 @@ def api_adminDeleteCommodityDescription():
     status = adminDeleteCommodityDescription(requestParameters)
     return jsonify(status)
 
+
 @app.route('/admindeleteregionofevent', methods=['POST'])
 @token_required
 def api_adminDeleteRegionOfEvent():
     requestParameters = request.get_json()
     status = adminDeleteRegionOfEvent(requestParameters)
     return jsonify(status)
+
 
 @app.route('/admindeleteregionofimpact', methods=['POST'])
 @token_required
@@ -207,12 +216,14 @@ def api_adminDeleteRegionOfImpact():
     status = adminDeleteRegionOfImpact(requestParameters)
     return jsonify(status)
 
+
 @app.route('/admindeletefactor', methods=['POST'])
 @token_required
 def api_adminDeleteFactor():
     requestParameters = request.get_json()
     status = adminDeleteFactor(requestParameters)
     return jsonify(status)
+
 
 @app.route('/admindeletesubfactor', methods=['POST'])
 @token_required
@@ -221,12 +232,14 @@ def api_adminDeleteSubFactor():
     status = adminDeleteSubFactor(requestParameters)
     return jsonify(status)
 
+
 @app.route('/admindeletesubfactorvalue', methods=['POST'])
 @token_required
 def api_adminDeleteSubFactorValue():
     requestParameters = request.get_json()
     status = adminDeleteSubFactorValue(requestParameters)
     return jsonify(status)
+
 
 @app.route('/admindeletedemand', methods=['POST'])
 @token_required
@@ -324,19 +337,58 @@ def api_adminAddSubFactorValue():
     return jsonify(status)
 
 
-@app.route('/fetchcategory', methods=['POST'])
-@token_required
-def api_fetchCategory():
-    requestParameters = request.get_json()
-    valueList = fetchCategory(requestParameters)
-    return jsonify(valueList)
-
-
 @app.route('/fetchcommodity', methods=['POST'])
 @token_required
 def api_fetchCommodity():
     requestParameters = request.get_json()
     valueList = fetchCommodity(requestParameters)
+    return jsonify(valueList)
+
+
+@app.route('/fetchcommoditydescription', methods=['POST'])
+@token_required
+def api_fetchCommodityDescription():
+    requestParameters = request.get_json()
+    valueList = fetchCommodityDescription(requestParameters)
+    return jsonify(valueList)
+
+
+@app.route('/fetchregionofevent', methods=['POST'])
+@token_required
+def api_fetchRegionOfEvent():
+    requestParameters = request.get_json()
+    valueList = fetchRegionOfEvent(requestParameters)
+    return jsonify(valueList)
+
+
+@app.route('/fetchfactor', methods=['POST'])
+@token_required
+def api_fetchFactor():
+    requestParameters = request.get_json()
+    valueList = fetchFactor(requestParameters)
+    return jsonify(valueList)
+
+
+@app.route('/fetchsubfactor', methods=['POST'])
+@token_required
+def api_fetchSubFactor():
+    requestParameters = request.get_json()
+    valueList = fetchSubFactor(requestParameters)
+    return jsonify(valueList)
+
+@app.route('/fetchsubfactorvalue', methods=['POST'])
+@token_required
+def api_fetchSubFactorValue():
+    requestParameters = request.get_json()
+    valueList = fetchSubFactorValue(requestParameters)
+    return jsonify(valueList)
+
+
+@app.route('/fetchregionofimpact', methods=['POST'])
+@token_required
+def api_fetchSubFactorValue():
+    requestParameters = request.get_json()
+    valueList = fetchSubFactorValue(requestParameters)
     return jsonify(valueList)
 
 
@@ -440,6 +492,7 @@ def api_adminUsersEdit():
     requestParameters = request.get_json()
     status = adminUserEdit(requestParameters)
     return jsonify(status)
+
 
 @app.route('/adminuserdelete', methods=['POST'])
 @token_required
