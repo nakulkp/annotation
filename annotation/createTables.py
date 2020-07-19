@@ -110,6 +110,7 @@ def createTables():
             created_date timestamp without time zone NOT NULL DEFAULT (current_timestamp AT TIME ZONE 'UTC'),
             subfactorvalue varchar NOT NULL,
             subfactorvalue_id SERIAL NOT NULL,
+            factor_id INTEGER NOT NULL,
             subfactor_id INTEGER NOT NULL,
             status varchar NOT NULL,
             CONSTRAINT subfactorvalue_table_pkey PRIMARY KEY (subfactorvalue_id)

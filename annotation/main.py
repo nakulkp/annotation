@@ -9,35 +9,39 @@ from functools import wraps
 
 from annotation.adminAddCommodity import adminAddCommodity
 from annotation.adminAddDemand import adminAddDemand
-from annotation.adminAddFactorValue import adminAddFactorValue
-from annotation.adminAddMovingFactor import adminAddMovingFactor
-
 from annotation.adminAddFactor import adminAddFactor
 from annotation.adminAddPrice import adminAddPrice
-from annotation.adminAddSubCategory import adminAddSubCategory
-
 from annotation.adminAddSubFactor import adminAddSubFactor
 from annotation.adminAddSubFactorValue import adminAddSubFactorValue
 from annotation.adminAddSupply import adminAddSupply
-from annotation.adminDeleteCategory import adminDeleteCategory
+from annotation.adminAddCommodityDescription import adminAddCommodityDescription
+from annotation.adminAddRegionOfEvent import adminAddRegionofEvent
+
 from annotation.adminDeleteCommodity import adminDeleteCommodity
+from annotation.adminDeleteCommodityDescription import adminDeleteCommodityDescription
 from annotation.adminDeleteDemand import adminDeleteDemand
-from annotation.adminDeleteFactorValue import adminDeleteFactorValue
-from annotation.adminDeleteMovingFactor import adminDeleteMovingFactor
+from annotation.adminDeleteFactor import adminDeleteFactor
 from annotation.adminDeletePrice import adminDeletePrice
-from annotation.adminDeleteRegion import adminDeleteRegion
-from annotation.adminDeleteSubCategory import adminDeleteSubCategory
+from annotation.adminDeleteRegionOfEvent import adminDeleteRegionOfEvent
+from annotation.adminDeleteRegionOfImpact import adminDeleteRegionOfImpact
+from annotation.adminDeleteSubFactor import adminDeleteSubFactor
+from annotation.adminDeleteSubFactorValue import adminDeleteSubFactorValue
 from annotation.adminDeleteSupply import adminDeleteSupply
+
 from annotation.adminUserEdit import adminUserEdit
 from annotation.adminUsersFetch import adminUsersFetch
+
 from annotation.annotationCount import annotationCount
 from annotation.articleContent import articleContent
 from annotation.articleContentId import articleContentId
 from annotation.articleContentNav import articleContentNav
 from annotation.articleCount import articleCount
 from annotation.articleSave import articleSave
+
 from annotation.csvUpload import csvUpload
+
 from annotation.deleteMapping import deleteMapping
+
 from annotation.fetchCategory import fetchCategory
 from annotation.fetchCommodity import fetchCommodity
 from annotation.fetchDemand import fetchDemand
@@ -49,6 +53,7 @@ from annotation.fetchRegion import fetchRegion
 from annotation.fetchSubCategory import fetchSubCategory
 from annotation.fetchSupply import fetchSupply
 from annotation.fetchUsers import fetchUsers
+
 from annotation.markIrrelevant import markIrrelevant
 from annotation.markWithQuestion import markWithQuestion
 from annotation.review import review
@@ -58,9 +63,6 @@ from annotation.login import login
 from annotation.exportCsv import exportCsv
 from annotation.movingFactorConstraints import movingFactorConstraints
 from annotation.subCategoryConstraints import subCategoryConstraints
-
-from annotation.adminAddCommodityDescription import adminAddCommodityDescription
-from annotation.adminAddRegionOfEvent import adminAddRegionofEvent
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
@@ -175,14 +177,6 @@ def api_articleReview():
     return jsonify(reviewValues)
 
 
-@app.route('/admindeletecategory', methods=['POST'])
-@token_required
-def api_adminDeleteCategory():
-    requestParameters = request.get_json()
-    status = adminDeleteCategory(requestParameters)
-    return jsonify(status)
-
-
 @app.route('/admindeletecommodity', methods=['POST'])
 @token_required
 def api_adminDeleteCommodity():
@@ -190,6 +184,48 @@ def api_adminDeleteCommodity():
     status = adminDeleteCommodity(requestParameters)
     return jsonify(status)
 
+
+@app.route('/admindeletecommoditydescriptiom', methods=['POST'])
+@token_required
+def api_adminDeleteCommodityDescription():
+    requestParameters = request.get_json()
+    status = adminDeleteCommodityDescription(requestParameters)
+    return jsonify(status)
+
+@app.route('/admindeleteregionofevent', methods=['POST'])
+@token_required
+def api_adminDeleteRegionOfEvent():
+    requestParameters = request.get_json()
+    status = adminDeleteRegionOfEvent(requestParameters)
+    return jsonify(status)
+
+@app.route('/admindeleteregionofimpact', methods=['POST'])
+@token_required
+def api_adminDeleteRegionOfImpact():
+    requestParameters = request.get_json()
+    status = adminDeleteRegionOfImpact(requestParameters)
+    return jsonify(status)
+
+@app.route('/admindeletefactor', methods=['POST'])
+@token_required
+def api_adminDeleteFactor():
+    requestParameters = request.get_json()
+    status = adminDeleteFactor(requestParameters)
+    return jsonify(status)
+
+@app.route('/admindeletesubfactor', methods=['POST'])
+@token_required
+def api_adminDeleteSubFactor():
+    requestParameters = request.get_json()
+    status = adminDeleteSubFactor(requestParameters)
+    return jsonify(status)
+
+@app.route('/admindeletesubfactorvalue', methods=['POST'])
+@token_required
+def api_adminDeleteSubFactorValue():
+    requestParameters = request.get_json()
+    status = adminDeleteSubFactorValue(requestParameters)
+    return jsonify(status)
 
 @app.route('/admindeletedemand', methods=['POST'])
 @token_required
@@ -199,43 +235,11 @@ def api_adminDeleteDemand():
     return jsonify(status)
 
 
-@app.route('/admindeletefactorvalue', methods=['POST'])
-@token_required
-def api_adminDeleteFactorValue():
-    requestParameters = request.get_json()
-    status = adminDeleteFactorValue(requestParameters)
-    return jsonify(status)
-
-
-@app.route('/admindeletemovingfactor', methods=['POST'])
-@token_required
-def api_adminDeleteMovingFactor():
-    requestParameters = request.get_json()
-    status = adminDeleteMovingFactor(requestParameters)
-    return jsonify(status)
-
-
 @app.route('/admindeleteprice', methods=['POST'])
 @token_required
 def api_adminDeletePrice():
     requestParameters = request.get_json()
     status = adminDeletePrice(requestParameters)
-    return jsonify(status)
-
-
-@app.route('/admindeleteregion', methods=['POST'])
-@token_required
-def api_adminDeleteRegion():
-    requestParameters = request.get_json()
-    status = adminDeleteRegion(requestParameters)
-    return jsonify(status)
-
-
-@app.route('/admindeletesubcategory', methods=['POST'])
-@token_required
-def api_adminDeleteSubCategory():
-    requestParameters = request.get_json()
-    status = adminDeleteSubCategory(requestParameters)
     return jsonify(status)
 
 
