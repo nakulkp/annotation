@@ -47,6 +47,7 @@ def createTables():
             subfactor_id INTEGER NOT NULL,
             subfactorvalue_id INTEGER NOT NULL,
             impact_region_id INTEGER NOT NULL,
+            event_region_id INTEGER NOT NULL,
             price_value_id INTEGER NOT NULL,
             supply_value_id INTEGER NOT NULL,
             demand_value_id INTEGER NOT NULL,
