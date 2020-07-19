@@ -31,6 +31,7 @@ def createTables():
             url text,
             question text,
             last_modified_date DATE default CURRENT_DATE,
+            last_modified_by INTEGER,
             status varchar NOT NULL,
             CONSTRAINT master_table_pkey PRIMARY KEY (article_id)
         );
@@ -41,7 +42,6 @@ def createTables():
             mapping_id SERIAL NOT NULL,            
             user_id INTEGER NOT NULL,
             article_id INTEGER NOT NULL,
-            region_id INTEGER NOT NULL,
             commodity_id INTEGER NOT NULL,
             comm_desc_id INTEGER NOT NULL,
             factor_id INTEGER NOT NULL,
@@ -52,8 +52,6 @@ def createTables():
             price_value_id INTEGER NOT NULL,
             supply_value_id INTEGER NOT NULL,
             demand_value_id INTEGER NOT NULL,
-            last_modified DATE,
-            last_modified_by INTEGER,
             status varchar,
             deleted_on_date DATE,
             deleted_by INTEGER,

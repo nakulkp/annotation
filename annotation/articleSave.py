@@ -25,11 +25,13 @@ def articleSave(requestParameters):
     content = requestParameters['content']
     question = requestParameters['question']
     last_modified_date = requestParameters['last_modified_date']
+    last_modified_by = requestParameters['last_modified_by']
+
     status = 'marked'
 
     isAnyMappingIdZero = False
 
-    if user_id == 0 or article_id == 0 or region_id == 0 or commodity_id == 0 or comm_desc_id == 0 or factor_id == 0 or subfactor_id == 0 or subfactorvalue_id == 0 or price_value_id == 0 or supply_value_id == 0 or demand_value_id == 0 or impact_region_id == 0 or event_region_id == 0:
+    if user_id == 0 or article_id == 0 or region_id == 0 or commodity_id == 0 or comm_desc_id == 0 or factor_id == 0 or subfactor_id == 0 or subfactorvalue_id == 0 or price_value_id == 0 or supply_value_id == 0 or demand_value_id == 0 or impact_region_id == 0 or event_region_id == 0 or last_modified_by == 0:
         isAnyMappingIdZero = True
 
     if question == 'NULL':
@@ -41,11 +43,11 @@ def articleSave(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("""UPDATE master_table SET release_date = %(release_date)s , source = %(source)s , headline = %(headline)s, content = %(content)s , question = %(question)s, last_modified_date = %(last_modified_date)s  status = %(status)s 
+    cur.execute("""UPDATE master_table SET release_date = %(release_date)s , source = %(source)s , headline = %(headline)s, content = %(content)s , question = %(question)s, last_modified_date = %(last_modified_date)s,last_modified_by= %(last_modified_by)s , status = %(status)s 
     WHERE article_id = %(article_id)s;""",
                 {'owner': owner, 'release_date': release_date, 'source': source, 'url': url, 'headline': headline,
-                 'content': content, 'question': question, 'last_modified_date': last_modified_date, 'status': status,
-                 'article_id': article_id}
+                 'content': content, 'question': question, 'last_modified_date': last_modified_date,
+                 'last_modified_by': last_modified_by, 'status': status, 'article_id': article_id}
                 )
     cur.close()
     conn.commit()

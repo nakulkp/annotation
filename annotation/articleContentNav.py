@@ -55,38 +55,38 @@ def articleContentNav(requestParameters):
 
     if privilege == '1':
         if direction == 0:
-            cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date, article_id, status
+            cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date,last_modified_by, article_id, status
                 FROM master_table 
                 WHERE article_id <= %(article_id)s ORDER BY article_id DESC LIMIT 1;""",
                         {"article_id": article_id}
                         )
         elif direction == 1:
-            cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date, article_id, status
+            cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date,last_modified_by, article_id, status
                 FROM master_table 
                 WHERE article_id >= %(article_id)s ORDER BY article_id ASC LIMIT 1;""",
                         {"article_id": article_id}
                         )
         else:
-            cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date, article_id, status
+            cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date,last_modified_by, article_id, status
                 FROM master_table 
                 WHERE article_id = %(article_id)s ORDER BY article_id ASC LIMIT 1;""",
                         {"article_id": article_id}
                         )
     else:
         if direction == 0:
-            cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date, article_id, status
+            cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date,last_modified_by, article_id, status
                 FROM master_table 
                 WHERE article_id <= %(article_id)s AND user_id= %(user_id)s ORDER BY article_id DESC LIMIT 1;""",
                         {"article_id": article_id, "user_id": user_id}
                         )
         elif direction == 1:
-            cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date, article_id, status
+            cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date,last_modified_by, article_id, status
                 FROM master_table 
                 WHERE article_id >= %(article_id)s AND user_id= %(user_id)s ORDER BY article_id ASC LIMIT 1;""",
                         {"article_id": article_id, "user_id": user_id}
                         )
         else:
-            cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date, article_id, status
+            cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date,last_modified_by, article_id, status
                 FROM master_table 
                 WHERE article_id = %(article_id)s ORDER BY article_id ASC LIMIT 1;""",
                         {"article_id": article_id}
@@ -101,8 +101,9 @@ def articleContentNav(requestParameters):
     content = row[0][5]
     question = row[0][6]
     last_modified_date = row[0][7]
-    article_id = row[0][8]
-    status = row[0][9]
+    last_modified_by = row[0][8]
+    article_id = row[0][9]
+    status = row[0][10]
 
     cur.execute(
         """SELECT username FROM users WHERE user_id = %(user_id)s LIMIT 1;""",
@@ -113,7 +114,7 @@ def articleContentNav(requestParameters):
 
     returnList = {'owner': ownername, 'release_date': release_date, 'source': source, 'url': url, 'headline': headline,
                   'content': content, 'question': question, 'last_modified_date': last_modified_date,
-                  'article_id': article_id, 'status': status, 'count': todoCount}
+                  'last_modified_by': last_modified_by, 'article_id': article_id, 'status': status, 'count': todoCount}
 
     cur.close()
     conn.commit()

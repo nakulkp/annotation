@@ -18,23 +18,24 @@ def csvUpload(requestParameters):
         source = dictionary["source"]
         url = dictionary["url"]
         question = ''
+        last_modified_by = user_id
         status = 'todo'
 
         if content == '':
             content = ' '
 
         if release_date == '':
-            cur.execute("""INSERT INTO master_table (user_id, headline, content, owner, release_date, source, url, question, status) 
-            VALUES ( %(user_id)s, %(headline)s, %(content)s, %(owner)s, now(), %(source)s, %(url)s, %(question)s, %(status)s );""",
+            cur.execute("""INSERT INTO master_table (user_id, headline, content, owner, release_date, source, url, question,last_modified_by, status) 
+            VALUES ( %(user_id)s, %(headline)s, %(content)s, %(owner)s, now(), %(source)s, %(url)s, %(question)s,%(last_modified_by)s, %(status)s );""",
                         {'user_id': user_id, 'headline': headline, 'content': content, 'owner': owner,
-                        'source': source, 'url': url, 'question': question,
-                        'status': status})
+                         'source': source, 'url': url, 'question': question, 'last_modified_by': last_modified_by,
+                         'status': status})
         else:
-            cur.execute("""INSERT INTO master_table (user_id, headline, content, owner, release_date, source, url, question, status) 
-            VALUES ( %(user_id)s, %(headline)s, %(content)s, %(owner)s, %(release_date)s, %(source)s, %(url)s, %(question)s, %(status)s );""",
+            cur.execute("""INSERT INTO master_table (user_id, headline, content, owner, release_date, source, url, question,last_modified_by, status) 
+            VALUES ( %(user_id)s, %(headline)s, %(content)s, %(owner)s, %(release_date)s, %(source)s, %(url)s, %(question)s,%(last_modified_by)s, %(status)s );""",
                         {'user_id': user_id, 'headline': headline, 'content': content, 'owner': owner,
-                        'release_date': release_date, 'source': source, 'url': url, 'question': question,
-                        'status': status})
+                         'release_date': release_date, 'source': source, 'url': url, 'question': question,
+                         'last_modified_by': last_modified_by, 'status': status})
 
         cur.close()
         conn.commit()

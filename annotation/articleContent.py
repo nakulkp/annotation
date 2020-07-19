@@ -38,7 +38,7 @@ def articleContent(requestParameters):
     article_id = articleList[flag]
 
     cur.execute(
-        """SELECT owner, release_date, source, url, headline, content, question, last_modified_date 
+        """SELECT owner, release_date, source, url, headline, content, question, last_modified_date, last_modified_by
         FROM master_table
         WHERE article_id= %(article_id)s AND status='todo';""",
         {"article_id": article_id}
@@ -53,6 +53,7 @@ def articleContent(requestParameters):
     content = row[0][5]
     question = row[0][6]
     last_modified_date = row[0][7]
+    last_modified_by = row[0][8]
 
     cur.execute(
         """SELECT username FROM users WHERE user_id = %(user_id)s LIMIT 1;""",
@@ -63,7 +64,7 @@ def articleContent(requestParameters):
 
     returnList = {'owner': ownername, 'release_date': release_date, 'source': source, 'url': url, 'headline': headline,
                   'content': content, 'question': question, 'last_modified_date': last_modified_date,
-                  'article_id': article_id, 'count': todoCount}
+                  'last_modified_by': last_modified_by, 'article_id': article_id, 'count': todoCount}
 
     cur.close()
     conn.commit()
