@@ -24,6 +24,7 @@ def articleSave(requestParameters):
     headline = requestParameters['headline']
     content = requestParameters['content']
     question = requestParameters['question']
+    last_modified_date = requestParameters['last_modified_date']
     status = 'marked'
 
     isAnyMappingIdZero = False
@@ -40,10 +41,11 @@ def articleSave(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    cur.execute("""UPDATE master_table SET release_date = %(release_date)s , source = %(source)s , headline = %(headline)s, content = %(content)s , question = %(question)s,  status = %(status)s 
+    cur.execute("""UPDATE master_table SET release_date = %(release_date)s , source = %(source)s , headline = %(headline)s, content = %(content)s , question = %(question)s, last_modified_date = %(last_modified_date)s  status = %(status)s 
     WHERE article_id = %(article_id)s;""",
                 {'owner': owner, 'release_date': release_date, 'source': source, 'url': url, 'headline': headline,
-                 'content': content, 'question': question, 'status': status, 'article_id': article_id}
+                 'content': content, 'question': question, 'last_modified_date': last_modified_date, 'status': status,
+                 'article_id': article_id}
                 )
     cur.close()
     conn.commit()

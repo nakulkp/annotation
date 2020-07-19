@@ -30,6 +30,7 @@ def createTables():
             source text,
             url text,
             question text,
+            last_modified_date DATE default CURRENT_DATE,
             status varchar NOT NULL,
             CONSTRAINT master_table_pkey PRIMARY KEY (article_id)
         );
