@@ -8,41 +8,70 @@ def fetchSubFactorValue(requestParameters):
     # conn = psycopg2.connect(**params)
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
-    subfactor_id = requestParameters['subfactor_id']
 
-    cur.execute("SELECT EXISTS (SELECT 1 FROM subfactorvalue_table WHERE status = 'enabled' LIMIT 1);")
+    is_null = requestParameters['is_null']
+    page = requestParameters['page']
+    offset = (page - 1) * 20
+    limit = 20
 
-    valueExists = cur.fetchone()
-    valueExists = valueExists[0]
+    cur.execute("""SELECT COUNT(subfactorvalue_id) FROM subfactorvalue_table;""")
+    dataCount = cur.fetchall()
+    dataCount = dataCount[0]
+    pageCount = dataCount[0] // 20
+    if (dataCount[0] % 20) != 0 and dataCount[0] > 20:
+        pageCount = pageCount + 1
 
-    if not valueExists:
-        return {'message': "no values"}
+    if is_null == 'NULL':
+        cur.execute("SELECT EXISTS (SELECT 1 FROM subfactorvalue_table LIMIT 1);")
 
-    cur.execute("""SELECT subfactorvalue, subfactorvalue_id, subfactor_id, status
-        FROM subfactorvalue_table WHERE status='enabled' AND subfactor_id = %(subfactor_id)s ORDER BY subfactorvalue_id ASC;""",
-                {"subfactor_id": subfactor_id})
+        valueExists = cur.fetchone()
+        valueExists = valueExists[0]
 
-    rows = cur.fetchall()
-    valueList = []
+        if not valueExists:
+            return {'message': "no values"}
 
-    for row in rows:
-        value = {"subfactorvalue": row[0], "subfactorvalue_id": row[1], "subfactor_id": row[2], "status": row[3]}
-        valueList.append(value)
+        cur.execute("""SELECT subfactorvalue, subfactorvalue_id, status
+            FROM subfactorvalue_table ORDER BY subfactorvalue_id ASC LIMIT %(limit)s OFFSET %(offset)s;""",
+                    {"limit": limit, "offset": offset})
+        rows = cur.fetchall()
+        valueList = []
+        for row in rows:
+            value = {"subfactorvalue": row[0], "subfactorvalue_id": row[1], "status": row[2]}
+            valueList.append(value)
 
-    value = {"subfactorvalue": "-------------------", "subfactorvalue_id": -1, "subfactor_id": -1, "status": 'none'}
-    valueList.append(value)
+        cur.close()
+        conn.commit()
 
-    cur.execute("""SELECT subfactorvalue, subfactorvalue_id, subfactor_id, status
-        FROM subfactorvalue_table WHERE status='enabled' EXCEPT (SELECT subfactorvalue, subfactorvalue_id, subfactor_id, status
-        FROM subfactorvalue_table WHERE status='enabled' AND subfactor_id = %(subfactor_id)s) ORDER BY subfactorvalue_id ASC;""",
-                {"subfactor_id": subfactor_id})
-    rows = cur.fetchall()
+        return {'data': valueList, 'pages': pageCount}
 
-    for row in rows:
-        value = {"subfactorvalue": row[0], "subfactorvalue_id": row[1], "subfactor_id": row[2], "status": row[3]}
-        valueList.append(value)
+    elif is_null == 'enabled':
+        cur.execute("SELECT EXISTS (SELECT 1 FROM subfactorvalue_table LIMIT 1);")
 
-    cur.close()
-    conn.commit()
+        valueExists = cur.fetchone()
+        valueExists = valueExists[0]
 
-    return {'data': valueList}
+        if not valueExists:
+            return {'message': "no values"}
+
+        cur.execute("""SELECT subfactorvalue, subfactorvalue_id, status
+            FROM subfactorvalue_table WHERE status='enabled' ORDER BY subfactorvalue_id ASC;""")
+        rows = cur.fetchall()
+        valueList = []
+        for row in rows:
+            value = {"subfactorvalue": row[0], "subfactorvalue_id": row[1], "status": row[2]}
+            valueList.append(value)
+
+        cur.close()
+        conn.commit()
+
+        return {'data': valueList}
+
+    subfactorvalue_id = requestParameters["subfactorvalue_id"]
+
+    cur.execute("""SELECT subfactorvalue
+           FROM subfactorvalue_table
+           WHERE subfactorvalue_id= %(subfactorvalue_id)s ;""", {"subfactorvalue_id": subfactorvalue_id})
+    row = cur.fetchone()
+    subfactorvalue = row[0]
+
+    return subfactorvalue

@@ -8,41 +8,69 @@ def fetchSubFactor(requestParameters):
     # conn = psycopg2.connect(**params)
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
-    factor_id = requestParameters['factor_id']
 
-    cur.execute("SELECT EXISTS (SELECT 1 FROM subfactor_table WHERE status = 'enabled' LIMIT 1);")
+    is_null = requestParameters['is_null']
+    page = requestParameters['page']
+    offset = (page-1)*20
+    limit = 20
 
-    valueExists = cur.fetchone()
-    valueExists = valueExists[0]
+    cur.execute("""SELECT COUNT(subfactor_id) FROM subfactor_table;""")
+    dataCount = cur.fetchall()
+    dataCount = dataCount[0]
+    pageCount = dataCount[0]//20
+    if (dataCount[0] % 20) != 0 and dataCount[0] > 20:
+        pageCount = pageCount + 1
 
-    if not valueExists:
-        return {'message': "no values"}
+    if is_null == 'NULL':
+        cur.execute("SELECT EXISTS (SELECT 1 FROM subfactor_table LIMIT 1);")
 
-    cur.execute("""SELECT subfactor, subfactor_id, factor_id, status
-        FROM subfactor_table WHERE status='enabled' AND factor_id = %(factor_id)s ORDER BY subfactor_id ASC;""",
-                {"factor_id": factor_id})
+        valueExists = cur.fetchone()
+        valueExists = valueExists[0]
 
-    rows = cur.fetchall()
-    valueList = []
+        if not valueExists:
+            return {'message': "no values"}
 
-    for row in rows:
-        value = {"subfactor": row[0], "subfactor_id": row[1], "factor_id": row[2], "status": row[3]}
-        valueList.append(value)
+        cur.execute("""SELECT subfactor, subfactor_id, status
+            FROM subfactor_table ORDER BY subfactor_id ASC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
+        rows = cur.fetchall()
+        valueList = []
+        for row in rows:
+            value = {"subfactor": row[0], "subfactor_id": row[1], "status": row[2]}
+            valueList.append(value)
 
-    value = {"subfactor": "-------------------", "subfactor_id": -1, "factor_id": -1, "status": 'none'}
-    valueList.append(value)
+        cur.close()
+        conn.commit()
 
-    cur.execute("""SELECT subfactor, subfactor_id, factor_id, status
-        FROM subfactor_table WHERE status='enabled' EXCEPT (SELECT subfactor, subfactor_id, factor_id, status
-        FROM subfactor_table WHERE status='enabled' AND factor_id = %(factor_id)s) ORDER BY subfactor_id ASC;""",
-                {"factor_id": factor_id})
-    rows = cur.fetchall()
+        return {'data': valueList, 'pages': pageCount}
+    
+    elif is_null == 'enabled':
+        cur.execute("SELECT EXISTS (SELECT 1 FROM subfactor_table LIMIT 1);")
 
-    for row in rows:
-        value = {"subfactor": row[0], "subfactor_id": row[1], "factor_id": row[2], "status": row[3]}
-        valueList.append(value)
+        valueExists = cur.fetchone()
+        valueExists = valueExists[0]
 
-    cur.close()
-    conn.commit()
+        if not valueExists:
+            return {'message': "no values"}
 
-    return {'data': valueList}
+        cur.execute("""SELECT subfactor, subfactor_id, status
+            FROM subfactor_table WHERE status='enabled' ORDER BY subfactor_id ASC;""")
+        rows = cur.fetchall()
+        valueList = []
+        for row in rows:
+            value = {"subfactor": row[0], "subfactor_id": row[1], "status": row[2]}
+            valueList.append(value)
+
+        cur.close()
+        conn.commit()
+
+        return {'data': valueList}
+
+    subfactor_id = requestParameters["subfactor_id"]
+
+    cur.execute("""SELECT subfactor
+           FROM subfactor_table
+           WHERE subfactor_id= %(subfactor_id)s ;""", {"subfactor_id": subfactor_id})
+    row = cur.fetchone()
+    subfactor = row[0]
+
+    return subfactor

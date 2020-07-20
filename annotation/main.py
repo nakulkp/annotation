@@ -45,6 +45,7 @@ from annotation.deleteMapping import deleteMapping
 
 from annotation.fetchCommodity import fetchCommodity
 from annotation.fetchCommodityDescription import fetchCommodityDescription
+from annotation.fetchCommodityDescriptionConstraints import fetchCommodityDescriptionConstraints
 from annotation.fetchDemand import fetchDemand
 
 from annotation.fetchFactor import fetchFactor
@@ -54,6 +55,9 @@ from annotation.fetchRegionOfEvent import fetchRegionOfEvent
 from annotation.fetchRegionOfImpact import fetchRegionOfImpact
 from annotation.fetchSubFactor import fetchSubFactor
 from annotation.fetchSubFactorValue import fetchSubFactorValue
+
+from annotation.fetchSubFactorConstraints import fetchSubFactorConstraints
+from annotation.fetchSubFactorValueConstraints import fetchSubFactorValueConstraints
 from annotation.fetchSupply import fetchSupply
 from annotation.fetchUsers import fetchUsers
 
@@ -64,7 +68,6 @@ from annotation.updateMapping import updateMapping
 from annotation.userSignUp import userSignUp
 from annotation.login import login
 from annotation.exportCsv import exportCsv
-from annotation.subCategoryConstraints import subCategoryConstraints
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
@@ -339,6 +342,14 @@ def api_fetchCommodity():
     return jsonify(valueList)
 
 
+@app.route('/fetchcommoditydescriptionconstraints', methods=['POST'])
+@token_required
+def api_fetchCommodityDescriptionConstraints():
+    requestParameters = request.get_json()
+    valueList = fetchCommodityDescriptionConstraints(requestParameters)
+    return jsonify(valueList)
+
+
 @app.route('/fetchcommoditydescription', methods=['POST'])
 @token_required
 def api_fetchCommodityDescription():
@@ -363,12 +374,29 @@ def api_fetchFactor():
     return jsonify(valueList)
 
 
+@app.route('/fetchsubfactorconstraints', methods=['POST'])
+@token_required
+def api_fetchSubFactorConstraints():
+    requestParameters = request.get_json()
+    valueList = fetchSubFactorConstraints(requestParameters)
+    return jsonify(valueList)
+
+
+@app.route('/fetchsubfactorvalueconstraints', methods=['POST'])
+@token_required
+def api_fetchSubFactorValueConstraints():
+    requestParameters = request.get_json()
+    valueList = fetchSubFactorValueConstraints(requestParameters)
+    return jsonify(valueList)
+
+
 @app.route('/fetchsubfactor', methods=['POST'])
 @token_required
 def api_fetchSubFactor():
     requestParameters = request.get_json()
     valueList = fetchSubFactor(requestParameters)
     return jsonify(valueList)
+
 
 @app.route('/fetchsubfactorvalue', methods=['POST'])
 @token_required
@@ -392,6 +420,7 @@ def api_fetchDemand():
     requestParameters = request.get_json()
     valueList = fetchDemand(requestParameters)
     return jsonify(valueList)
+
 
 @app.route('/fetchmapping', methods=['POST'])
 @token_required
@@ -493,4 +522,3 @@ def api_subCategoryConstraints():
     requestParameters = request.get_json()
     status = subCategoryConstraints(requestParameters)
     return jsonify(status)
-

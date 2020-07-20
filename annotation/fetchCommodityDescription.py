@@ -8,41 +8,69 @@ def fetchCommodityDescription(requestParameters):
     # conn = psycopg2.connect(**params)
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
-    commodity_id = requestParameters['commodity_id']
 
-    cur.execute("SELECT EXISTS (SELECT 1 FROM commodity_description_table WHERE status = 'enabled' LIMIT 1);")
+    is_null = requestParameters['is_null']
+    page = requestParameters['page']
+    offset = (page-1)*20
+    limit = 20
 
-    valueExists = cur.fetchone()
-    valueExists = valueExists[0]
+    cur.execute("""SELECT COUNT(comm_desc_id) FROM commodity_description_table;""")
+    dataCount = cur.fetchall()
+    dataCount = dataCount[0]
+    pageCount = dataCount[0]//20
+    if (dataCount[0] % 20) != 0 and dataCount[0] > 20:
+        pageCount = pageCount + 1
 
-    if not valueExists:
-        return {'message': "no values"}
+    if is_null == 'NULL':
+        cur.execute("SELECT EXISTS (SELECT 1 FROM commodity_description_table LIMIT 1);")
 
-    cur.execute("""SELECT comm_desc, comm_desc_id, commodity_id, status
-        FROM commodity_description_table WHERE status='enabled' AND commodity_id = %(commodity_id)s ORDER BY comm_desc_id ASC;""",
-                {"commodity_id": commodity_id})
+        valueExists = cur.fetchone()
+        valueExists = valueExists[0]
 
-    rows = cur.fetchall()
-    valueList = []
+        if not valueExists:
+            return {'message': "no values"}
 
-    for row in rows:
-        value = {"comm_desc": row[0], "comm_desc_id": row[1], "commodity_id": row[2], "status": row[3]}
-        valueList.append(value)
+        cur.execute("""SELECT comm_desc, comm_desc_id, status
+            FROM commodity_description_table ORDER BY comm_desc_id ASC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
+        rows = cur.fetchall()
+        valueList = []
+        for row in rows:
+            value = {"comm_desc": row[0], "comm_desc_id": row[1], "status": row[2]}
+            valueList.append(value)
 
-    value = {"comm_desc": "-------------------", "comm_desc_id": -1, "commodity_id": -1, "status": 'none'}
-    valueList.append(value)
+        cur.close()
+        conn.commit()
 
-    cur.execute("""SELECT comm_desc, comm_desc_id, commodity_id, status
-        FROM commodity_description_table WHERE status='enabled' EXCEPT (SELECT comm_desc, comm_desc_id, commodity_id, status
-        FROM commodity_description_table WHERE status='enabled' AND commodity_id = %(commodity_id)s) ORDER BY comm_desc_id ASC;""",
-                {"commodity_id": commodity_id})
-    rows = cur.fetchall()
+        return {'data': valueList, 'pages': pageCount}
+    
+    elif is_null == 'enabled':
+        cur.execute("SELECT EXISTS (SELECT 1 FROM commodity_description_table LIMIT 1);")
 
-    for row in rows:
-        value = {"comm_desc": row[0], "comm_desc_id": row[1], "commodity_id": row[2], "status": row[3]}
-        valueList.append(value)
+        valueExists = cur.fetchone()
+        valueExists = valueExists[0]
 
-    cur.close()
-    conn.commit()
+        if not valueExists:
+            return {'message': "no values"}
 
-    return {'data': valueList}
+        cur.execute("""SELECT comm_desc, comm_desc_id, status
+            FROM commodity_description_table WHERE status='enabled' ORDER BY comm_desc_id ASC;""")
+        rows = cur.fetchall()
+        valueList = []
+        for row in rows:
+            value = {"comm_desc": row[0], "comm_desc_id": row[1], "status": row[2]}
+            valueList.append(value)
+
+        cur.close()
+        conn.commit()
+
+        return {'data': valueList}
+
+    comm_desc_id = requestParameters["comm_desc_id"]
+
+    cur.execute("""SELECT comm_desc
+           FROM commodity_description_table
+           WHERE comm_desc_id= %(comm_desc_id)s ;""", {"comm_desc_id": comm_desc_id})
+    row = cur.fetchone()
+    comm_desc = row[0]
+
+    return comm_desc
