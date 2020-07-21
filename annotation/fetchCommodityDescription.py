@@ -30,8 +30,11 @@ def fetchCommodityDescription(requestParameters):
         if not valueExists:
             return {'message': "no values"}
 
-        cur.execute("""SELECT comm_desc, comm_desc_id, status
-            FROM commodity_description_table ORDER BY comm_desc_id ASC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
+        cur.execute("""SELECT cd.comm_desc, cd.comm_desc_id, cd.status, c.commodities 
+            FROM commodity_description_table cd 
+            INNER JOIN commodity_table c
+            ON cd.commodity_id=c.commodity_id              
+            ORDER BY cd.comm_desc_id ASC LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
         rows = cur.fetchall()
         valueList = []
         for row in rows:
@@ -52,8 +55,11 @@ def fetchCommodityDescription(requestParameters):
         if not valueExists:
             return {'message': "no values"}
 
-        cur.execute("""SELECT comm_desc, comm_desc_id, status
-            FROM commodity_description_table WHERE status='enabled' ORDER BY comm_desc_id ASC;""")
+        cur.execute("""SELECT cd.comm_desc, cd.comm_desc_id, cd.status, c.commodities 
+            FROM commodity_description_table cd 
+            INNER JOIN commodity_table c
+            ON cd.commodity_id=c.commodity_id 
+            WHERE cd.status='enabled' ORDER BY cd.comm_desc_id ASC;""")
         rows = cur.fetchall()
         valueList = []
         for row in rows:
@@ -67,9 +73,11 @@ def fetchCommodityDescription(requestParameters):
 
     comm_desc_id = requestParameters["comm_desc_id"]
 
-    cur.execute("""SELECT comm_desc
-           FROM commodity_description_table
-           WHERE comm_desc_id= %(comm_desc_id)s ;""", {"comm_desc_id": comm_desc_id})
+    cur.execute("""SELECT cd.comm_desc, c.commodities 
+            FROM commodity_description_table cd 
+            INNER JOIN commodity_table c
+            ON cd.commodity_id=c.commodity_id 
+           WHERE cd.comm_desc_id= %(comm_desc_id)s ;""", {"comm_desc_id": comm_desc_id})
     row = cur.fetchone()
     comm_desc = row[0]
 

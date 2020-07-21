@@ -30,8 +30,13 @@ def fetchSubFactorValue(requestParameters):
         if not valueExists:
             return {'message': "no values"}
 
-        cur.execute("""SELECT subfactorvalue, subfactorvalue_id, status
-            FROM subfactorvalue_table ORDER BY subfactorvalue_id ASC LIMIT %(limit)s OFFSET %(offset)s;""",
+        cur.execute("""SELECT sv.subfactorvalue, sv.subfactorvalue_id, sv.status, f.factor, s.subfactor
+            FROM subfactorvalue_table sv
+            INNER JOIN factor_table f
+            ON sv.factor_id=f.factor_id
+            INNER JOIN subfactor_table s
+            ON sv.subfactor_id = s.subfactor_id 
+            ORDER BY sv.subfactorvalue_id ASC LIMIT %(limit)s OFFSET %(offset)s;""",
                     {"limit": limit, "offset": offset})
         rows = cur.fetchall()
         valueList = []
@@ -53,8 +58,14 @@ def fetchSubFactorValue(requestParameters):
         if not valueExists:
             return {'message': "no values"}
 
-        cur.execute("""SELECT subfactorvalue, subfactorvalue_id, status
-            FROM subfactorvalue_table WHERE status='enabled' ORDER BY subfactorvalue_id ASC;""")
+        cur.execute("""SELECT sv.subfactorvalue, sv.subfactorvalue_id, sv.status, f.factor, s.subfactor
+            FROM subfactorvalue_table sv
+            INNER JOIN factor_table f
+            ON sv.factor_id=f.factor_id
+            INNER JOIN subfactor_table s
+            ON sv.subfactor_id = s.subfactor_id 
+            WHERE sv.status='enabled' 
+            ORDER BY sv.subfactorvalue_id ASC;""")
         rows = cur.fetchall()
         valueList = []
         for row in rows:
@@ -68,9 +79,13 @@ def fetchSubFactorValue(requestParameters):
 
     subfactorvalue_id = requestParameters["subfactorvalue_id"]
 
-    cur.execute("""SELECT subfactorvalue
-           FROM subfactorvalue_table
-           WHERE subfactorvalue_id= %(subfactorvalue_id)s ;""", {"subfactorvalue_id": subfactorvalue_id})
+    cur.execute("""SELECT SELECT sv.subfactorvalue, f.factor, s.subfactor
+            FROM subfactorvalue_table sv
+            INNER JOIN factor_table f
+            ON sv.factor_id=f.factor_id
+            INNER JOIN subfactor_table s
+            ON sv.subfactor_id = s.subfactor_id 
+            WHERE sv.subfactorvalue_id= %(subfactorvalue_id)s ;""", {"subfactorvalue_id": subfactorvalue_id})
     row = cur.fetchone()
     subfactorvalue = row[0]
 
