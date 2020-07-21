@@ -28,5 +28,4 @@ def adminAddCommodity(requestParameters):
         return {'commodity_id': commodity_id}
     else:
         return "failed"
-    if conn is not None:
-        conn.close()
+

@@ -11,11 +11,11 @@ def adminUserDelete(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
     cur.execute("""UPDATE master_table 
-    SET user_id = 1
+    SET user_id = 1, status = 'disabled'
     WHERE user_id = %(user_id)s;""", {'user_id': user_id})
 
     cur.execute("""UPDATE mapping_table 
-    SET user_id = 1
+    SET user_id = 1, status = 'disabled'
     WHERE user_id = %(user_id)s;""", {'user_id': user_id})
 
     conn.commit()
