@@ -1,5 +1,6 @@
 import psycopg2
 from config import config
+from datetime import date
 
 
 def articleSave(requestParameters):
@@ -23,8 +24,8 @@ def articleSave(requestParameters):
     headline = requestParameters['headline']
     content = requestParameters['content']
     question = requestParameters['question']
-    last_modified_date = requestParameters['last_modified_date']
-    last_modified_by = requestParameters['last_modified_by']
+    last_modified_date = date.today()
+    last_modified_by = user_id
 
     status = 'marked'
 
