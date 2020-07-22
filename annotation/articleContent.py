@@ -31,7 +31,9 @@ def articleContent(requestParameters):
     if todoCount == 0:
         return {"message": "empty"}
 
-    cur.execute("SELECT article_id FROM master_table WHERE user_id= %(user_id)s AND status='todo';",
+    cur.execute("""SELECT article_id 
+    FROM master_table 
+    WHERE user_id= %(user_id)s AND status='todo';""",
                 {"user_id": user_id})
 
     articleList = cur.fetchall()

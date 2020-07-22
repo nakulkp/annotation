@@ -1,5 +1,6 @@
 import psycopg2
 from config import config
+from datetime import date
 
 
 def updateMapping(requestParameters):
@@ -16,6 +17,7 @@ def updateMapping(requestParameters):
     supply_value_id = requestParameters['supply_value_id']
     demand_value_id = requestParameters['demand_value_id']
     event_region_id = requestParameters['event_region_id']
+    last_modified_date = date.today()
 
     # params = config()
     # conn = psycopg2.connect(**params)
@@ -33,16 +35,20 @@ def updateMapping(requestParameters):
         return {'message': "no matching mapping"}
 
     cur.execute("""UPDATE mapping_table 
-                SET status = 'enabled', last_modified_by= %(user_id)s, article_id = %(article_id)s, comm_desc_id = %(comm_desc_id)s, commodity_id = %(commodity_id)s, factor_id = %(factor_id)s, subfactor_id = %(subfactor_id)s, subfactorvalue_id = %(subfactorvalue_id)s, impact_region_id = %(impact_region_id)s, price_value_id = %(price_value_id)s, supply_value_id = %(supply_value_id)s, demand_value_id = %(demand_value_id)s, event_region_id = %(event_region_id)s, last_modified = current_timestamp AT TIME ZONE 'UTC'
+                SET status = 'enabled', last_modified_by= %(user_id)s, article_id = %(article_id)s, comm_desc_id = %(comm_desc_id)s, commodity_id = %(commodity_id)s, factor_id = %(factor_id)s, subfactor_id = %(subfactor_id)s, subfactorvalue_id = %(subfactorvalue_id)s, impact_region_id = %(impact_region_id)s, price_value_id = %(price_value_id)s, supply_value_id = %(supply_value_id)s, demand_value_id = %(demand_value_id)s, event_region_id = %(event_region_id)s
                 WHERE mapping_id = %(mapping_id)s;""",
-                {'user_id': user_id, 'article_id': article_id, 'comm_desc_id': comm_desc_id, 'commodity_id': commodity_id,
+                {'user_id': user_id, 'article_id': article_id, 'comm_desc_id': comm_desc_id,
+                 'commodity_id': commodity_id,
                  'factor_id': factor_id, 'subfactor_id': subfactor_id, 'subfactorvalue_id': subfactorvalue_id,
                  'impact_region_id': impact_region_id, 'price_value_id': price_value_id,
                  'supply_value_id': supply_value_id, 'demand_value_id': demand_value_id,
                  'event_region_id': event_region_id, 'mapping_id': mapping_id}
                 )
+
+    cur.execute("""UPDATE master_table
+    SET last_modified_by= %(user_id)s, last_modified_date = %(last_modified_date)s
+    WHERE article_id=%(article_id)s;""", {'article_id': article_id, 'last_modified_date': last_modified_date})
     cur.close()
     conn.commit()
     conn.close()
     return {'message': "Success"}
-
