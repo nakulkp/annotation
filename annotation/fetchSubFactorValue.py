@@ -97,4 +97,4 @@ def fetchSubFactorValue(requestParameters):
     cur.close()
     conn.commit()
 
-    return {'data': valueList}
+    return {'data': valueList }
