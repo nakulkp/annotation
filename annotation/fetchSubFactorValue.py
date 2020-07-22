@@ -41,7 +41,8 @@ def fetchSubFactorValue(requestParameters):
         rows = cur.fetchall()
         valueList = []
         for row in rows:
-            value = {"subfactorvalue": row[0], "subfactorvalue_id": row[1], "status": row[2]}
+            value = {"subfactorvalue": row[0], "subfactorvalue_id": row[1], "status": row[2], "factor": row[3],
+                     "subfactor": row[4]}
             valueList.append(value)
 
         cur.close()
@@ -69,7 +70,8 @@ def fetchSubFactorValue(requestParameters):
         rows = cur.fetchall()
         valueList = []
         for row in rows:
-            value = {"subfactorvalue": row[0], "subfactorvalue_id": row[1], "status": row[2]}
+            value = {"subfactorvalue": row[0], "subfactorvalue_id": row[1], "status": row[2], "factor": row[3],
+                     "subfactor": row[4]}
             valueList.append(value)
 
         cur.close()
@@ -79,14 +81,20 @@ def fetchSubFactorValue(requestParameters):
 
     subfactorvalue_id = requestParameters["subfactorvalue_id"]
 
-    cur.execute("""SELECT SELECT sv.subfactorvalue, f.factor, s.subfactor
+    cur.execute("""SELECT sv.subfactorvalue, f.factor, s.subfactor
             FROM subfactorvalue_table sv
             INNER JOIN factor_table f
             ON sv.factor_id=f.factor_id
             INNER JOIN subfactor_table s
             ON sv.subfactor_id = s.subfactor_id 
             WHERE sv.subfactorvalue_id= %(subfactorvalue_id)s ;""", {"subfactorvalue_id": subfactorvalue_id})
-    row = cur.fetchone()
-    subfactorvalue = row[0]
+    rows = cur.fetchall()
+    valueList = []
+    for row in rows:
+        value = {"subfactorvalue": row[0], "factor": row[3], "subfactor": row[4]}
+        valueList.append(value)
 
-    return subfactorvalue
+    cur.close()
+    conn.commit()
+
+    return {'data': valueList}

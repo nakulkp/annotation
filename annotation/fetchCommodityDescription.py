@@ -11,13 +11,13 @@ def fetchCommodityDescription(requestParameters):
 
     is_null = requestParameters['is_null']
     page = requestParameters['page']
-    offset = (page-1)*20
+    offset = (page - 1) * 20
     limit = 20
 
     cur.execute("""SELECT COUNT(comm_desc_id) FROM commodity_description_table;""")
     dataCount = cur.fetchall()
     dataCount = dataCount[0]
-    pageCount = dataCount[0]//20
+    pageCount = dataCount[0] // 20
     if (dataCount[0] % 20) != 0 and dataCount[0] > 20:
         pageCount = pageCount + 1
 
@@ -38,14 +38,14 @@ def fetchCommodityDescription(requestParameters):
         rows = cur.fetchall()
         valueList = []
         for row in rows:
-            value = {"comm_desc": row[0], "comm_desc_id": row[1], "status": row[2]}
+            value = {"comm_desc": row[0], "comm_desc_id": row[1], "status": row[2], "commodities": row[3]}
             valueList.append(value)
 
         cur.close()
         conn.commit()
 
         return {'data': valueList, 'pages': pageCount}
-    
+
     elif is_null == 'enabled':
         cur.execute("SELECT EXISTS (SELECT 1 FROM commodity_description_table LIMIT 1);")
 
@@ -63,7 +63,7 @@ def fetchCommodityDescription(requestParameters):
         rows = cur.fetchall()
         valueList = []
         for row in rows:
-            value = {"comm_desc": row[0], "comm_desc_id": row[1], "status": row[2]}
+            value = {"comm_desc": row[0], "comm_desc_id": row[1], "status": row[2], "commodities": row[3]}
             valueList.append(value)
 
         cur.close()
@@ -78,7 +78,10 @@ def fetchCommodityDescription(requestParameters):
             INNER JOIN commodity_table c
             ON cd.commodity_id=c.commodity_id 
            WHERE cd.comm_desc_id= %(comm_desc_id)s ;""", {"comm_desc_id": comm_desc_id})
-    row = cur.fetchone()
-    comm_desc = row[0]
+    rows = cur.fetchall()
+    valueList = []
+    for row in rows:
+        value = {"comm_desc": row[0], "commodities": row[1]}
+        valueList.append(value)
 
-    return comm_desc
+    return {'data': valueList}
