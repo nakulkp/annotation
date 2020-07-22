@@ -79,7 +79,7 @@ def fetchSubFactorValue(requestParameters):
 
     subfactorvalue_id = requestParameters["subfactorvalue_id"]
 
-    cur.execute("""SELECT SELECT sv.subfactorvalue, f.factor, s.subfactor
+    cur.execute("""SELECT sv.subfactorvalue, f.factor, s.subfactor
             FROM subfactorvalue_table sv
             INNER JOIN factor_table f
             ON sv.factor_id=f.factor_id
