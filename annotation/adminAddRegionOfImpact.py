@@ -2,7 +2,7 @@ import psycopg2
 from config import config
 
 
-def adminAddRegionofEvent(requestParameters):
+def adminAddRegionofImpact(requestParameters):
 
     impact_region = requestParameters['impact_region']
 

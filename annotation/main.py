@@ -11,6 +11,7 @@ from annotation.adminAddCommodity import adminAddCommodity
 from annotation.adminAddDemand import adminAddDemand
 from annotation.adminAddFactor import adminAddFactor
 from annotation.adminAddPrice import adminAddPrice
+from annotation.adminAddRegionOfImpact import adminAddRegionofImpact
 from annotation.adminAddSubFactor import adminAddSubFactor
 from annotation.adminAddSubFactorValue import adminAddSubFactorValue
 from annotation.adminAddSupply import adminAddSupply
@@ -301,6 +302,12 @@ def api_adminAddRegionofEvent():
     status = adminAddRegionofEvent(requestParameters)
     return jsonify(status)
 
+@app.route('/adminaddregionofimpact', methods=['POST'])
+@token_required
+def api_adminAddRegionofImpact():
+    requestParameters = request.get_json()
+    status = adminAddRegionofImpact(requestParameters)
+    return jsonify(status)
 
 @app.route('/adminaddsupply', methods=['POST'])
 @token_required

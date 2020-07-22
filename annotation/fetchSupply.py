@@ -13,7 +13,7 @@ def fetchSupply(requestParameters):
     offset = (page-1)*20
     limit = 20
 
-    cur.execute("""SELECT COUNT(category_id) FROM category_table;""")
+    cur.execute("""SELECT COUNT(supply_value_id) FROM supply;""")
     dataCount = cur.fetchall()
     dataCount = dataCount[0]
     pageCount = dataCount[0]//20
