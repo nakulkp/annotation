@@ -8,6 +8,10 @@ def review(requestParameters):
     filter_ = requestParameters["filter"]
     sort_by = requestParameters["sort_by"]
     order_by = requestParameters["order_by"]
+    filter_type = requestParameters["filter_type_val"]
+    filter_type_val = requestParameters["filter_type_val"]
+    page = requestParameters['page']
+    factor = requestParameters['factor']
 
     # params = config()
     # conn = psycopg2.connect(**params)
@@ -15,8 +19,6 @@ def review(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    page = requestParameters['page']
-    factor = requestParameters['factor']
 
     offset = (page - 1) * factor
     limit = factor
@@ -38,15 +40,28 @@ def review(requestParameters):
     if filter_ == 'all':
         if privilege == '1':
             if order_by == 'asc':
-                query = sql.SQL("""SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
-                 FROM master_table 
-                 ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;""").format(field=sql.Identifier(sort_by))
-                cur.execute(query, {"limit": limit, "offset": offset})
+                if filter_type == 'null':
+                    query = sql.SQL("""SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
+                    FROM master_table 
+                    ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;""").format(field=sql.Identifier(sort_by))
+                    cur.execute(query, {"limit": limit, "offset": offset})
+                else:
+                    query = sql.SQL("""SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
+                    FROM master_table WHERE {filterType} = %(filterTypeVal)s
+                    ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;""").format(field=sql.Identifier(sort_by), filterType=sql.Identifier(filter_type))
+                    cur.execute(query, {"filterTypeVal":filter_type_val,"limit": limit, "offset": offset})
             else:
-                query = sql.SQL("""SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
-                 FROM master_table 
-                 ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;""").format(field=sql.Identifier(sort_by))
-                cur.execute(query, {"limit": limit, "offset": offset})
+                if filter_type == 'null':
+                    query = sql.SQL("""SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
+                    FROM master_table 
+                    ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;""").format(field=sql.Identifier(sort_by))
+                    cur.execute(query, {"limit": limit, "offset": offset})
+                else:
+                    query = sql.SQL("""SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
+                    FROM master_table WHERE {filterType} = %(filterTypeVal)s
+                    ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;""").format(field=sql.Identifier(sort_by), filterType=sql.Identifier(filter_type))
+                    cur.execute(query, {"filterTypeVal":filter_type_val,"limit": limit, "offset": offset})
+                    
             reviewValues = cur.fetchall()
 
             cur.execute("""SELECT COUNT(article_id) FROM master_table;""")
