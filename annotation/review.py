@@ -304,7 +304,7 @@ def review(requestParameters):
             {"user_id": owner}
         )
         row = cur.fetchall()
-        ownername = row[0][0]
+        ownername = row[0]
         lst = list(rv)
         lst[0] = ownername
         finalValues.append(lst)
