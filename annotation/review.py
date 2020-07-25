@@ -48,7 +48,7 @@ def review(requestParameters):
                 else:
                     query = sql.SQL("""SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
                     FROM master_table WHERE {filterType} = %(filterTypeVal)s
-                    ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;""").format(field=sql.Identifier(sort_by), filterType=sql.Identifier(filter_type))
+                    ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;""").format( filterType=sql.Identifier(filter_type),field=sql.Identifier(sort_by))
                     cur.execute(query, {"filterTypeVal":filter_type_val,"limit": limit, "offset": offset})
             else:
                 if filter_type == 'null':
@@ -59,7 +59,7 @@ def review(requestParameters):
                 else:
                     query = sql.SQL("""SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
                     FROM master_table WHERE {filterType} = %(filterTypeVal)s
-                    ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;""").format(field=sql.Identifier(sort_by), filterType=sql.Identifier(filter_type))
+                    ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;""").format( filterType=sql.Identifier(filter_type),field=sql.Identifier(sort_by))
                     cur.execute(query, {"filterTypeVal":filter_type_val,"limit": limit, "offset": offset})
                     
             reviewValues = cur.fetchall()
