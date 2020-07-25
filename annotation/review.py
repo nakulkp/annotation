@@ -8,7 +8,7 @@ def review(requestParameters):
     filter_ = requestParameters["filter"]
     sort_by = requestParameters["sort_by"]
     order_by = requestParameters["order_by"]
-    filter_type = requestParameters["filter_type_val"]
+    filter_type = requestParameters["filter_type"]
     filter_type_val = requestParameters["filter_type_val"]
     page = requestParameters['page']
     factor = requestParameters['factor']
