@@ -12,7 +12,9 @@ def exportCsv(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     cur = conn.cursor()
 
-    # cur.execute("""select a.article_id, a.headline, a.status, a.question, c.username as owner, a.release_date, a.content, a.source, a.url, b.last_modified, c1.username as last_modified_by, b.status as is_deleted, b.deleted_on_date, c2.username as disabled_by, r.countries, cmd.commodities, cat.categories, scat.sub_categories, mft.moving_factors, fvt.factor_value, p.price_value, sup.supply_value, dem.demand_value, scd.sc_disruption_value
+    # cur.execute("""select a.article_id, a.headline, a.status, a.question, c.username as owner, a.release_date, a.content, a.source,
+    # a.url, b.last_modified, c1.username as last_modified_by, b.status as is_deleted, b.deleted_on_date, c2.username as disabled_by,
+    # r.countries, cmd.commodities, cat.categories, scat.sub_categories, mft.moving_factors, fvt.factor_value, p.price_value, sup.supply_value, dem.demand_value, scd.sc_disruption_value
     # from master_table a left join mapping_table b on a.article_id = b.article_id left join users c on a.owner = c.user_id left join users c1 on b.last_modified_by = c1.user_id
     # left join users c2 on b.deleted_by = c2.user_id left join region_of_event r on b.impact_region_id = r.event_region_id
     # left join commodity_table cmd on b.commodity_id = cmd.commodity_id left join category_table cat on b.category_id = cat.category_id
@@ -23,12 +25,14 @@ def exportCsv(requestParameters):
     # WHERE a.release_date >= %(start)s AND a.release_date <= %(end)s;""", {'start': start, 'end': end})
 
     cur.execute("""
-    SELECT mast.article_id, mast.headline, mast.status, mast.question, usr.username, mast.release_date, mast.content, mast.source, mast.url, mast.last_modified_date, mast.last_modified_by, maptbl.status, maptbl.deleted_on_date, maptbl.deleted_by, com.commodities, comds.comm_desc, regevnt.event_region, fctr.factor, sbfctr.subfactor, sbfctrval.subfactorvalue, regimp.impact_region, price.price_value, supply.supply_value, demand.demand_value
+    SELECT mast.article_id, mast.headline, mast.status, mast.question, usr.username, mast.release_date, mast.content, mast.source, mast.url, mast.last_modified_date, usr2.username, maptbl.status, maptbl.deleted_on_date, maptbl.deleted_by, com.commodities, comds.comm_desc, regevnt.event_region, fctr.factor, sbfctr.subfactor, sbfctrval.subfactorvalue, regimp.impact_region, price.price_value, supply.supply_value, demand.demand_value
     FROM master_table mast 
     LEFT JOIN users usr 
-        ON mast.user_id=usr.user_id 
+        ON mast.user_id=usr.user_id  
     LEFT JOIN  mapping_table maptbl 
-        ON maptbl.article_id=mast.article_id  
+        ON maptbl.article_id=mast.article_id
+    LEFT JOIN users usr2 
+        ON mptbl.user_id=usr2.user_id  
     LEFT JOIN commodity_table com 
         ON maptbl.commodity_id=com.commodity_id 
     LEFT JOIN commodity_description_table comds 
