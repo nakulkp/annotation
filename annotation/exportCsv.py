@@ -32,7 +32,7 @@ def exportCsv(requestParameters):
     LEFT JOIN  mapping_table maptbl 
         ON maptbl.article_id=mast.article_id
     LEFT JOIN users usr2 
-        ON mptbl.user_id=usr2.user_id  
+        ON maptbl.user_id=usr2.user_id  
     LEFT JOIN commodity_table com 
         ON maptbl.commodity_id=com.commodity_id 
     LEFT JOIN commodity_description_table comds 
