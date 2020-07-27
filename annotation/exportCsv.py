@@ -33,12 +33,10 @@ def exportCsv(requestParameters):
     # WHERE a.release_date >= %(start)s AND a.release_date <= %(end)s;""", {'start': start, 'end': end})
 
     cur.execute("""
-    SELECT mast.article_id, mast.headline, mast.status, mast.question, usr.username, mast.release_date, mast.content, mast.source, mast.url, mast.last_modified_date, usr2.username,
-     maptbl.status, maptbl.deleted_on_date, maptbl.deleted_by, com.commodities, comds.comm_desc, regevnt.event_region, fctr.factor, sbfctr.subfactor, sbfctrval.subfactorvalue,
-      regimp.impact_region, price.price_value, supply.supply_value, demand.demand_value
+    SELECT mast.article_id, mast.headline, mast.status, mast.question, usr.username, mast.release_date, mast.content, mast.source, mast.url, mast.last_modified_date, usr2.username,maptbl.status, maptbl.deleted_on_date, maptbl.deleted_by, com.commodities, comds.comm_desc, regevnt.event_region, fctr.factor, sbfctr.subfactor, sbfctrval.subfactorvalue, regimp.impact_region, price.price_value, supply.supply_value, demand.demand_value
     FROM master_table mast 
     LEFT JOIN users usr 
-        ON mast.user_id=usr.user_id  
+        ON mast.owner=usr.user_id  
     LEFT JOIN  mapping_table maptbl 
         ON maptbl.article_id=mast.article_id
     LEFT JOIN users usr2 
