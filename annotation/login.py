@@ -15,7 +15,7 @@ def login(requestParameters):
     conn = psycopg2.connect(host="localhost", database="annotation", user="postgres", password="pass")
     try:
         cur = conn.cursor()
-        cur.execute("SELECT EXISTS (SELECT 1 FROM users WHERE email = %(email)s LIMIT 1);", {'email': email})
+        cur.execute("SELECT EXISTS (SELECT 1 FROM users WHERE email = %(email)s LIMIT 1); AND status = 'enabled'", {'email': email})
 
         userExist = cur.fetchone()
         userExist = userExist[0]
