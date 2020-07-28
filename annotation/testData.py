@@ -30,4 +30,4 @@ def testData():
     conn.commit()
 
     conn.close()
-    return "success"
+    return {"message": "success"}

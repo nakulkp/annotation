@@ -41,4 +41,4 @@ def csvUpload(requestParameters):
         conn.commit()
 
     conn.close()
-    return "success"
+    return {"message": "success"}

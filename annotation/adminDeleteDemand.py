@@ -19,6 +19,6 @@ def adminDeleteDemand(requestParameters):
     cur.close()
     conn.commit()
 
-    return "success"
+    return {"message": "success"}
     if conn is not None:
         conn.close()

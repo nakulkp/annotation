@@ -25,4 +25,4 @@ def markWithQuestion(requestParameters):
     cur.close()
     conn.commit()
     conn.close()
-    return "Success"
+    return {"message": "success"}

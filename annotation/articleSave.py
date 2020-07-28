@@ -81,4 +81,4 @@ def articleSave(requestParameters):
     conn.commit()
     conn.close()
     if isAnyMappingIdZero: return "success article only"
-    return "success"
+    return {"message": "success"}

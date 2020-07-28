@@ -20,4 +20,4 @@ def adminDeletePrice(requestParameters):
     cur.close()
     conn.commit()
 
-    return "success"
+    return {"message": "success"}
