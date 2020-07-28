@@ -191,9 +191,9 @@ def api_adminDeleteCommodity():
     return jsonify(status)
 
 
-@app.route('/admindeletecommoditydescriptiom', methods=['POST'])
+@app.route('/admindeletecommoditydescription', methods=['POST'])
 @token_required
-def api_adminDeleteCommodityDescription():
+def api_adminDeleteCommodityDescription():sss
     requestParameters = request.get_json()
     status = adminDeleteCommodityDescription(requestParameters)
     return jsonify(status)
