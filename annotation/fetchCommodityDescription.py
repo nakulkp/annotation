@@ -73,7 +73,7 @@ def fetchCommodityDescription(requestParameters):
 
     comm_desc_id = requestParameters["comm_desc_id"]
 
-    cur.execute("""SELECT cd.comm_desc, c.commodities 
+    cur.execute("""SELECT cd.comm_desc, c.commodities, c.commodity_id
             FROM commodity_description_table cd 
             INNER JOIN commodity_table c
             ON cd.commodity_id=c.commodity_id 
@@ -81,7 +81,7 @@ def fetchCommodityDescription(requestParameters):
     rows = cur.fetchall()
     valueList = []
     for row in rows:
-        value = {"comm_desc": row[0], "commodities": row[1]}
+        value = {"comm_desc": row[0], "commodities": row[1], "commodity_id": row[2]}
         valueList.append(value)
 
     return {'data': valueList}
