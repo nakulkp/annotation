@@ -19,7 +19,7 @@ def adminUsersFetch(requestParameters):
     if (dataCount[0] % 20) != 0 and dataCount[0] > 20:
         pageCount = pageCount + 1
         
-    cur.execute("""SELECT user_id, username, email, phone, pass_key, status, privilege FROM users LIMIT %(limit)s OFFSET %(offset)s;""", {"limit": limit, "offset": offset})
+    cur.execute("""SELECT user_id, username, email, phone, pass_key, status, privilege FROM users LIMIT %(limit)s OFFSET %(offset)s WHERE status = 'enabled';""", {"limit": limit, "offset": offset})
     valueList = []
     rows = cur.fetchall()
     for row in rows:

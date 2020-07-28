@@ -18,6 +18,10 @@ def adminUserDelete(requestParameters):
     SET user_id = 1
     WHERE user_id = %(user_id)s;""", {'user_id': user_id})
 
+    cur.execute("""UPDATE users 
+    SET status = "disabled"
+    WHERE user_id = %(user_id)s;""", {'user_id': user_id})
+
     conn.commit()
     cur.close()
     conn.close()
