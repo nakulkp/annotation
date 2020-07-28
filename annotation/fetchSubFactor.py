@@ -31,7 +31,7 @@ def fetchSubFactor(requestParameters):
         if not valueExists:
             return {'message': "no values"}
 
-        cur.execute("""SELECT s.subfactor, s.subfactor_id, s.status, f.factor
+        cur.execute("""SELECT s.subfactor, s.subfactor_id, s.status, f.factor, f.factor_id
             FROM subfactor_table s 
             INNER JOIN factor_table f 
             ON s.factor_id=f.factor_id 
@@ -39,7 +39,7 @@ def fetchSubFactor(requestParameters):
         rows = cur.fetchall()
         valueList = []
         for row in rows:
-            value = {"subfactor": row[0], "subfactor_id": row[1], "status": row[2], "factor": row[3]}
+            value = {"subfactor": row[0], "subfactor_id": row[1], "status": row[2], "factor": row[3], "factor_id": row[4]}
             valueList.append(value)
 
         cur.close()
@@ -56,7 +56,7 @@ def fetchSubFactor(requestParameters):
         if not valueExists:
             return {'message': "no values"}
 
-        cur.execute("""SELECT s.subfactor, s.subfactor_id, s.status, f.factor
+        cur.execute("""SELECT s.subfactor, s.subfactor_id, s.status, f.factor, f.factor_id
             FROM subfactor_table s 
             INNER JOIN factor_table f ON s.factor_id=f.factor_id
             WHERE s.status='enabled' 
@@ -64,7 +64,7 @@ def fetchSubFactor(requestParameters):
         rows = cur.fetchall()
         valueList = []
         for row in rows:
-            value = {"subfactor": row[0], "subfactor_id": row[1], "status": row[2], "factor": row[3]}
+            value = {"subfactor": row[0], "subfactor_id": row[1], "status": row[2], "factor": row[3], "factor_id": row[4]}
             valueList.append(value)
 
         cur.close()
@@ -74,7 +74,7 @@ def fetchSubFactor(requestParameters):
 
     subfactor_id = requestParameters["subfactor_id"]
 
-    cur.execute("""SELECT s.subfactor, f.factor
+    cur.execute("""SELECT s.subfactor, s.subfactor_id, s.status, f.factor, f.factor_id
            FROM subfactor_table s 
            INNER JOIN factor_table f 
            ON s.factor_id=f.factor_id
@@ -82,7 +82,7 @@ def fetchSubFactor(requestParameters):
     rows = cur.fetchall()
     valueList = []
     for row in rows:
-        value = {"subfactor": row[0], "factor": row[1]}
+        value = {"subfactor": row[0], "subfactor_id": row[1], "status": row[2], "factor": row[3], "factor_id": row[4]}
         valueList.append(value)
 
     cur.close()
