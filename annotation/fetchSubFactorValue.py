@@ -30,7 +30,7 @@ def fetchSubFactorValue(requestParameters):
         if not valueExists:
             return {'message': "no values"}
 
-        cur.execute("""SELECT sv.subfactorvalue, sv.subfactorvalue_id, sv.status, f.factor, s.subfactor
+        cur.execute("""SELECT sv.subfactorvalue, sv.subfactorvalue_id, sv.status, f.factor, s.subfactor, s.subfactor_id
             FROM subfactorvalue_table sv
             INNER JOIN factor_table f
             ON sv.factor_id=f.factor_id
@@ -42,7 +42,7 @@ def fetchSubFactorValue(requestParameters):
         valueList = []
         for row in rows:
             value = {"subfactorvalue": row[0], "subfactorvalue_id": row[1], "status": row[2], "factor": row[3],
-                     "subfactor": row[4]}
+                     "subfactor": row[4], "subfactor_id": row[5]}
             valueList.append(value)
 
         cur.close()
@@ -59,7 +59,7 @@ def fetchSubFactorValue(requestParameters):
         if not valueExists:
             return {'message': "no values"}
 
-        cur.execute("""SELECT sv.subfactorvalue, sv.subfactorvalue_id, sv.status, f.factor, s.subfactor
+        cur.execute("""SELECT sv.subfactorvalue, sv.subfactorvalue_id, sv.status, f.factor, s.subfactor, s.subfactor_id
             FROM subfactorvalue_table sv
             INNER JOIN factor_table f
             ON sv.factor_id=f.factor_id
@@ -71,7 +71,7 @@ def fetchSubFactorValue(requestParameters):
         valueList = []
         for row in rows:
             value = {"subfactorvalue": row[0], "subfactorvalue_id": row[1], "status": row[2], "factor": row[3],
-                     "subfactor": row[4]}
+                     "subfactor": row[4], "subfactor_id":row[5]}
             valueList.append(value)
 
         cur.close()
@@ -81,7 +81,7 @@ def fetchSubFactorValue(requestParameters):
 
     subfactorvalue_id = requestParameters["subfactorvalue_id"]
 
-    cur.execute("""SELECT sv.subfactorvalue, f.factor, s.subfactor
+    cur.execute("""SELECT sv.subfactorvalue, sv.subfactorvalue_id, sv.status, f.factor, s.subfactor, s.subfactor_id
             FROM subfactorvalue_table sv
             INNER JOIN factor_table f
             ON sv.factor_id=f.factor_id
@@ -91,7 +91,8 @@ def fetchSubFactorValue(requestParameters):
     rows = cur.fetchall()
     valueList = []
     for row in rows:
-        value = {"subfactorvalue": row[0], "factor": row[3], "subfactor": row[4]}
+        value = {"subfactorvalue": row[0], "subfactorvalue_id": row[1], "status": row[2], "factor": row[3],
+                     "subfactor": row[4], "subfactor_id":row[5]}
         valueList.append(value)
 
     cur.close()
