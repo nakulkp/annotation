@@ -1,5 +1,5 @@
 import psycopg2
-#from config import config
+from config import config
 from datetime import date
 
 
@@ -18,6 +18,15 @@ def updateMapping(requestParameters):
     demand_value_id = requestParameters['demand_value_id']
     event_region_id = requestParameters['event_region_id']
     last_modified_date = date.today()
+
+    if comm_desc_id == 0:
+        comm_desc_id = -1
+    if price_value_id == 0:
+        price_value_id = -1
+    if demand_value_id == 0:
+        demand_value_id = -1
+    if supply_value_id == 0:
+        supply_value_id = -1
 
     # params = config()
     # conn = psycopg2.connect(**params)

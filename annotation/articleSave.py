@@ -29,6 +29,15 @@ def articleSave(requestParameters):
 
     status = 'marked'
 
+    if comm_desc_id == 0:
+        comm_desc_id = -1
+    if price_value_id == 0:
+        price_value_id = -1
+    if demand_value_id == 0:
+        demand_value_id = -1
+    if supply_value_id == 0:
+        supply_value_id = -1
+
     isAnyMappingIdZero = False
 
     if user_id == 0 or article_id == 0 or commodity_id == 0 or comm_desc_id == 0 or factor_id == 0 or subfactor_id == 0 or subfactorvalue_id == 0 or price_value_id == 0 or supply_value_id == 0 or demand_value_id == 0 or impact_region_id == 0 or event_region_id == 0 or last_modified_by == 0:

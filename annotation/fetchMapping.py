@@ -53,6 +53,15 @@ def fetchMapping(requestParameters):
         mapping_id = row[10]
         user_id = row[11]
 
+        if comm_desc_id == -1:
+            comm_desc_id = ""
+        if price_value_id == -1:
+            price_value_id = ""
+        if demand_value_id == -1:
+            demand_value_id = ""
+        if supply_value_id == -1:
+            supply_value_id = ""
+
         loopVal = {'mapping_id': mapping_id, 'user_id': user_id, 'comm_desc_id': comm_desc_id,
                    'commodity_id': commodity_id, 'factor_id': factor_id, 'subfactor_id': subfactor_id,
                    'subfactorvalue_id': subfactorvalue_id, 'impact_region_id': impact_region_id,
