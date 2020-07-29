@@ -74,7 +74,7 @@ def fetchSubFactor(requestParameters):
 
     subfactor_id = requestParameters["subfactor_id"]
 
-    cur.execute("""SELECT s.subfactor, s.subfactor_id, s.status, f.factor, f.factor_id
+    cur.execute("""SELECT s.subfactor
            FROM subfactor_table s 
            INNER JOIN factor_table f 
            ON s.factor_id=f.factor_id
@@ -82,10 +82,10 @@ def fetchSubFactor(requestParameters):
     rows = cur.fetchall()
     valueList = []
     for row in rows:
-        value = {"subfactor": row[0], "subfactor_id": row[1], "status": row[2], "factor": row[3], "factor_id": row[4]}
+        value = {"subfactor": row[0]}
         valueList.append(value)
 
     cur.close()
     conn.commit()
 
-    return {'data': valueList}
+    return valueList
