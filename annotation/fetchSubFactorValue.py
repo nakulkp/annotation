@@ -89,10 +89,7 @@ def fetchSubFactorValue(requestParameters):
             ON sv.subfactor_id = s.subfactor_id 
             WHERE sv.subfactorvalue_id= %(subfactorvalue_id)s ;""", {"subfactorvalue_id": subfactorvalue_id})
     rows = cur.fetchall()
-    valueList = []
-    for row in rows:
-        value = {"subfactorvalue": row[0]}
-        valueList.append(value)
+    valueList = row[0]
 
     cur.close()
     conn.commit()

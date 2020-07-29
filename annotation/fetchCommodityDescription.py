@@ -79,9 +79,6 @@ def fetchCommodityDescription(requestParameters):
             ON cd.commodity_id=c.commodity_id 
            WHERE cd.comm_desc_id= %(comm_desc_id)s ;""", {"comm_desc_id": comm_desc_id})
     rows = cur.fetchall()
-    valueList = []
-    for row in rows:
-        value = {"comm_desc": row[0]}
-        valueList.append(value)
+    valueList = row[0]
 
     return valueList
