@@ -58,24 +58,25 @@ def fetchMapping(requestParameters):
                    'subfactorvalue_id': subfactorvalue_id, 'impact_region_id': impact_region_id,
                    'price_value_id': price_value_id, 'supply_value_id': supply_value_id,
                    'demand_value_id': demand_value_id, 'event_region_id': event_region_id,
-                   "factor" : fetchFactor({'is_null' : "no", 'factor_id':factor_id, 'page': 0}),
-                    "commodities" : fetchCommodity({'is_null' : "no", 'commodity_id': commodity_id, 'page': 0}),
-                    "demand_value" : fetchDemand({'is_null' : "no", 'demand_value_id': demand_value_id, 'page': 0}),
-                    "impact_region" : fetchRegionOfImpact({'is_null' : "no", 'impact_region_id': impact_region_id, 'page': 0}),
-                    "subfactorvalue" : fetchSubFactorValue({'is_null' : "no", 'subfactorvalue_id': subfactorvalue_id, 'page': 0}),
-                    "price_value" : fetchPrice({'is_null' : "no", 'price_value_id': price_value_id, 'page': 0}),
-                    "comm_desc" : fetchCommodityDescription({'is_null' : "no", 'comm_desc_id': comm_desc_id, 'page': 0}),
-                    "event_region" : fetchRegionOfEvent({'is_null' : "no", 'event_region_id': event_region_id, 'page': 0}),
-                    "subfactor" : fetchSubFactor({'is_null' : "no", 'subfactor_id': subfactor_id, 'page': 0}),
-                    "supply_value" : fetchSupply({'is_null' : "no", 'supply_value_id': supply_value_id, 'page': 0})
-               }
+                   "factor": fetchFactor({'is_null': "no", 'factor_id': factor_id, 'page': 0}),
+                   "commodities": fetchCommodity({'is_null': "no", 'commodity_id': commodity_id, 'page': 0}),
+                   "demand_value": fetchDemand({'is_null': "no", 'demand_value_id': demand_value_id, 'page': 0}),
+                   "impact_region": fetchRegionOfImpact(
+                       {'is_null': "no", 'impact_region_id': impact_region_id, 'page': 0}),
+                   "subfactorvalue": fetchSubFactorValue(
+                       {'is_null': "no", 'subfactorvalue_id': subfactorvalue_id, 'page': 0}),
+                   "price_value": fetchPrice({'is_null': "no", 'price_value_id': price_value_id, 'page': 0}),
+                   "comm_desc": fetchCommodityDescription({'is_null': "no", 'comm_desc_id': comm_desc_id, 'page': 0}),
+                   "event_region": fetchRegionOfEvent({'is_null': "no", 'event_region_id': event_region_id, 'page': 0}),
+                   "subfactor": fetchSubFactor({'is_null': "no", 'subfactor_id': subfactor_id, 'page': 0}),
+                   "supply_value": fetchSupply({'is_null': "no", 'supply_value_id': supply_value_id, 'page': 0})
+                   }
         returnList.append(loopVal)
-
 
         cur.close()
         conn.close()
 
-    #success_message = {"message": "success"}
-    #returnList.append(success_message)
+    # success_message = {"message": "success"}
+    # returnList.append(success_message)
     finalList = {'data': returnList, "message": "success"}
     return finalList
