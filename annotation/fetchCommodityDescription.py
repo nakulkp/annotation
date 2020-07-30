@@ -78,7 +78,7 @@ def fetchCommodityDescription(requestParameters):
             INNER JOIN commodity_table c
             ON cd.commodity_id=c.commodity_id 
            WHERE cd.comm_desc_id= %(comm_desc_id)s ;""", {"comm_desc_id": comm_desc_id})
-    rows = cur.fetchall()
+    row = cur.fetchall()
     valueList = row[0]
 
     return valueList
