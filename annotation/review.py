@@ -473,17 +473,17 @@ def review(requestParameters):
                 pageCount = pageCount + 1
 
     finalValues = []
-    for rv in reviewValues:
-        owner = rv[0]
-        cur.execute(
-            """SELECT username FROM users WHERE user_id = %(user_id)s LIMIT 1;""",
-            {"user_id": owner}
-        )
-        row = cur.fetchall()
-        ownername = row[0]
-        lst = list(rv)
-        lst[0] = ownername
-        finalValues.append(lst)
+    #for rv in reviewValues:
+    #    owner = rv[0]
+    #    cur.execute(
+    #        """SELECT username FROM users WHERE user_id = %(user_id)s LIMIT 1;""",
+    #        {"user_id": user_id}
+    #    )
+    #   row = cur.fetchall()
+    #    ownername = row[0]
+    #    lst = list(rv)
+    #    lst[0] = ownername
+    #    finalValues.append(lst)
 
     cur.close()
     conn.commit()

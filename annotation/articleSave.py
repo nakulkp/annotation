@@ -17,7 +17,6 @@ def articleSave(requestParameters):
     impact_region_id = requestParameters['impact_region_id']
     event_region_id = requestParameters['event_region_id']
 
-    owner = requestParameters['owner']
     release_date = requestParameters['release_date']
     source = requestParameters['source']
     url = requestParameters['url']
