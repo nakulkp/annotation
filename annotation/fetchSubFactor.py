@@ -79,7 +79,7 @@ def fetchSubFactor(requestParameters):
            INNER JOIN factor_table f 
            ON s.factor_id=f.factor_id
            WHERE subfactor_id= %(subfactor_id)s ;""", {"subfactor_id": subfactor_id})
-    rows = cur.fetchall()
+    row = cur.fetchall()
     valueList = row[0]
 
     cur.close()
