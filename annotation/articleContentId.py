@@ -37,14 +37,14 @@ def articleContentId(requestParameters):
     last_modified_by = row[0][8]
     status = row[0][9]
 
-    cur.execute(
-        """SELECT username FROM users WHERE user_id = %(user_id)s LIMIT 1;""",
-        {"user_id": owner}
-    )
-    row = cur.fetchall()
-    ownername = row[0][0]
+    #cur.execute(
+    #    """SELECT username FROM users WHERE user_id = %(user_id)s LIMIT 1;""",
+    #    {"user_id": owner}
+    #)
+    #row = cur.fetchall()
+    #ownername = row[0][0]
 
-    returnList = {'owner': ownername, 'release_date': release_date, 'source': source, 'url': url, 'headline': headline,
+    returnList = {'owner': owner, 'release_date': release_date, 'source': source, 'url': url, 'headline': headline,
                   'content': content, 'question': question, 'last_modified_date': last_modified_date,
                   'last_modified_by': last_modified_by,'status':status, 'article_id': article_id, 'count': todoCount}
 

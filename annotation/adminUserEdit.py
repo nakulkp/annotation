@@ -25,6 +25,12 @@ def adminUserEdit(requestParameters):
             WHERE user_id = %(user_id)s;""",
             {'user_id': user_id, 'username': username, 'email': email, 'phone': phone,
              'status': status, 'privilege': privilege})
+
+        cur.execute("""
+        UPDATE master_table
+        SET owner=%(username)s
+        WHERE user_id=%(user_id)s;""",
+                    {'username': username, 'user_id': user_id})
         conn.commit()
         cur.close()
         conn.close()
@@ -37,6 +43,13 @@ def adminUserEdit(requestParameters):
          WHERE user_id = %(user_id)s;""",
         {'user_id': user_id, 'username': username, 'email': email, 'phone': phone, 'pass_key': pass_key,
          'status': status, 'privilege': privilege})
+
+    cur.execute("""
+    UPDATE master_table
+    SET owner=%(username)s
+    WHERE user_id=%(user_id)s;""",
+                {'username': username, 'user_id': user_id})
+
     conn.commit()
     cur.close()
     conn.close()

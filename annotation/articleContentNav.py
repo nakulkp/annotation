@@ -105,14 +105,14 @@ def articleContentNav(requestParameters):
     article_id = row[0][9]
     status = row[0][10]
 
-    cur.execute(
-        """SELECT username FROM users WHERE user_id = %(user_id)s LIMIT 1;""",
-        {"user_id": owner}
-    )
-    row = cur.fetchall()
-    ownername = row[0][0]
+    #cur.execute(
+    #    """SELECT username FROM users WHERE user_id = %(user_id)s LIMIT 1;""",
+    #    {"user_id": owner}
+    #)
+    #row = cur.fetchall()
+    #ownername = row[0][0]
 
-    returnList = {'owner': ownername, 'release_date': release_date, 'source': source, 'url': url, 'headline': headline,
+    returnList = {'owner': owner, 'release_date': release_date, 'source': source, 'url': url, 'headline': headline,
                   'content': content, 'question': question, 'last_modified_date': last_modified_date,
                   'last_modified_by': last_modified_by, 'article_id': article_id, 'status': status, 'count': todoCount}
 

@@ -25,7 +25,7 @@ def createTables():
             article_id SERIAL NOT NULL,
             headline varchar NOT NULL,
             content varchar NOT NULL,
-            owner INTEGER NOT NULL,
+            owner varchar NOT NULL,
             release_date date NOT NULL,
             source text,
             url text,
