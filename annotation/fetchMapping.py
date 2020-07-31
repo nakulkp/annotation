@@ -23,9 +23,8 @@ def fetchMapping(requestParameters):
     cur.execute("""SELECT exists (SELECT 1 FROM mapping_table
                 WHERE article_id= %(article_id)s AND status = 'enabled' LIMIT 1);""", {'article_id': article_id})
     articleExist = cur.fetchone()
-    articleExist = articleExist[0]
 
-    if articleExist != 'exists':
+    if not articleExist:
         cur.close()
         conn.close()
         return {'message': "no matching data"}
