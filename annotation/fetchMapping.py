@@ -25,7 +25,7 @@ def fetchMapping(requestParameters):
     articleExist = cur.fetchone()
     articleExist = articleExist[0]
 
-    if not articleExist:
+    if articleExist != 'exists':
         cur.close()
         conn.close()
         return {'message': "no matching data"}
