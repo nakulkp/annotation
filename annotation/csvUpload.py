@@ -24,6 +24,10 @@ def csvUpload(requestParameters):
         if content == '':
             content = ' '
 
+        cur.execute("""SELECT username FROM users WHERE user_id=%(owner)s""", {'owner': owner});
+        row = cur.fetchall()
+        owner = row[0]
+
         if release_date == '':
             cur.execute("""INSERT INTO master_table (user_id, headline, content, owner, release_date, source, url, question,last_modified_by, status) 
             VALUES ( %(user_id)s, %(headline)s, %(content)s, %(owner)s, now(), %(source)s, %(url)s, %(question)s,%(last_modified_by)s, %(status)s );""",
