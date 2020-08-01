@@ -44,7 +44,7 @@ def updateMapping(requestParameters):
         return {'message': "no matching mapping"}
 
     cur.execute("""UPDATE mapping_table 
-                SET status = 'enabled', last_modified_by= %(user_id)s, article_id = %(article_id)s, comm_desc_id = %(comm_desc_id)s, commodity_id = %(commodity_id)s, factor_id = %(factor_id)s, subfactor_id = %(subfactor_id)s, subfactorvalue_id = %(subfactorvalue_id)s, impact_region_id = %(impact_region_id)s, price_value_id = %(price_value_id)s, supply_value_id = %(supply_value_id)s, demand_value_id = %(demand_value_id)s, event_region_id = %(event_region_id)s
+                SET status = 'enabled', article_id = %(article_id)s, comm_desc_id = %(comm_desc_id)s, commodity_id = %(commodity_id)s, factor_id = %(factor_id)s, subfactor_id = %(subfactor_id)s, subfactorvalue_id = %(subfactorvalue_id)s, impact_region_id = %(impact_region_id)s, price_value_id = %(price_value_id)s, supply_value_id = %(supply_value_id)s, demand_value_id = %(demand_value_id)s, event_region_id = %(event_region_id)s
                 WHERE mapping_id = %(mapping_id)s;""",
                 {'user_id': user_id, 'article_id': article_id, 'comm_desc_id': comm_desc_id,
                  'commodity_id': commodity_id,

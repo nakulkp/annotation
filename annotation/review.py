@@ -47,7 +47,7 @@ def review(requestParameters):
                     cur.execute(query, {"limit": limit, "offset": offset})
                 else:
                     query = sql.SQL("""SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
-                    FROM master_table WHERE {filterType} = %(filterTypeVal)s
+                    FROM master_table WHERE {filterType} >= %(filterTypeVal)s
                     ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;""").format( filterType=sql.Identifier(filter_type),field=sql.Identifier(sort_by))
                     cur.execute(query, {"filterTypeVal":filter_type_val,"limit": limit, "offset": offset})
             else:
@@ -58,7 +58,7 @@ def review(requestParameters):
                     cur.execute(query, {"limit": limit, "offset": offset})
                 else:
                     query = sql.SQL("""SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
-                    FROM master_table WHERE {filterType} = %(filterTypeVal)s
+                    FROM master_table WHERE {filterType} >= %(filterTypeVal)s
                     ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;""").format( filterType=sql.Identifier(filter_type),field=sql.Identifier(sort_by))
                     cur.execute(query, {"filterTypeVal":filter_type_val,"limit": limit, "offset": offset})
                     
@@ -82,7 +82,7 @@ def review(requestParameters):
                 else:
                     query = sql.SQL("""SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
                     FROM master_table 
-                    WHERE user_id=%(user_id)s AND {filterType} = %(filterTypeVal)s
+                    WHERE user_id=%(user_id)s AND {filterType} >= %(filterTypeVal)s
                     ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;""").format( filterType=sql.Identifier(filter_type),field=sql.Identifier(sort_by))
                     cur.execute(query, {'user_id': user_id, "limit": limit, "offset": offset})
             else:
@@ -95,7 +95,7 @@ def review(requestParameters):
                 else:
                     query = sql.SQL("""SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
                     FROM master_table 
-                    WHERE user_id=%(user_id)s AND {filterType} = %(filterTypeVal)s
+                    WHERE user_id=%(user_id)s AND {filterType} >= %(filterTypeVal)s
                     ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;""").format( filterType=sql.Identifier(filter_type),field=sql.Identifier(sort_by))
                     cur.execute(query, {'user_id': user_id, "limit": limit, "offset": offset})
             reviewValues = cur.fetchall()
@@ -123,7 +123,7 @@ def review(requestParameters):
                     query = sql.SQL(
                         """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
                         FROM master_table
-                        WHERE status='todo' AND {filterType} = %(filterTypeVal)s
+                        WHERE status='todo' AND {filterType} >= %(filterTypeVal)s
                         ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;""").format(
                         filterType=sql.Identifier(filter_type),field=sql.Identifier(sort_by))
                     cur.execute(query, {"limit": limit, "offset": offset})
@@ -140,7 +140,7 @@ def review(requestParameters):
                     query = sql.SQL(
                         """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
                         FROM master_table
-                        WHERE status='todo' AND {filterType} = %(filterTypeVal)s
+                        WHERE status='todo' AND {filterType} >= %(filterTypeVal)s
                         ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;""").format(
                         filterType=sql.Identifier(filter_type),field=sql.Identifier(sort_by))
                     cur.execute(query, {"limit": limit, "offset": offset})
@@ -167,7 +167,7 @@ def review(requestParameters):
                     query = sql.SQL(
                         """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
                         FROM master_table
-                        WHERE user_id=%(user_id)s AND status='todo' AND {filterType} = %(filterTypeVal)s
+                        WHERE user_id=%(user_id)s AND status='todo' AND {filterType} >= %(filterTypeVal)s
                         ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;""").format(
                         filterType=sql.Identifier(filter_type),field=sql.Identifier(sort_by))
                     cur.execute(query, {'user_id': user_id, "limit": limit, "offset": offset, "sort_by": sort_by})
@@ -184,7 +184,7 @@ def review(requestParameters):
                     query = sql.SQL(
                         """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
                         FROM master_table
-                        WHERE user_id=%(user_id)s AND status='todo' AND {filterType} = %(filterTypeVal)s
+                        WHERE user_id=%(user_id)s AND status='todo' AND {filterType} >= %(filterTypeVal)s
                         ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;""").format(
                         filterType=sql.Identifier(filter_type),field=sql.Identifier(sort_by))
                     cur.execute(query, {'user_id': user_id, "limit": limit, "offset": offset, "sort_by": sort_by})
@@ -214,7 +214,7 @@ def review(requestParameters):
                     query = sql.SQL(
                         """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
                         FROM master_table
-                        WHERE status='irrelevant' AND {filterType} = %(filterTypeVal)s
+                        WHERE status='irrelevant' AND {filterType} >= %(filterTypeVal)s
                         ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;""").format(
                         filterType=sql.Identifier(filter_type),field=sql.Identifier(sort_by))
                     cur.execute(query, {"limit": limit, "offset": offset})
@@ -231,7 +231,7 @@ def review(requestParameters):
                     query = sql.SQL(
                         """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
                         FROM master_table
-                        WHERE status='irrelevant' AND {filterType} = %(filterTypeVal)s
+                        WHERE status='irrelevant' AND {filterType} >= %(filterTypeVal)s
                         ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;""").format(
                         filterType=sql.Identifier(filter_type),field=sql.Identifier(sort_by))
                     cur.execute(query, {"limit": limit, "offset": offset})
@@ -259,7 +259,7 @@ def review(requestParameters):
                     query = sql.SQL(
                         """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
                         FROM master_table
-                        WHERE user_id=%(user_id)s AND status='irrelevant' AND {filterType} = %(filterTypeVal)s
+                        WHERE user_id=%(user_id)s AND status='irrelevant' AND {filterType} >= %(filterTypeVal)s
                         ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;""").format(
                         filterType=sql.Identifier(filter_type),field=sql.Identifier(sort_by))
                     cur.execute(query, {'user_id': user_id, "limit": limit, "offset": offset})
@@ -275,7 +275,7 @@ def review(requestParameters):
                     query = sql.SQL(
                         """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
                         FROM master_table
-                        WHERE user_id=%(user_id)s AND status='irrelevant' AND {filterType} = %(filterTypeVal)s
+                        WHERE user_id=%(user_id)s AND status='irrelevant' AND {filterType} >= %(filterTypeVal)s
                         ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;""").format(
                         filterType=sql.Identifier(filter_type),field=sql.Identifier(sort_by))
                     cur.execute(query, {'user_id': user_id, "limit": limit, "offset": offset})
@@ -306,7 +306,7 @@ def review(requestParameters):
                     query = sql.SQL(
                         """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
                         FROM master_table
-                        WHERE status ='completed' AND {filterType} = %(filterTypeVal)s
+                        WHERE status ='completed' AND {filterType} >= %(filterTypeVal)s
                         ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;""").format(
                         filterType=sql.Identifier(filter_type),field=sql.Identifier(sort_by))
                     cur.execute(query, {"limit": limit, "offset": offset, "sort_by": sort_by})
@@ -323,7 +323,7 @@ def review(requestParameters):
                     query = sql.SQL(
                         """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
                         FROM master_table
-                        WHERE status ='completed' AND {filterType} = %(filterTypeVal)s
+                        WHERE status ='completed' AND {filterType} >= %(filterTypeVal)s
                         ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;""").format(
                         filterType=sql.Identifier(filter_type),field=sql.Identifier(sort_by))
                     cur.execute(query, {"limit": limit, "offset": offset, "sort_by": sort_by})
@@ -350,7 +350,7 @@ def review(requestParameters):
                     query = sql.SQL(
                         """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
                         FROM master_table
-                        WHERE user_id=%(user_id)s AND status='completed' AND {filterType} = %(filterTypeVal)s
+                        WHERE user_id=%(user_id)s AND status='completed' AND {filterType} >= %(filterTypeVal)s
                         ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;""").format(
                         filterType=sql.Identifier(filter_type),field=sql.Identifier(sort_by))
                     cur.execute(query, {'user_id': user_id, "limit": limit, "offset": offset})
@@ -367,7 +367,7 @@ def review(requestParameters):
                     query = sql.SQL(
                         """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
                         FROM master_table
-                        WHERE user_id=%(user_id)s AND status='completed' AND {filterType} = %(filterTypeVal)s
+                        WHERE user_id=%(user_id)s AND status='completed' AND {filterType} >= %(filterTypeVal)s
                         ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;""").format(
                         filterType=sql.Identifier(filter_type),field=sql.Identifier(sort_by))
                     cur.execute(query, {'user_id': user_id, "limit": limit, "offset": offset})
@@ -397,7 +397,7 @@ def review(requestParameters):
                     query = sql.SQL(
                         """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
                         FROM master_table
-                        WHERE status='marked' AND {filterType} = %(filterTypeVal)s
+                        WHERE status='marked' AND {filterType} >= %(filterTypeVal)s
                         ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;""").format(
                         filterType=sql.Identifier(filter_type),field=sql.Identifier(sort_by))
                     cur.execute(query, {"limit": limit, "offset": offset})
@@ -413,7 +413,7 @@ def review(requestParameters):
                     query = sql.SQL(
                         """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
                         FROM master_table
-                        WHERE status='marked' AND {filterType} = %(filterTypeVal)s
+                        WHERE status='marked' AND {filterType} >= %(filterTypeVal)s
                         ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;""").format(
                         filterType=sql.Identifier(filter_type),field=sql.Identifier(sort_by))
                     cur.execute(query, {"limit": limit, "offset": offset})
@@ -440,7 +440,7 @@ def review(requestParameters):
                     query = sql.SQL(
                         """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
                         FROM master_table
-                        WHERE user_id=%(user_id)s AND status='marked' AND {filterType} = %(filterTypeVal)s
+                        WHERE user_id=%(user_id)s AND status='marked' AND {filterType} >= %(filterTypeVal)s
                         ORDER BY {field} ASC LIMIT %(limit)s OFFSET %(offset)s;""").format(
                         filterType=sql.Identifier(filter_type),field=sql.Identifier(sort_by))
                     cur.execute(query, {'user_id': user_id, "limit": limit, "offset": offset})
@@ -457,7 +457,7 @@ def review(requestParameters):
                     query = sql.SQL(
                         """SELECT owner, article_id, headline, status, question, url, release_date, last_modified_date
                         FROM master_table
-                        WHERE user_id=%(user_id)s AND status='marked' AND {filterType} = %(filterTypeVal)s
+                        WHERE user_id=%(user_id)s AND status='marked' AND {filterType} >= %(filterTypeVal)s
                         ORDER BY {field} DESC LIMIT %(limit)s OFFSET %(offset)s;""").format(
                         filterType=sql.Identifier(filter_type),field=sql.Identifier(sort_by))
                     cur.execute(query, {'user_id': user_id, "limit": limit, "offset": offset})
