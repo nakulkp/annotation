@@ -56,7 +56,7 @@ def updateMapping(requestParameters):
 
     cur.execute("""UPDATE master_table
     SET last_modified_by= %(user_id)s, last_modified_date = %(last_modified_date)s
-    WHERE article_id=%(article_id)s;""", {'article_id': article_id, 'last_modified_date': last_modified_date, 'user_id', user_id})
+    WHERE article_id=%(article_id)s;""", {'article_id': article_id, 'last_modified_date': last_modified_date, 'user_id': user_id})
     cur.close()
     conn.commit()
     conn.close()
