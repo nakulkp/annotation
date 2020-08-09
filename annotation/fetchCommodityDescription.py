@@ -63,7 +63,7 @@ def fetchCommodityDescription(requestParameters):
         rows = cur.fetchall()
         valueList = []
         for row in rows:
-            value = {"comm_desc": row[0], "comm_desc_id": row[1], "status": row[2], "commodities": row[3], "commodity_id": [4]}
+            value = {"comm_desc": row[0], "comm_desc_id": row[1], "status": row[2], "commodities": row[3], "commodity_id": r[4]}
             valueList.append(value)
 
         cur.close()
