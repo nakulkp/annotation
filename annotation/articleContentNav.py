@@ -7,6 +7,7 @@ def articleContentNav(requestParameters):
     article_id = requestParameters['article_id']
     user_id = requestParameters['user_id']
     direction = requestParameters['flag']
+    last_article = requestParameters['last_article']
 
     # params = config()
     # conn = psycopg2.connect(**params)
@@ -52,45 +53,58 @@ def articleContentNav(requestParameters):
 
     if todoCount == 0:
         return {"message": "empty"}
+    
+    if last_article == 'yes':
+        cur.execute("""SELECT last_open_article_id FROM users WHERE user_id == %(user_id) LIMIT 1""", {"article_id": article_id})
+        article_id = cur.fetchone()
+        article_id = article_id[0]
 
-    if privilege == '1':
-        if direction == 0:
-            cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date,last_modified_by, article_id, status
-                FROM master_table 
-                WHERE article_id <= %(article_id)s ORDER BY article_id DESC LIMIT 1;""",
-                        {"article_id": article_id}
-                        )
-        elif direction == 1:
-            cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date,last_modified_by, article_id, status
-                FROM master_table 
-                WHERE article_id >= %(article_id)s ORDER BY article_id ASC LIMIT 1;""",
-                        {"article_id": article_id}
-                        )
-        else:
-            cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date,last_modified_by, article_id, status
-                FROM master_table 
-                WHERE article_id = %(article_id)s ORDER BY article_id ASC LIMIT 1;""",
-                        {"article_id": article_id}
-                        )
+    if last_article != 'yes':
+        cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date,last_modified_by, article_id, status
+            FROM master_table 
+            WHERE article_id == %(article_id)s LIMIT 1;""",
+                    {"article_id": article_id}
+                    )
     else:
-        if direction == 0:
-            cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date,last_modified_by, article_id, status
-                FROM master_table 
-                WHERE article_id <= %(article_id)s AND user_id= %(user_id)s ORDER BY article_id DESC LIMIT 1;""",
-                        {"article_id": article_id, "user_id": user_id}
-                        )
-        elif direction == 1:
-            cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date,last_modified_by, article_id, status
-                FROM master_table 
-                WHERE article_id >= %(article_id)s AND user_id= %(user_id)s ORDER BY article_id ASC LIMIT 1;""",
-                        {"article_id": article_id, "user_id": user_id}
-                        )
+        if privilege == '1':
+            if direction == 0:
+                cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date,last_modified_by, article_id, status
+                    FROM master_table 
+                    WHERE article_id <= %(article_id)s ORDER BY article_id DESC LIMIT 1;""",
+                            {"article_id": article_id}
+                            )
+            elif direction == 1:
+                cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date,last_modified_by, article_id, status
+                    FROM master_table 
+                    WHERE article_id >= %(article_id)s ORDER BY article_id ASC LIMIT 1;""",
+                            {"article_id": article_id}
+                            )
+            else:
+                cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date,last_modified_by, article_id, status
+                    FROM master_table 
+                    WHERE article_id = %(article_id)s ORDER BY article_id ASC LIMIT 1;""",
+                            {"article_id": article_id}
+                            )
         else:
-            cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date,last_modified_by, article_id, status
-                FROM master_table 
-                WHERE article_id = %(article_id)s ORDER BY article_id ASC LIMIT 1;""",
-                        {"article_id": article_id}
-                        )
+            if direction == 0:
+                cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date,last_modified_by, article_id, status
+                    FROM master_table 
+                    WHERE article_id <= %(article_id)s AND user_id= %(user_id)s ORDER BY article_id DESC LIMIT 1;""",
+                            {"article_id": article_id, "user_id": user_id}
+                            )
+            elif direction == 1:
+                cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date,last_modified_by, article_id, status
+                    FROM master_table 
+                    WHERE article_id >= %(article_id)s AND user_id= %(user_id)s ORDER BY article_id ASC LIMIT 1;""",
+                            {"article_id": article_id, "user_id": user_id}
+                            )
+            else:
+                cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date,last_modified_by, article_id, status
+                    FROM master_table 
+                    WHERE article_id = %(article_id)s ORDER BY article_id ASC LIMIT 1;""",
+                            {"article_id": article_id}
+                            )
+        
 
     row = cur.fetchall()
     owner = row[0][0]
