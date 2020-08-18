@@ -13,7 +13,7 @@ def createTables():
             phone varchar NOT NULL,
             pass_key varchar NOT NULL,
             status varchar NOT NULL,
-            last_open_article_id INTEGER default 0,
+            last_open_article_id INTEGER default 1,
             privilege character varying(50) NOT NULL,
             CONSTRAINT users_pkey PRIMARY KEY (user_id),
             CONSTRAINT "user" UNIQUE (email, phone)
