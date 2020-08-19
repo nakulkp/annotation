@@ -55,7 +55,7 @@ def articleContentNav(requestParameters):
         return {"message": "empty"}
     
     if last_article == 'yes':
-        cur.execute("""SELECT last_open_article_id FROM users WHERE user_id == %(user_id) LIMIT 1""", {"article_id": article_id})
+        cur.execute("""SELECT last_open_article_id FROM users WHERE user_id == %(user_id) LIMIT 1""", {"article_id": article_id, "user_id": user_id})
         article_id = cur.fetchone()
         article_id = article_id[0]
 
