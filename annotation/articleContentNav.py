@@ -62,7 +62,7 @@ def articleContentNav(requestParameters):
     if last_article != 'yes':
         cur.execute("""SELECT owner, release_date, source, url, headline, content, question, last_modified_date,last_modified_by, article_id, status
             FROM master_table 
-            WHERE article_id == %(article_id)s LIMIT 1;""",
+            WHERE article_id = %(article_id)s LIMIT 1;""",
                     {"article_id": article_id}
                     )
     else:
