@@ -47,6 +47,8 @@ def articleContentId(requestParameters):
     returnList = {'owner': owner, 'release_date': release_date, 'source': source, 'url': url, 'headline': headline,
                   'content': content, 'question': question, 'last_modified_date': last_modified_date,
                   'last_modified_by': last_modified_by,'status':status, 'article_id': article_id, 'count': todoCount}
+                  
+    cur.execute("""UPDATE users SET last_open_article_id = %(article_id)s where user_id = %(user_id)s""", {"article_id": article_id, "user_id": user_id})
 
     cur.close()
     conn.commit()
