@@ -32,10 +32,10 @@ def review(requestParameters):
     pageCount = 0
 
     if sort_by == '':
-        sort_by = 'created_date';
+        sort_by = 'created_date'
 
     if order_by == '':
-        order_by = 'asc';
+        order_by = 'asc'
 
     if filter_ == 'all':
         if privilege == '1':
