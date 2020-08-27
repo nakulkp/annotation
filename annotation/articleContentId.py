@@ -5,6 +5,7 @@ from config import config
 def articleContentId(requestParameters):
     conn = None
     article_id = requestParameters['article_id']
+    user_id = requestParameters['user_id']
 
     # params = config()
     # conn = psycopg2.connect(**params)

@@ -36,7 +36,7 @@ def adminUserEdit(requestParameters):
         conn.close()
         return ({"message": "success"})
 
-    pass_key = passHash(password)
+    pass_key = passHash(pass_key)
     cur.execute(
         """UPDATE users
          SET username = %(username)s, email = %(email)s, phone = %(phone)s, pass_key = %(pass_key)s, status = %(status)s, privilege = %(privilege)s
