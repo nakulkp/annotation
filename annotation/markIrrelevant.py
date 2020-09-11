@@ -20,6 +20,10 @@ def markIrrelevant(requestParameters):
     where article_id = %(article_id)s;""",
                 {"article_id": article_id, 'last_modified_date': last_modified_date,
                  'last_modified_by': last_modified_by})
+
+    cur.execute("""DELETE FROM mapping_table WHERE article_id = %(article_id)s;""",
+                {"article_id": article_id})
+
     cur.close()
     conn.commit()
     conn.close()
